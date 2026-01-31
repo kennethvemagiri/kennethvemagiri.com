@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<!--
+  Kenneth Vemagiri – Personal website
+  Single-page site: Hero, About, Products & Apps, Projects, Featured block, Testimonials, Contact form.
+  Contact form: Replace YOUR_FORM_ID in the form action with your Formspree form ID (see CONTACT-FORM-SETUP.md).
+  Awards strip: Images loaded from awards/ via awards-data.js (run node build-awards.js after adding images).
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Kenneth Vemagiri | Personal Website</title>
+  <meta name="description" content="Personal website of Kenneth Vemagiri — developer, creator, and professional.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Fixed header: logo (KV), nav links, mobile hamburger -->
+  <header class="site-header">
+    <nav class="nav" aria-label="Main navigation">
+      <a href="#home" class="nav-logo">KV</a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="nav-links">
+        <li class="nav-close-wrap">
+          <button type="button" class="nav-close" aria-label="Close menu">← Back</button>
+        </li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="cv/CV.pdf" class="nav-cv" download>Download CV</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Hero: dark band, name + tagline + CTAs left, profile image right. -->
+    <section id="home" class="hero hero-dark">
+      <div class="hero-inner container-wide">
+        <div class="hero-text">
+          <h1 class="hero-name">
+            <span class="hero-greeting">Hi there, I'm</span> <span class="hero-name-first">Prabhakar</span>
+            <span class="hero-name-main">Kenneth Vemagiri</span>
+          </h1>
+          <p class="hero-tagline">Building products for the web and beyond as a software developer and data analyst, with a mission to bring AI into everyday life.</p>
+          <div class="hero-ctas">
+            <a href="#projects" class="btn btn-primary">→ View My Work</a>
+            <a href="#contact" class="btn btn-outline">→ Get in Touch</a>
+          </div>
+        </div>
+        <div class="hero-image-placeholder">
+          <img src="profile.png" alt="Kenneth Vemagiri" class="hero-profile-img" width="320" height="373">
+        </div>
+      </div>
+    </section>
+
+    <!-- Bio: light section, two columns -->
+    <section id="about" class="section section-light">
+      <div class="container">
+        <div class="about-header">
+          <h2 class="section-title">About me</h2>
+          <nav class="bio-filter" aria-label="About me view">
+            <button type="button" class="bio-filter-btn is-active" data-bio-view="developer" aria-pressed="true">For developers</button>
+            <span class="bio-filter-sep" aria-hidden="true">·</span>
+            <button type="button" class="bio-filter-btn" data-bio-view="newbie" aria-pressed="false">Explain like I'm a newbie</button>
+          </nav>
+        </div>
+        <div class="bio-grid">
+          <div class="bio-content">
+            <div class="bio-view bio-view-developer" data-view="developer">
+              <p class="bio-lead">
+                I'm a software developer and data analyst who builds clean, thoughtful digital experiences.
+              </p>
+              <p>
+                I turn complex problems into simple, reliable solutions using web technologies, data, and AI.
+              </p>
+              <p>
+                I enjoy taking ideas from concept to reality and building tools that just work.
+              </p>
+              <p>
+                Based in the UK, building and collaborating globally. Open to ideas, conversations, and ambitious projects wherever they come from.
+              </p>
+            </div>
+            <div class="bio-view bio-view-newbie" data-view="newbie" hidden>
+              <p class="bio-lead">
+                I'm a software developer and data analyst. I build websites, apps, and tools that help people and businesses.
+              </p>
+              <p>
+                I like taking big, complicated problems and making them simple and easy to use.
+              </p>
+              <p>
+                I work from the UK and with people around the world. I'm always open to new ideas and projects.
+              </p>
+            </div>
+            <div class="bio-ctas">
+              <a href="#projects" class="btn btn-primary">→ View My Work</a>
+              <a href="#contact" class="btn btn-outline">→ Get in Touch</a>
+            </div>
+          </div>
+          <!-- Awards / activities: circular grid next to About me, filled by script.js -->
+          <div class="activities-grid-wrap" aria-label="Awards and activities">
+            <div class="activities-track" id="activities-track"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured projects: horizontal scroll of tiles (MedWorkFlow + placeholders) -->
+    <section id="projects" class="section section-alt">
+      <div class="container">
+        <h2 class="section-title">Featured projects</h2>
+        <p class="section-intro">Selected work and products I've built or co-founded.</p>
+        <div class="projects-scroll">
+          <article class="project-tile project-tile-featured project-tile-mwf">
+            <div class="project-tile-image">
+              <img src="MWF/MedWorkFlow.png" alt="MedWorkFlow" width="200" height="200">
+            </div>
+            <div class="project-tile-content">
+              <span class="project-tile-badge">Co-founder</span>
+              <h3>MedWorkFlow</h3>
+              <p>Building solutions that matter.</p>
+            </div>
+          </article>
+          <article class="project-tile project-tile-featured project-tile-gocafeco">
+            <div class="project-tile-image">
+              <img src="GoCafeCo/Projects%20Logo.png" alt="GoCafeCo" width="1024" height="1536">
+            </div>
+            <div class="project-tile-content">
+              <span class="project-tile-badge">Co-founder and developer</span>
+              <h3>GoCafeCo</h3>
+              <p>Cafe discovery and more.</p>
+            </div>
+          </article>
+          <article class="project-tile project-tile-pronto">
+            <div class="project-tile-image">
+              <img src="Pronto/Logo.png" alt="Pronto" width="200" height="200">
+            </div>
+            <div class="project-tile-content">
+              <span class="project-tile-badge">Co-founder and developer</span>
+              <h3>Pronto</h3>
+              <p>Your project description.</p>
+            </div>
+          </article>
+          <article class="project-tile project-tile-inplan">
+            <div class="project-tile-image">
+              <img src="InPlan/Logo.png" alt="InPlan" width="200" height="200">
+            </div>
+            <div class="project-tile-content">
+              <span class="project-tile-badge project-tile-badge-soon">Coming soon</span>
+              <h3>InPlan</h3>
+              <p>Your project description.</p>
+            </div>
+          </article>
+          <article class="project-tile">
+            <div class="project-tile-image placeholder-box placeholder-tile">
+              <svg class="placeholder-tile-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+              <span class="placeholder-tile-text">MORE COMING SOON</span>
+            </div>
+            <div class="project-tile-content">
+              <span class="project-tile-badge project-tile-badge-soon">Coming soon</span>
+              <h3>Your next project</h3>
+              <p>In the works.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact: Get in touch CTA + LinkedIn + Email -->
+    <section id="contact" class="section section-light contact-cta-section">
+      <div class="container contact-cta-container">
+        <h2 class="section-title">Get in touch!</h2>
+        <p class="contact-cta-lead">Let's create something amazing together. Drop me a line and let's get the conversation started.</p>
+        <button type="button" class="btn btn-primary" id="open-contact-modal" aria-haspopup="dialog" aria-controls="contact-modal">Get in Touch</button>
+        <div class="contact-social">
+          <a href="https://www.linkedin.com/in/prabhakar-kenneth-vemagiri-" target="_blank" rel="noopener noreferrer" class="contact-social-item" aria-label="LinkedIn">
+            <span class="contact-social-icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </span>
+            <span class="contact-social-label">LinkedIn</span>
+          </a>
+          <a href="mailto:urstrulykenneth@gmail.com" class="contact-social-item" aria-label="Email">
+            <span class="contact-social-icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </span>
+            <span class="contact-social-label">Email</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="year"></span> Prabhakar Kenneth Vemagiri. All rights reserved.</p>
+  </footer>
+
+  <!-- Contact modal: privacy note, required note, name/email/message fields, submit + LinkedIn CTA, success state -->
+  <div id="contact-modal" class="contact-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="contact-modal-title" aria-hidden="true">
+    <div class="contact-modal-backdrop" id="contact-modal-backdrop"></div>
+    <div class="contact-modal-box">
+      <button type="button" class="contact-modal-close" id="close-contact-modal" aria-label="Close">×</button>
+      <h2 id="contact-modal-title" class="contact-modal-title">Get in touch</h2>
+      <p class="contact-modal-microcopy">For your privacy, please don't include phone numbers or sensitive personal details. Your name and email are enough.</p>
+
+      <form id="contact-modal-form" class="contact-modal-form" action="https://formspree.io/f/xjgrdeyd" method="POST">
+        <input type="hidden" name="_subject" value="New message from your website">
+        <p class="contact-modal-required-note">Fields marked * are required. Invalid email addresses will show an error before sending.</p>
+        <label class="contact-modal-label" for="contact-modal-name">Name <span class="contact-modal-required" aria-hidden="true">*</span></label>
+        <input class="contact-modal-input" id="contact-modal-name" type="text" name="name" required placeholder="e.g. Jane" autocomplete="name" aria-required="true" aria-describedby="contact-modal-name-hint">
+        <span class="contact-modal-hint" id="contact-modal-name-hint">A first name or nickname is totally fine.</span>
+        <label class="contact-modal-label" for="contact-modal-email">Email <span class="contact-modal-required" aria-hidden="true">*</span></label>
+        <input class="contact-modal-input" id="contact-modal-email" type="email" name="email" required placeholder="e.g. jane@example.com" autocomplete="email" aria-describedby="contact-modal-email-hint contact-modal-email-error" aria-invalid="false" aria-required="true">
+        <span class="contact-modal-hint" id="contact-modal-email-hint">We'll use this to reply to you.</span>
+        <span class="contact-modal-error" id="contact-modal-email-error" role="alert" aria-live="polite"></span>
+        <label class="contact-modal-label" for="contact-modal-message">Message <span class="contact-modal-required" aria-hidden="true">*</span></label>
+        <textarea class="contact-modal-input contact-modal-textarea contact-modal-message-field" id="contact-modal-message" name="message" required placeholder="How can I help?&#10;Please don't include phone numbers or sensitive personal details." rows="4" maxlength="2000" aria-required="true" aria-describedby="contact-modal-message-helper contact-modal-message-hint"></textarea>
+        <span class="contact-modal-hint" id="contact-modal-message-helper">For security reasons, avoid sharing personal or confidential information.</span>
+        <span class="contact-modal-hint contact-modal-char-count" id="contact-modal-message-hint" aria-live="polite"><span id="contact-modal-char-count">0</span>/2000</span>
+        <p class="contact-modal-expectation">You'll get a reply to your email within 1–2 business days.</p>
+        <div class="contact-modal-actions">
+          <button type="submit" class="btn btn-primary contact-modal-submit" id="contact-modal-submit">
+            <span class="contact-modal-submit-text">Send message</span>
+            <span class="contact-modal-submit-sending" aria-hidden="true">Sending message…</span>
+          </button>
+          <a href="https://www.linkedin.com/in/prabhakar-kenneth-vemagiri-" target="_blank" rel="noopener noreferrer" class="btn btn-outline contact-modal-btn contact-modal-linkedin" aria-label="Connect on LinkedIn (opens in new tab)">Or connect on LinkedIn</a>
+        </div>
+      </form>
+
+      <div class="contact-modal-success" id="contact-modal-success" aria-live="polite" hidden>
+        <span class="contact-modal-success-icon" aria-hidden="true">✓</span>
+        <p class="contact-modal-success-text">Got it! I'll reply within 1–2 business days.</p>
+      </div>
+
+      <div class="contact-modal-submit-error" id="contact-modal-submit-error" aria-live="polite" role="alert" hidden>
+        <p class="contact-modal-submit-error-text">Sorry, we couldn't send your message. You can also send me a Hi on LinkedIn!</p>
+        <a href="https://www.linkedin.com/in/prabhakar-kenneth-vemagiri-" target="_blank" rel="noopener noreferrer" class="btn btn-primary contact-modal-submit-error-link">Open LinkedIn</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
