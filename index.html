@@ -9,12 +9,61 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Kenneth Vemagiri | Personal Website</title>
-  <meta name="description" content="Personal website of Kenneth Vemagiri — developer, creator, and professional.">
+
+  <!-- Primary Meta Tags -->
+  <title>Kenneth Vemagiri | Product Designer &amp; Developer</title>
+  <meta name="title" content="Kenneth Vemagiri | Product Designer &amp; Developer">
+  <meta name="description" content="Kenneth Vemagiri - Product Designer and Developer based in London. Creating innovative digital products and experiences.">
+  <meta name="keywords" content="Kenneth Vemagiri, Product Designer, Developer, London, Portfolio">
+  <meta name="author" content="Kenneth Vemagiri">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://kennethvemagiri.com/">
+  <meta property="og:title" content="Kenneth Vemagiri | Product Designer &amp; Developer">
+  <meta property="og:description" content="Kenneth Vemagiri - Product Designer and Developer based in London.">
+  <meta property="og:image" content="https://kennethvemagiri.com/profile.png">
+  <meta property="og:image:width" content="320">
+  <meta property="og:image:height" content="373">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://kennethvemagiri.com/">
+  <meta property="twitter:title" content="Kenneth Vemagiri | Product Designer &amp; Developer">
+  <meta property="twitter:description" content="Kenneth Vemagiri - Product Designer and Developer based in London.">
+  <meta property="twitter:image" content="https://kennethvemagiri.com/profile.png">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://kennethvemagiri.com/">
+
+  <!-- JSON-LD Schema: Person -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Kenneth Vemagiri",
+    "url": "https://kennethvemagiri.com",
+    "sameAs": [
+      "https://www.linkedin.com/in/prabhakar-kenneth-vemagiri-",
+      "https://github.com/kennethvemagiri"
+    ],
+    "jobTitle": "Product Designer & Developer",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "London",
+      "addressCountry": "GB"
+    }
+  }
+  </script>
+
+  <!-- Preload LCP image (hero) -->
+  <link rel="preload" as="image" href="profile.webp" fetchpriority="high">
+  <link rel="preload" href="styles.min.css" as="style">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.min.css">
 </head>
 <body>
   <!-- Fixed header: logo (KV), nav links, mobile hamburger -->
@@ -54,7 +103,10 @@
           </div>
         </div>
         <div class="hero-image-placeholder">
-          <img src="profile.png" alt="Kenneth Vemagiri" class="hero-profile-img" width="320" height="373">
+          <picture>
+            <source type="image/webp" srcset="profile.webp 480w" sizes="(max-width: 400px) 100vw, 320px">
+            <img src="profile.png" alt="Kenneth Vemagiri" class="hero-profile-img" width="320" height="373" fetchpriority="high" decoding="async">
+          </picture>
         </div>
       </div>
     </section>
@@ -118,7 +170,10 @@
         <div class="projects-scroll">
           <article class="project-tile project-tile-featured project-tile-mwf">
             <div class="project-tile-image">
-              <img src="MWF/MedWorkFlow.png" alt="MedWorkFlow" width="200" height="200">
+              <picture>
+                <source type="image/webp" srcset="featured-projects/MWF/MedWorkFlow.webp">
+                <img src="featured-projects/MWF/MedWorkFlow.png" alt="MedWorkFlow" width="200" height="200" loading="lazy" decoding="async">
+              </picture>
             </div>
             <div class="project-tile-content">
               <span class="project-tile-badge">Co-founder</span>
@@ -128,7 +183,10 @@
           </article>
           <article class="project-tile project-tile-featured project-tile-gocafeco">
             <div class="project-tile-image">
-              <img src="GoCafeCo/Projects%20Logo.png" alt="GoCafeCo" width="1024" height="1536">
+              <picture>
+                <source type="image/webp" srcset="featured-projects/GoCafeCo/Projects%20Logo.webp">
+                <img src="featured-projects/GoCafeCo/Projects%20Logo.png" alt="GoCafeCo" width="1024" height="1536" loading="lazy" decoding="async">
+              </picture>
             </div>
             <div class="project-tile-content">
               <span class="project-tile-badge">Co-founder and developer</span>
@@ -138,7 +196,10 @@
           </article>
           <article class="project-tile project-tile-pronto">
             <div class="project-tile-image">
-              <img src="Pronto/Logo.png" alt="Pronto" width="200" height="200">
+              <picture>
+                <source type="image/webp" srcset="featured-projects/Pronto/Logo.webp">
+                <img src="featured-projects/Pronto/Logo.png" alt="Pronto" width="200" height="200" loading="lazy" decoding="async">
+              </picture>
             </div>
             <div class="project-tile-content">
               <span class="project-tile-badge">Co-founder and developer</span>
@@ -148,7 +209,10 @@
           </article>
           <article class="project-tile project-tile-inplan">
             <div class="project-tile-image">
-              <img src="InPlan/Logo.png" alt="InPlan" width="200" height="200">
+              <picture>
+                <source type="image/webp" srcset="featured-projects/InPlan/Logo.webp">
+                <img src="featured-projects/InPlan/Logo.png" alt="InPlan" width="200" height="200" loading="lazy" decoding="async">
+              </picture>
             </div>
             <div class="project-tile-content">
               <span class="project-tile-badge project-tile-badge-soon">Coming soon</span>
@@ -158,7 +222,10 @@
           </article>
           <article class="project-tile project-tile-featured project-tile-wiseweb">
             <div class="project-tile-image">
-              <img src="WiseWeb/Logo.png" alt="WiseWeb" width="200" height="200">
+              <picture>
+                <source type="image/webp" srcset="featured-projects/WiseWeb/Logo.webp">
+                <img src="featured-projects/WiseWeb/Logo.png" alt="WiseWeb" width="200" height="200" loading="lazy" decoding="async">
+              </picture>
             </div>
             <div class="project-tile-content">
               <span class="project-tile-badge">Developer</span>
@@ -254,6 +321,6 @@
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <script src="script.min.js" defer></script>
 </body>
 </html>

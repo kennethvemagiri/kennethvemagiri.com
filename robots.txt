@@ -1,0 +1,6 @@
+# https://kennethvemagiri.com/robots.txt
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://kennethvemagiri.com/sitemap.xml

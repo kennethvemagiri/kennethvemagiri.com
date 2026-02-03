@@ -1,0 +1,25 @@
+{
+  "name": "kennethvemagiri.com",
+  "version": "1.0.0",
+  "description": "A simple, responsive personal website built with HTML, CSS, and vanilla JavaScript.",
+  "main": "build-awards.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node build-images.js",
+    "minify": "npx clean-css-cli -o styles.min.css styles.css && npx terser script.js -o script.min.js -c -m"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kennethvemagiri/kennethvemagiri.com.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kennethvemagiri/kennethvemagiri.com/issues"
+  },
+  "homepage": "https://github.com/kennethvemagiri/kennethvemagiri.com#readme",
+  "devDependencies": {
+    "sharp": "^0.34.5"
+  }
+}
