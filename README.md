@@ -1,36 +1,31 @@
-# Kenneth Vemagiri — Personal Website
+# Kenneth Vemagiri — Portfolio
 
-A simple, responsive personal website built with HTML, CSS, and vanilla JavaScript.
+Portfolio and project site. Built with HTML, CSS, and vanilla JavaScript. Single-page: hero, about, featured projects, contact form.
 
-## What's included
+## What’s included
 
-- **Hero** — Name, tagline, and call-to-action
-- **About** — Short bio (customize with your own text)
-- **Skills** — Grid of skills/interests (edit in `index.html`)
-- **Projects** — Placeholder cards (add your real projects)
-- **Contact** — Email and social links (update with your URLs)
-- **Responsive nav** — Mobile-friendly menu with hamburger toggle
-- **Dark theme** — Warm accent color (amber/gold) on dark background
+- **Hero** — Name, tagline, CTAs
+- **About** — Bio with toggle (developers / plain-language)
+- **Featured projects** — Scrollable project tiles (assets in `featured-projects/`)
+- **Contact** — Modal form (Formspree), LinkedIn, email
+- **Responsive nav** — Mobile hamburger, smooth scroll
+- **Awards strip** — Loaded from `awards/` via `awards-data.js` (run `node build-awards.js` after adding images)
 
-## How to run locally
+## Run locally
 
-1. **Option A — Open the file**
-   - Double-click `index.html` to open it in your browser.
-
-2. **Option B — Local server (recommended)**
-   - From this folder in a terminal:
-   - **Node:** `npx serve .` then open http://localhost:3000
-   - **Python 3:** `python -m http.server 8000` then open http://localhost:8000
+- **Node:** `npx serve .` then open http://localhost:3000
+- **Python 3:** `python -m http.server 8000` then open http://localhost:8000
 
 ## Customize
 
-- **Content:** Edit `index.html` — change copy, add/remove sections, update links.
-- **Colors & fonts:** Edit the `:root` variables at the top of `styles.css`.
-- **Contact links:** Replace the placeholder GitHub/LinkedIn URLs and email in the Contact section.
+- **Content:** Edit `index.html` (copy, links, project descriptions).
+- **Styles:** Edit `styles.css`; run `npm run minify` to update `styles.min.css`.
+- **Images:** Add or change images, then run `npm run build` to regenerate WebP.
+- **Contact form:** See `CONTACT-FORM-SETUP.md`. Form ID is in the form `action` in `index.html`.
 
 ## Deploy
 
-Upload the folder contents to any static host (e.g. Netlify, Vercel, GitHub Pages) or point your domain to the same files.
+The site is static. Deploy the repo to Netlify, Vercel, or GitHub Pages (publish directory: root). See `DEPLOY-NETLIFY.md` for Netlify steps.
 
 ---
 

@@ -1,5 +1,5 @@
 /**
- * build-awards.js – Generate awards strip image list for the personal site
+ * build-awards.js – Generate awards strip image list for the site
  *
  * Run after adding images to the awards folder:  node build-awards.js
  *

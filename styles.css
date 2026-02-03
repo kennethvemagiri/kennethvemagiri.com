@@ -1,8 +1,4 @@
-/*
-  Kenneth Vemagiri – Personal website – main styles
-  Layout: fixed header (warm dark), hero, sections (light/alt), footer.
-  Theme: warm gold accent, Syne + Figtree. Responsive with mobile nav.
-*/
+/* Kenneth Vemagiri – Main styles. Layout: header, hero, sections, footer. Theme: warm gold accent, Syne + Figtree. Responsive. */
 /* ===== Theme variables (colours, spacing, fonts) ===== */
 :root {
   --color-bg: #f8fafc;
@@ -1200,6 +1196,19 @@ a:hover {
 .site-footer p {
   font-size: 0.9rem;
   color: var(--color-text-muted);
+}
+
+.site-footer .footer-site-url {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.site-footer .footer-site-url a {
+  color: var(--color-text-muted);
+}
+
+.site-footer .footer-site-url a:hover {
+  color: var(--color-accent);
 }
 
 /* ===== Responsive ===== */

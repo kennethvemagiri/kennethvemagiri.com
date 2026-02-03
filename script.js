@@ -1,12 +1,6 @@
 /**
- * Kenneth Vemagiri – Personal website – main script
- *
- * Features:
- * - Footer: inject current year into #year
- * - Mobile nav: hamburger toggle, close on link click or Back, lock body scroll when open
- * - Scroll: set aria-current on nav link for section in view
- * - About: IntersectionObserver scroll reveal; bio filter (developers / newbie)
- * - Contact modal: open/close, escape/backdrop; form validation (email only), Formspree submit, char count
+ * Kenneth Vemagiri – Main script.
+ * Footer year, mobile nav, scroll state, about bio filter, contact modal (Formspree).
  */
 (function () {
   "use strict";

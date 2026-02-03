@@ -34,11 +34,11 @@ Each time someone submits the form, you’ll get an email at **urstrulykenneth@g
 - **Name**  
 - **Email**  
 - **Message**  
-- Subject line: *"New message from your website"*
+- Subject line: *"New message from kennethvemagiri.com"*
 
 ## Free tier
 
-Formspree’s free plan includes about **50 submissions per month**. For a personal site that’s usually enough; you can upgrade if you need more.
+Formspree’s free plan includes about **50 submissions per month**. For a most sites that’s usually enough; you can upgrade if you need more.
 
 ## Optional: thank-you page
 

@@ -8,7 +8,7 @@ Your project is ready: Git is initialized and the first commit is done. Follow t
 
 1. Go to [github.com](https://github.com) and sign in (or create an account).
 2. Click **+** (top right) → **New repository**.
-3. **Repository name:** e.g. `kennethvemagiri` or `personal-website`.
+3. **Repository name:** e.g. `kennethvemagiri` or `kennethvemagiri.com`.
 4. Choose **Public**.
 5. **Do not** check "Add a README" or ".gitignore" (you already have them).
 6. Click **Create repository**.

@@ -1,10 +1,5 @@
 <!DOCTYPE html>
-<!--
-  Kenneth Vemagiri – Personal website
-  Single-page site: Hero, About, Products & Apps, Projects, Featured block, Testimonials, Contact form.
-  Contact form: Replace YOUR_FORM_ID in the form action with your Formspree form ID (see CONTACT-FORM-SETUP.md).
-  Awards strip: Images loaded from awards/ via awards-data.js (run node build-awards.js after adding images).
--->
+<!-- Kenneth Vemagiri – Portfolio. Single-page: Hero, About, Featured projects, Contact. Form: Formspree (see CONTACT-FORM-SETUP.md). Awards: awards-data.js, run build-awards.js after adding images. -->
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -13,7 +8,7 @@
   <!-- Primary Meta Tags -->
   <title>Kenneth Vemagiri | Product Designer &amp; Developer</title>
   <meta name="title" content="Kenneth Vemagiri | Product Designer &amp; Developer">
-  <meta name="description" content="Kenneth Vemagiri - Product Designer and Developer based in London. Creating innovative digital products and experiences.">
+  <meta name="description" content="Kenneth Vemagiri – Product Designer and developer based in London. Software developer and data analyst building for the web and beyond.">
   <meta name="keywords" content="Kenneth Vemagiri, Product Designer, Developer, London, Portfolio">
   <meta name="author" content="Kenneth Vemagiri">
 
@@ -21,16 +16,17 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://kennethvemagiri.com/">
   <meta property="og:title" content="Kenneth Vemagiri | Product Designer &amp; Developer">
-  <meta property="og:description" content="Kenneth Vemagiri - Product Designer and Developer based in London.">
+  <meta property="og:description" content="Kenneth Vemagiri – Product Designer and developer. Based in London, building for the web and beyond.">
   <meta property="og:image" content="https://kennethvemagiri.com/profile.png">
   <meta property="og:image:width" content="320">
   <meta property="og:image:height" content="373">
+  <meta property="og:image:alt" content="Kenneth Vemagiri, Product Designer and Developer">
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="https://kennethvemagiri.com/">
   <meta property="twitter:title" content="Kenneth Vemagiri | Product Designer &amp; Developer">
-  <meta property="twitter:description" content="Kenneth Vemagiri - Product Designer and Developer based in London.">
+  <meta property="twitter:description" content="Kenneth Vemagiri – Product Designer and developer. Based in London, building for the web and beyond.">
   <meta property="twitter:image" content="https://kennethvemagiri.com/profile.png">
 
   <!-- Canonical URL -->
@@ -105,7 +101,7 @@
         <div class="hero-image-placeholder">
           <picture>
             <source type="image/webp" srcset="profile.webp 480w" sizes="(max-width: 400px) 100vw, 320px">
-            <img src="profile.png" alt="Kenneth Vemagiri" class="hero-profile-img" width="320" height="373" fetchpriority="high" decoding="async">
+            <img src="profile.png" alt="Kenneth Vemagiri" class="hero-profile-img" width="320" height="373" loading="eager" fetchpriority="high" decoding="async">
           </picture>
         </div>
       </div>
@@ -204,7 +200,7 @@
             <div class="project-tile-content">
               <span class="project-tile-badge">Co-founder and developer</span>
               <h3>Pronto</h3>
-              <p>Your project description.</p>
+              <p>Streamlining workflows and collaboration.</p>
             </div>
           </article>
           <article class="project-tile project-tile-inplan">
@@ -275,6 +271,7 @@
 
   <footer class="site-footer">
     <p>&copy; <span id="year"></span> Prabhakar Kenneth Vemagiri. All rights reserved.</p>
+    <p class="footer-site-url"><a href="https://kennethvemagiri.com">kennethvemagiri.com</a></p>
   </footer>
 
   <!-- Contact modal: privacy note, required note, name/email/message fields, submit + LinkedIn CTA, success state -->
@@ -286,7 +283,7 @@
       <p class="contact-modal-microcopy">For your privacy, please don't include phone numbers or sensitive personal details. Your name and email are enough.</p>
 
       <form id="contact-modal-form" class="contact-modal-form" action="https://formspree.io/f/xjgrdeyd" method="POST">
-        <input type="hidden" name="_subject" value="New message from your website">
+        <input type="hidden" name="_subject" value="New message from kennethvemagiri.com">
         <p class="contact-modal-required-note">Fields marked * are required. Invalid email addresses will show an error before sending.</p>
         <label class="contact-modal-label" for="contact-modal-name">Name <span class="contact-modal-required" aria-hidden="true">*</span></label>
         <input class="contact-modal-input" id="contact-modal-name" type="text" name="name" required placeholder="e.g. Jane" autocomplete="name" aria-required="true" aria-describedby="contact-modal-name-hint">
