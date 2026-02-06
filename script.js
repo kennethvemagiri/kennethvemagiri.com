@@ -5,6 +5,37 @@
 (function () {
   "use strict";
 
+  // --- Hero: fade-in on load ---
+  var heroReveal = document.querySelector(".hero-reveal");
+  if (heroReveal) {
+    function showHero() {
+      heroReveal.classList.add("hero-ready");
+    }
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", showHero);
+    } else {
+      requestAnimationFrame(showHero);
+    }
+  }
+
+  // --- Scroll reveal: Projects, Contact ---
+  var revealEls = document.querySelectorAll(".reveal");
+  if (revealEls.length && "IntersectionObserver" in window) {
+    var revealObserver = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("reveal-in");
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
+    );
+    revealEls.forEach(function (el) {
+      revealObserver.observe(el);
+    });
+  }
+
   // --- Footer: current year ---
   var yearEl = document.getElementById("year");
   if (yearEl) {

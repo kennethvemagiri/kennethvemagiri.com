@@ -151,12 +151,43 @@ a:hover {
   transform: translateY(-8px) rotate(-45deg);
 }
 
+/* ===== Page polish: hero fade-in, scroll reveals ===== */
+.hero-reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.hero-reveal.hero-ready {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.reveal.reveal-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal:nth-child(2) {
+  transition-delay: 0.08s;
+}
+
+.reveal:nth-child(3) {
+  transition-delay: 0.16s;
+}
+
 /* ===== Hero (dark banner) ===== */
 .hero {
   position: relative;
   margin-top: 0;
-  min-height: 85vh;
-  min-height: 85dvh;
+  min-height: 100vh;
+  min-height: 100dvh;
   padding: var(--space-2xl) var(--pad-x);
   padding-top: calc(7rem + env(safe-area-inset-top));
   padding-bottom: calc(var(--space-2xl) + env(safe-area-inset-bottom));
@@ -173,19 +204,20 @@ a:hover {
 }
 
 .hero-inner {
-  max-width: 1200px;
+  max-width: 1100px;
   margin: 0 auto;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
-  gap: var(--space-xl);
+  gap: var(--space-lg);
   flex-wrap: wrap;
 }
 
 .hero-text {
   flex: 1;
   min-width: 280px;
-  text-align: center;
+  max-width: 520px;
+  text-align: left;
 }
 
 .hero-name {
@@ -197,26 +229,23 @@ a:hover {
   margin-bottom: var(--space-sm);
 }
 
-.hero-name-first {
-  display: inline;
-  font-size: 0.4em;
-  font-weight: 600;
-  color: var(--color-hero-text);
-  letter-spacing: 0.02em;
-  margin-left: 0;
-}
-
 .hero-greeting {
-  display: inline;
-  font-size: 0.35em;
+  display: block;
+  font-size: 0.9em;
   font-weight: 500;
   color: var(--color-hero-muted);
-  font-style: italic;
   letter-spacing: 0.02em;
+  margin-bottom: 0.15em;
 }
 
-.hero-name-main {
+.hero-name-full {
   display: block;
+}
+
+@media (min-width: 769px) {
+  .hero-name-line1 {
+    white-space: nowrap;
+  }
 }
 
 .hero-tagline {
@@ -229,7 +258,7 @@ a:hover {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-sm);
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .btn {
@@ -239,7 +268,7 @@ a:hover {
   font-size: 0.95rem;
   font-weight: 600;
   border-radius: var(--radius-sm);
-  transition: background var(--transition), color var(--transition), border-color var(--transition), transform var(--transition);
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .btn-primary {
@@ -258,7 +287,8 @@ a:hover {
   background: var(--color-accent-hero-hover);
   border-color: var(--color-accent-hero-hover);
   color: #1e2419;
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(229, 159, 71, 0.25);
 }
 
 .btn-primary:hover {
@@ -274,14 +304,32 @@ a:hover {
   border: 2px solid rgba(255, 255, 255, 0.35);
 }
 
-.btn-outline:hover {
+.hero-dark .btn-outline:hover {
   border-color: var(--color-accent-hero);
   color: var(--color-accent-hero);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.08);
 }
 
 .hero-image-placeholder {
   flex-shrink: 0;
   width: min(100%, 320px);
+  position: relative;
+}
+
+.hero-image-placeholder::before {
+  content: "";
+  position: absolute;
+  inset: -20px;
+  background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(229, 159, 71, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-image-placeholder picture,
+.hero-image-placeholder .hero-image-caption {
+  position: relative;
+  z-index: 1;
 }
 
 .hero-profile-img {
@@ -291,6 +339,35 @@ a:hover {
   object-fit: cover;
   border-radius: var(--radius);
   display: block;
+}
+
+.hero-image-caption {
+  margin-top: var(--space-sm);
+  font-family: var(--font-body);
+  text-align: center;
+}
+
+.hero-image-caption .profile-role {
+  font-family: var(--font-heading);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--color-hero-text);
+  margin: 0 0 0.25rem 0;
+}
+
+.hero-image-caption .profile-location {
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: var(--color-hero-muted);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.hero-image-caption .profile-time {
+  font-weight: 400;
+  opacity: 0.92;
 }
 
 /* ===== Sections (light / alt backgrounds) ===== */
@@ -1215,10 +1292,12 @@ a:hover {
 @media (max-width: 768px) {
   .hero-inner {
     flex-direction: column;
+    align-items: center;
     text-align: center;
   }
 
   .hero-text {
+    max-width: none;
     text-align: center;
   }
 
