@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-white text-body-text antialiased;
+    font-family: 'Inter', 'Poppins', system-ui, sans-serif;
+    font-size: 16px;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-heading font-bold;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(135deg, #0A2463 0%, #00A896 50%, #2E86DE 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}

@@ -1,0 +1,66 @@
+const base = import.meta.env.BASE_URL || '/'
+
+export const portfolioItems = [
+  {
+    id: 1,
+    title: 'London Family Practice',
+    specialty: 'General Practice',
+    description: '5-page GP website with services, team, contact and booking.',
+    features: ['AI chatbot', 'Online booking', 'Mobile-first'],
+    image: base + 'hero.png',
+    demoUrl: '#',
+    stack: ['React', 'Tailwind', 'AI Chat'],
+  },
+  {
+    id: 2,
+    title: 'Harley Street Dental',
+    specialty: 'Dental Surgery',
+    description: 'Upscale dental practice with treatment pages and gallery.',
+    features: ['Treatment pages', 'Before/after gallery', 'Appointment booking'],
+    image: base + 'hero.png',
+    demoUrl: '#',
+    stack: ['React', 'Tailwind', 'AI Chat'],
+  },
+  {
+    id: 3,
+    title: 'City Physiotherapy Clinic',
+    specialty: 'Physiotherapy',
+    description: 'Sports injury focus with prominent online booking.',
+    features: ['Online booking', 'Service pages', 'Blog'],
+    image: base + 'hero.png',
+    demoUrl: '#',
+    stack: ['React', 'Tailwind', 'AI Chat'],
+  },
+  {
+    id: 4,
+    title: 'Wellness Mental Health',
+    specialty: 'Therapy & Counselling',
+    description: 'Calm, reassuring design with patient resources.',
+    features: ['Patient resources', 'Therapist profiles', 'Secure forms'],
+    image: base + 'hero.png',
+    demoUrl: '#',
+    stack: ['React', 'Tailwind', 'AI Chat'],
+  },
+  {
+    id: 5,
+    title: 'Advanced Dermatology',
+    specialty: 'Dermatology',
+    description: 'Specialist skin clinic with treatment information.',
+    features: ['Treatment info', 'Image gallery', 'Contact forms'],
+    image: base + 'hero.png',
+    demoUrl: '#',
+    stack: ['React', 'Tailwind', 'AI Chat'],
+  },
+  {
+    id: 6,
+    title: "Children's Health Centre",
+    specialty: 'Paediatric',
+    description: 'Colourful but professional with parent resources.',
+    features: ['Parent resources', 'Child-friendly design', 'Booking'],
+    image: base + 'hero.png',
+    demoUrl: '#',
+    stack: ['React', 'Tailwind', 'AI Chat'],
+  },
+]
+
+export const portfolioFilters = ['All', 'General Practice', 'Dental Surgery', 'Physiotherapy', 'Therapy & Counselling', 'Dermatology', 'Paediatric']

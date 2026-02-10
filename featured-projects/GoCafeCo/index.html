@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" class="project-page">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>GoCafeCo | Kenneth Vemagiri</title>
+  <meta name="description" content="Discover and explore local cafes with curated recommendations and community reviews.">
+  <link rel="canonical" href="https://kennethvemagiri.com/featured-projects/GoCafeCo/">
+  <link rel="stylesheet" href="../../styles.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    html.project-page, .project-page body { min-height: 100vh; margin: 0; display: flex; flex-direction: column; }
+    .project-main { flex: 1; display: flex; align-items: center; justify-content: center; min-height: 0; }
+    .project-hero { width: 100%; min-height: calc(100vh - 7rem); display: flex; align-items: center; justify-content: center; padding: clamp(2rem, 5vw, 4rem) var(--pad-x); }
+    .project-content { max-width: 640px; text-align: center; }
+    .project-logo { max-width: 180px; height: auto; margin-bottom: var(--space-lg); }
+    .project-title { font-family: var(--font-heading); font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 700; color: var(--color-text); margin-bottom: var(--space-md); letter-spacing: -0.02em; line-height: 1.1; }
+    .project-badge { display: inline-block; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-accent); margin-bottom: var(--space-sm); }
+    .project-intro { font-size: clamp(1.125rem, 2vw, 1.35rem); color: var(--color-text-muted); margin-bottom: var(--space-md); line-height: 1.6; }
+    .project-sub { font-size: clamp(1rem, 1.5vw, 1.125rem); color: var(--color-text-muted); margin-bottom: var(--space-xl); line-height: 1.6; }
+    .project-content .btn { font-size: 1.05rem; padding: 0.9rem 1.75rem; }
+    .project-footer { flex-shrink: 0; }
+  </style>
+</head>
+<body class="project-page">
+  <header class="site-header">
+    <nav class="nav" aria-label="Main navigation">
+      <a href="../../index.html" class="nav-logo">KV</a>
+      <a href="../../index.html#projects" class="nav-back">← Back to projects</a>
+    </nav>
+  </header>
+
+  <main class="project-main">
+    <section class="project-hero">
+      <div class="project-content">
+        <span class="project-badge">Co-founder and developer</span>
+        <h1 class="project-title">GoCafeCo</h1>
+        <p class="project-intro">Discover and explore local cafes with curated recommendations and community reviews.</p>
+        <p class="project-sub">Your guide to finding great coffee spots nearby.</p>
+        <a href="../../index.html#contact" class="btn btn-primary">Get in Touch</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer project-footer">
+    <p>&copy; <span id="year"></span> Prabhakar Kenneth Vemagiri. All rights reserved.</p>
+    <p class="footer-site-url"><a href="https://kennethvemagiri.com">kennethvemagiri.com</a></p>
+  </footer>
+
+  <script>var y=document.getElementById("year");if(y)y.textContent=new Date().getFullYear();</script>
+</body>
+</html>

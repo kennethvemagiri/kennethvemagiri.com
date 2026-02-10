@@ -32,6 +32,12 @@
   <!-- Canonical URL -->
   <link rel="canonical" href="https://kennethvemagiri.com/">
 
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" href="favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
   <!-- JSON-LD Schema: Person -->
   <script type="application/ld+json">
   {
@@ -62,6 +68,7 @@
   <link rel="stylesheet" href="styles.min.css">
 </head>
 <body>
+  <a href="#home" class="skip-link">Skip to main content</a>
   <!-- Fixed header: logo (KV), nav links, mobile hamburger -->
   <header class="site-header">
     <nav class="nav" aria-label="Main navigation">
@@ -165,7 +172,7 @@
         <h2 class="section-title reveal">Featured projects</h2>
         <p class="section-intro reveal">Selected work and products I've built or co-founded.</p>
         <div class="projects-scroll reveal">
-          <article class="project-tile project-tile-featured project-tile-mwf">
+          <a href="featured-projects/MWF/" class="project-tile project-tile-featured project-tile-mwf project-tile-link">
             <div class="project-tile-image">
               <picture>
                 <source type="image/webp" srcset="featured-projects/MWF/MedWorkFlow.webp">
@@ -177,21 +184,21 @@
               <h3>MedWorkFlow</h3>
               <p>Healthcare workflow automation and digital solutions for medical teams.</p>
             </div>
-          </article>
-          <article class="project-tile project-tile-featured project-tile-gocafeco">
+          </a>
+          <a href="featured-projects/GoCafeCo/" class="project-tile project-tile-featured project-tile-gocafeco project-tile-link">
             <div class="project-tile-image">
               <picture>
                 <source type="image/webp" srcset="featured-projects/GoCafeCo/Projects%20Logo.webp">
-                <img src="featured-projects/GoCafeCo/Projects%20Logo.png" alt="GoCafeCo" width="1024" height="1536" loading="lazy" decoding="async">
+                <img src="featured-projects/GoCafeCo/Projects%20Logo.png" alt="GoCafeCo" width="200" height="260" loading="lazy" decoding="async">
               </picture>
             </div>
             <div class="project-tile-content">
               <span class="project-tile-badge">Co-founder and developer</span>
               <h3>GoCafeCo</h3>
-              <p>Cafe discovery and more.</p>
+              <p>Discover and explore local cafes with curated recommendations and community reviews.</p>
             </div>
-          </article>
-          <article class="project-tile project-tile-pronto">
+          </a>
+          <a href="featured-projects/Pronto/" class="project-tile project-tile-pronto project-tile-link">
             <div class="project-tile-image">
               <picture>
                 <source type="image/webp" srcset="featured-projects/Pronto/Logo.webp">
@@ -203,8 +210,8 @@
               <h3>Pronto</h3>
               <p>Fast, intuitive tools for team collaboration and workflow management.</p>
             </div>
-          </article>
-          <article class="project-tile project-tile-inplan">
+          </a>
+          <a href="featured-projects/InPlan/" class="project-tile project-tile-inplan project-tile-link">
             <div class="project-tile-image">
               <picture>
                 <source type="image/webp" srcset="featured-projects/InPlan/Logo.webp">
@@ -214,10 +221,10 @@
             <div class="project-tile-content">
               <span class="project-tile-badge project-tile-badge-soon">Coming soon</span>
               <h3>InPlan</h3>
-              <p>Your project description.</p>
+              <p>Planning and project management tools to help teams stay organised and deliver on time.</p>
             </div>
-          </article>
-          <article class="project-tile project-tile-featured project-tile-wiseweb">
+          </a>
+          <a href="featured-projects/WiseWeb/" class="project-tile project-tile-featured project-tile-wiseweb project-tile-link">
             <div class="project-tile-image">
               <picture>
                 <source type="image/webp" srcset="featured-projects/WiseWeb/Logo.webp">
@@ -229,8 +236,8 @@
               <h3>WiseWeb</h3>
               <p>Custom web development and digital product design for businesses.</p>
             </div>
-          </article>
-          <article class="project-tile">
+          </a>
+          <a href="more-apps.html" class="project-tile project-tile-link">
             <div class="project-tile-image placeholder-box placeholder-tile">
               <svg class="placeholder-tile-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
               <span class="placeholder-tile-text">More apps & ideas</span>
@@ -241,7 +248,7 @@
               <h3>More apps & ideas</h3>
               <p>Tools, products and experiments I'm working on. Reach out if you'd like to hear more or collaborate.</p>
             </div>
-          </article>
+          </a>
         </div>
       </div>
     </section>

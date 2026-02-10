@@ -158,11 +158,48 @@
   var contactModalBackdrop = document.getElementById("contact-modal-backdrop");
   var closeContactBtn = document.getElementById("close-contact-modal");
 
+  var focusBeforeModal = null;
+
+  function getFocusableElements(container) {
+    var selector = "a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex=\"-1\"])";
+    return Array.prototype.slice.call(container.querySelectorAll(selector));
+  }
+
+  function trapFocus(e) {
+    if (e.key !== "Tab" || !contactModal || !contactModal.classList.contains("is-open")) return;
+    var focusable = getFocusableElements(contactModal);
+    if (focusable.length === 0) return;
+    var first = focusable[0];
+    var last = focusable[focusable.length - 1];
+    if (e.shiftKey) {
+      if (document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      }
+    } else {
+      if (document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  }
+
   function openContactModal() {
     if (!contactModal) return;
+    focusBeforeModal = document.activeElement;
     contactModal.classList.add("is-open");
     contactModal.setAttribute("aria-hidden", "false");
     document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", trapFocus);
+    var focusable = getFocusableElements(contactModal);
+    var firstInput = contactModal.querySelector("#contact-modal-name");
+    if (firstInput) {
+      firstInput.focus();
+    } else if (closeContactBtn) {
+      closeContactBtn.focus();
+    } else if (focusable.length > 0) {
+      focusable[0].focus();
+    }
   }
 
   function closeContactModal() {
@@ -170,7 +207,16 @@
     contactModal.classList.remove("is-open");
     contactModal.setAttribute("aria-hidden", "true");
     document.body.style.overflow = "";
+    document.removeEventListener("keydown", trapFocus);
+    if (focusBeforeModal && typeof focusBeforeModal.focus === "function") {
+      focusBeforeModal.focus();
+    }
   }
+
+  var contactForm = document.getElementById("contact-modal-form");
+  var contactModalBox = contactModal ? contactModal.querySelector(".contact-modal-box") : null;
+  var contactModalSuccess = document.getElementById("contact-modal-success");
+  var contactModalSubmitError = document.getElementById("contact-modal-submit-error");
 
   if (openContactBtn) {
     openContactBtn.addEventListener("click", function (e) {
@@ -179,11 +225,6 @@
       if (contactModalSubmitError) contactModalSubmitError.setAttribute("hidden", "");
     });
   }
-
-  var contactForm = document.getElementById("contact-modal-form");
-  var contactModalBox = contactModal ? contactModal.querySelector(".contact-modal-box") : null;
-  var contactModalSuccess = document.getElementById("contact-modal-success");
-  var contactModalSubmitError = document.getElementById("contact-modal-submit-error");
 
   function hasContactFormContent() {
     if (!contactForm) return false;
