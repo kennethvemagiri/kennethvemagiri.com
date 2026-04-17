@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Offline evaluation for RAG: metrics I actually track | Kenneth Vemagiri</title>
+  <meta name="description" content="Context precision, answer faithfulness, abstention, and regression suites for retrieval-augmented LLM systems.">
+  <link rel="canonical" href="https://kennethvemagiri.com/blog/rag-offline-evaluation-metrics.html">
+  <link rel="icon" href="../favicon.ico" sizes="any">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Offline evaluation for RAG: metrics I actually track">
+  <meta property="og:url" content="https://kennethvemagiri.com/blog/rag-offline-evaluation-metrics.html">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BlogPosting","headline":"Offline evaluation for RAG: metrics I actually track","author":{"@type":"Person","name":"Kenneth Vemagiri","url":"https://kennethvemagiri.com"},"datePublished":"2026-04-07","dateModified":"2026-04-07"}
+  </script>
+</head>
+<body class="blog-page">
+  <header class="site-header">
+    <nav class="nav" aria-label="Main navigation">
+      <a href="../index.html" class="nav-logo">KV</a>
+      <a href="index.html" class="nav-back">← All writing</a>
+    </nav>
+  </header>
+
+  <article class="blog-wrap">
+    <header class="blog-article-header">
+      <p class="blog-nav"><a href="../index.html#writing">Writing</a></p>
+      <h1 class="blog-article-title">Offline evaluation for RAG: metrics I actually track</h1>
+      <p class="blog-article-deck">BLEU won’t tell you if the model cited the wrong paragraph. I combine retrieval diagnostics with lightweight answer checks before any template or embedding change ships.</p>
+      <p class="blog-article-meta">Kenneth Vemagiri · ~8 min read · April 2026</p>
+      <ul class="blog-tags" aria-label="Topics">
+        <li>RAG</li>
+        <li>Evaluation</li>
+        <li>ML ops</li>
+      </ul>
+    </header>
+
+    <div class="blog-prose">
+      <h2>1. Build a golden set per tenant or domain</h2>
+      <p>Twenty to fifty question–answer pairs labelled by someone who knows the source docs beats five hundred synthetic QA pairs. I store <code>question</code>, <code>gold_chunk_ids</code> (or page ranges), and <code>gold_short_answer</code> where possible.</p>
+
+      <h2>2. Context precision and recall</h2>
+      <p>For each question I log which chunks entered the prompt. <strong>Recall@k</strong>: did any of the top‑k include a gold chunk? <strong>Precision@k</strong>: what fraction of top‑k are relevant? Purging noisy chunks often improves end-to-end accuracy more than prompt tweaks.</p>
+
+      <h2>3. Answer groundedness</h2>
+      <p>I use a simple rubric: every sentence in the model answer must be entailed by the retrieved context or marked as “general knowledge”. Entailment can be a smaller cross-encoder or an LLM-as-judge with fixed temperature—consistency matters more than the specific model.</p>
+
+      <h2>4. Abstention and refusal quality</h2>
+      <p>For questions with <strong>no</strong> supporting passage, the correct output is often “I don’t have that in the documents.” I track false-answer rate on those items separately; it is where hallucinations hurt trust most.</p>
+
+      <h2>5. Regression CI</h2>
+      <p>Every change to chunk size, embedding model, or reranker runs the same JSON suite; I fail the PR if precision@8 drops more than an agreed epsilon. Production logs feed new failures back into the golden set.</p>
+
+      <footer class="blog-page-footer">
+        <p><a href="index.html">← More writing</a> · <a href="../index.html#contact">Get in touch</a></p>
+      </footer>
+    </div>
+  </article>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="year"></span> Prabhakar Kenneth Vemagiri</p>
+    <p class="footer-site-url"><a href="https://kennethvemagiri.com">kennethvemagiri.com</a></p>
+  </footer>
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

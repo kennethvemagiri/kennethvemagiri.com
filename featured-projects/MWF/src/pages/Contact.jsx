@@ -12,6 +12,8 @@ const serviceOptions = [
 
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState('')
   const {
     register,
     handleSubmit,
@@ -19,11 +21,39 @@ export default function Contact() {
     reset,
   } = useForm()
 
-  const onSubmit = (data) => {
-    console.log('Contact form:', data)
-    // TODO: Send via EmailJS/Formspree to hello@medworkflow.digital
-    setSubmitted(true)
-    reset()
+  const onSubmit = async (data) => {
+    setIsSubmitting(true)
+    setSubmitError('')
+
+    // Keep endpoint configurable per environment and avoid hardcoding credentials.
+    const endpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT
+    if (!endpoint) {
+      setSubmitError('Contact form is not configured yet. Please email hello@medworkflow.digital.')
+      setIsSubmitting(false)
+      return
+    }
+
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to submit contact form')
+      }
+
+      setSubmitted(true)
+      reset()
+    } catch (error) {
+      setSubmitError('We could not send your message right now. Please try again or email hello@medworkflow.digital.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -102,7 +132,13 @@ export default function Contact() {
                   <input
                     id="email"
                     type="email"
-                    {...register('email', { required: 'Email is required' })}
+                    {...register('email', {
+                      required: 'Email is required',
+                      pattern: {
+                        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                        message: 'Please enter a valid email address',
+                      },
+                    })}
                     className="w-full px-4 py-3 rounded-lg border border-border bg-white focus:ring-2 focus:ring-bright-blue focus:border-transparent outline-none"
                   />
                   {errors.email && (
@@ -170,10 +206,16 @@ export default function Contact() {
                 </div>
                 <button
                   type="submit"
+                  disabled={isSubmitting}
                   className="w-full py-4 bg-bright-blue text-white font-semibold rounded-lg hover:opacity-90 transition-opacity"
                 >
-                  Send Message
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
                 </button>
+                {submitError && (
+                  <p className="text-sm text-red-600" role="alert">
+                    {submitError}
+                  </p>
+                )}
               </form>
             )}
           </motion.div>

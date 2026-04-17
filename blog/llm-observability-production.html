@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>LLM observability in production: traces, costs, and SLOs | Kenneth Vemagiri</title>
+  <meta name="description" content="What to log for LLM services: latency breakdowns, token budgets, retrieval spans, and error budgets without storing sensitive payloads.">
+  <link rel="canonical" href="https://kennethvemagiri.com/blog/llm-observability-production.html">
+  <link rel="icon" href="../favicon.ico" sizes="any">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="LLM observability in production: traces, costs, and SLOs">
+  <meta property="og:url" content="https://kennethvemagiri.com/blog/llm-observability-production.html">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BlogPosting","headline":"LLM observability in production: traces, costs, and SLOs","author":{"@type":"Person","name":"Kenneth Vemagiri","url":"https://kennethvemagiri.com"},"datePublished":"2026-04-07","dateModified":"2026-04-07"}
+  </script>
+</head>
+<body class="blog-page">
+  <header class="site-header">
+    <nav class="nav" aria-label="Main navigation">
+      <a href="../index.html" class="nav-logo">KV</a>
+      <a href="index.html" class="nav-back">← All writing</a>
+    </nav>
+  </header>
+
+  <article class="blog-wrap">
+    <header class="blog-article-header">
+      <p class="blog-nav"><a href="../index.html#writing">Writing</a></p>
+      <h1 class="blog-article-title">LLM observability in production: traces, costs, and SLOs</h1>
+      <p class="blog-article-deck">Demos log the final string. Production needs span-level visibility: retrieval time, prompt tokens, cache hits, provider errors, and budget alarms—without turning your datastore into a PII warehouse.</p>
+      <p class="blog-article-meta">Kenneth Vemagiri · ~7 min read · April 2026</p>
+      <ul class="blog-tags" aria-label="Topics">
+        <li>Production</li>
+        <li>LLM</li>
+        <li>SRE</li>
+      </ul>
+    </header>
+
+    <div class="blog-prose">
+      <h2>1. One trace per user request</h2>
+      <p>I give each HTTP request a trace ID and nest spans: <code>retrieve</code>, <code>rerank</code>, <code>llm_first_token</code>, <code>llm_complete</code>, <code>post_validate</code>. That breakdown is how you learn whether latency is search-bound or generation-bound.</p>
+
+      <h2>2. Log structure, not raw text—by default</h2>
+      <p>Payloads often contain personal data. I store hashed prompts, token counts, retrieved chunk IDs, model name, temperature, and finish reason. Full text replay stays in encrypted short-retention buffers only when compliance signs off.</p>
+
+      <h2>3. Cost and token budgets</h2>
+      <p>I emit per-request <code>prompt_tokens</code> and <code>completion_tokens</code> to metrics with labels for route and tenant. Alerts fire on sustained p95 growth after deploys—that is how runaway context stuffing gets caught early.</p>
+
+      <h2>4. Error taxonomy</h2>
+      <p>Provider timeouts, rate limits, content-filter blocks, and tool validation failures should be <strong>typed errors</strong> in your API layer—not a generic 500. Dashboards split retryable from user-fixable failures.</p>
+
+      <h2>5. SLOs you can defend</h2>
+      <p>Examples: “p95 end-to-end &lt; 4s for FAQ route,” “&gt; 99% tool arguments pass schema validation,” “zero cross-tenant chunk IDs in traces.” Tie releases to those SLOs the same way you would for payments or auth.</p>
+
+      <footer class="blog-page-footer">
+        <p><a href="index.html">← More writing</a> · <a href="../index.html#contact">Get in touch</a></p>
+      </footer>
+    </div>
+  </article>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="year"></span> Prabhakar Kenneth Vemagiri</p>
+    <p class="footer-site-url"><a href="https://kennethvemagiri.com">kennethvemagiri.com</a></p>
+  </footer>
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

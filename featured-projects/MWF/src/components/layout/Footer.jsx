@@ -4,6 +4,7 @@ import { Linkedin, Twitter, Mail } from 'lucide-react'
 const quickLinks = [
   { name: 'Services', path: '/services' },
   { name: 'Portfolio', path: '/portfolio' },
+  { name: 'Skills', path: '/skills' },
   { name: 'About', path: '/about' },
   { name: 'Contact', path: '/contact' },
 ]

@@ -1,0 +1,16 @@
+# Agent instructions – kennethvemagiri.com
+
+**Created:** 2025-03-06  
+**Last updated:** 2025-03-06
+
+---
+
+## Purpose
+Personal portfolio website for Kenneth Vemagiri (kennethvemagiri.com).
+
+## Instructions for the agent
+1. All edits in this folder are for the personal portfolio site only.
+2. Follow the project’s existing structure, stack, and conventions.
+3. When the user describes a task (e.g. new section, fix, deploy), apply it only within this project.
+
+Update the "Last updated" date above when making changes to these instructions or when project focus/tasks change.

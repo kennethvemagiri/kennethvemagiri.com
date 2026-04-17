@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Site admin · kennethvemagiri.com</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <div id="admin-gate" class="admin-gate">
+    <div class="admin-gate-box">
+      <p class="admin-gate-brand">kennethvemagiri.com</p>
+      <h2>Admin access</h2>
+      <p class="admin-gate-note">Enter the passphrase set in <code>admin/admin.js</code> (<code>ADMIN_SECRET</code>). Change it before deploying; this is not a substitute for server auth.</p>
+      <form id="admin-gate-form" autocomplete="on">
+        <input type="password" id="admin-pass" name="admin-pass" autocomplete="current-password" aria-label="Passphrase" placeholder="Passphrase">
+        <button type="submit" id="admin-unlock" class="admin-btn admin-btn-primary">Unlock</button>
+      </form>
+      <p id="admin-gate-err" class="admin-gate-note admin-gate-err" hidden>Incorrect passphrase.</p>
+    </div>
+  </div>
+
+  <div id="admin-app" hidden>
+    <header class="admin-header">
+      <div class="admin-header-top">
+        <a class="admin-back" href="../">← Back to site</a>
+        <button type="button" id="admin-lock" class="admin-lock">Lock admin</button>
+      </div>
+      <h1>Content admin</h1>
+      <p class="admin-lead">Edit featured projects and homepage writing cards. This site is static: use <strong>Export JSON</strong>, replace <code>data/site-content.json</code> in your repo, then deploy. New articles still need an HTML file under <code>blog/</code> (link to it from here).</p>
+    </header>
+
+    <!--
+      Adding a section: (1) Duplicate a <li> in #admin-nav with href="#section-yourid" + label/meta.
+      (2) Duplicate a <section id="section-yourid" class="admin-category" data-admin-section> block
+          (data-admin-section = scroll-spy). (3) If it drives site JSON, extend site-content.json,
+          admin.js (read/render/export), and js/render-site-content.js for the live site.
+    -->
+    <div class="admin-layout">
+      <nav class="admin-nav" id="admin-nav" aria-label="Admin sections">
+        <p class="admin-nav-title">Sections</p>
+        <ul class="admin-nav-list">
+          <li>
+            <a href="#section-data" class="admin-nav-link" data-section="section-data">
+              <span class="admin-nav-label">Data &amp; export</span>
+              <span class="admin-nav-meta">Reload / import / save</span>
+            </a>
+          </li>
+          <li>
+            <a href="#section-projects" class="admin-nav-link" data-section="section-projects">
+              <span class="admin-nav-label">Featured projects</span>
+              <span class="admin-nav-meta">Homepage tiles</span>
+            </a>
+          </li>
+          <li>
+            <a href="#section-writing" class="admin-nav-link" data-section="section-writing">
+              <span class="admin-nav-label">Writing</span>
+              <span class="admin-nav-meta">Blog cards on home</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="admin-main">
+        <section id="section-data" class="admin-category" data-admin-section>
+          <header class="admin-category-head">
+            <p class="admin-category-kicker">Workflow</p>
+            <h2 class="admin-category-title">Data &amp; export</h2>
+            <p class="admin-category-desc">Load from the live JSON file, or import a file from your computer. Export when you are done and replace <code>data/site-content.json</code> in the repo before deploy.</p>
+          </header>
+          <div class="admin-toolbar">
+            <button type="button" id="btn-reload" class="admin-btn admin-btn-primary">Reload from <code>data/site-content.json</code></button>
+            <label class="admin-btn admin-btn-outline file-btn">Import JSON<input type="file" id="file-import" accept=".json,application/json"></label>
+            <button type="button" id="btn-export" class="admin-btn admin-btn-primary">Export <code>site-content.json</code></button>
+            <span id="admin-status" class="admin-status"></span>
+          </div>
+        </section>
+
+        <section id="section-projects" class="admin-category" data-admin-section>
+          <header class="admin-category-head admin-category-head--row">
+            <div class="admin-category-head-text">
+              <p class="admin-category-kicker">Homepage</p>
+              <h2 class="admin-category-title">Featured projects</h2>
+              <p class="admin-category-desc">Each block maps to a tile. <code>tileClass</code> must match rules in <code>styles.css</code> (e.g. <code>project-tile-mwf</code>).</p>
+            </div>
+            <div class="admin-category-actions">
+              <button type="button" id="btn-projects-expand" class="admin-btn admin-btn-outline admin-btn-sm">Expand all</button>
+              <button type="button" id="btn-projects-collapse" class="admin-btn admin-btn-outline admin-btn-sm">Collapse all</button>
+              <button type="button" id="btn-add-project" class="admin-btn admin-btn-outline admin-category-cta">+ Add project</button>
+            </div>
+          </header>
+          <div id="projects-form"></div>
+        </section>
+
+        <section id="section-writing" class="admin-category" data-admin-section>
+          <header class="admin-category-head admin-category-head--row">
+            <div class="admin-category-head-text">
+              <p class="admin-category-kicker">Homepage</p>
+              <h2 class="admin-category-title">Writing</h2>
+              <p class="admin-category-desc">Cards link to existing pages under <code>blog/</code>.</p>
+            </div>
+            <div class="admin-category-actions">
+              <button type="button" id="btn-writing-expand" class="admin-btn admin-btn-outline admin-btn-sm">Expand all</button>
+              <button type="button" id="btn-writing-collapse" class="admin-btn admin-btn-outline admin-btn-sm">Collapse all</button>
+              <button type="button" id="btn-add-writing" class="admin-btn admin-btn-outline admin-category-cta">+ Add writing card</button>
+            </div>
+          </header>
+          <div id="writing-form"></div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>

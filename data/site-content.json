@@ -1,0 +1,162 @@
+{
+  "version": 1,
+  "projects": [
+    {
+      "tileClass": "project-tile-openrole",
+      "featured": false,
+      "mediaHref": "featured-projects/OpenRole/",
+      "imageWebp": "featured-projects/OpenRole/logo.webp",
+      "imageFallback": "featured-projects/OpenRole/logo.png",
+      "imageW": 200,
+      "imageH": 200,
+      "badge": "New",
+      "badgeSoon": true,
+      "title": "OpenRole",
+      "caseHref": "featured-projects/OpenRole/",
+      "tagline": "Ships roles, permissions, and identity-aware access so multi-tenant apps stay predictable and secure.",
+      "stack": ["TypeScript", "RBAC", "REST APIs"],
+      "metric": "Early build — public API & docs underway",
+      "actions": [
+        { "label": "Case study", "href": "featured-projects/OpenRole/", "external": false },
+        { "label": "GitHub", "href": "https://github.com/kennethvemagiri/kennethvemagiri.com/tree/main/featured-projects/OpenRole", "external": true }
+      ]
+    },
+    {
+      "tileClass": "project-tile-mwf",
+      "featured": true,
+      "mediaHref": "featured-projects/MWF/",
+      "imageWebp": "featured-projects/MWF/MedWorkFlow.webp",
+      "imageFallback": "featured-projects/MWF/MedWorkFlow.png",
+      "imageW": 200,
+      "imageH": 200,
+      "badge": "Co-founder",
+      "badgeSoon": false,
+      "title": "MedWorkFlow",
+      "caseHref": "featured-projects/MWF/",
+      "tagline": "AI-ready marketing sites and patient-facing chat for UK clinics — fast turnaround, healthcare-focused UX.",
+      "stack": ["React", "Vite", "Tailwind", "Framer Motion", "Three.js"],
+      "metric": "Positioning: sites from £1,499 · builds from 48 hours (UK healthcare)",
+      "actions": [
+        { "label": "Live demo", "href": "https://medworkflow.digital", "external": true },
+        { "label": "GitHub", "href": "https://github.com/kennethvemagiri/kennethvemagiri.com/tree/main/featured-projects/MWF", "external": true }
+      ]
+    },
+    {
+      "tileClass": "project-tile-gocafeco",
+      "featured": true,
+      "mediaHref": "featured-projects/GoCafeCo/",
+      "imageWebp": "featured-projects/GoCafeCo/Projects%20Logo.webp",
+      "imageFallback": "featured-projects/GoCafeCo/Projects%20Logo.png",
+      "imageW": 200,
+      "imageH": 260,
+      "badge": "Co-founder and developer",
+      "badgeSoon": false,
+      "title": "GoCafeCo",
+      "caseHref": "featured-projects/GoCafeCo/",
+      "tagline": "Surfaces independent cafes with maps, curated picks, and community reviews so people find the right spot fast.",
+      "stack": ["HTML", "CSS", "JavaScript", "Responsive UI"],
+      "metric": "Co-founded product — discovery + community content model",
+      "actions": [
+        { "label": "Case study", "href": "featured-projects/GoCafeCo/", "external": false },
+        { "label": "GitHub", "href": "https://github.com/kennethvemagiri/kennethvemagiri.com/tree/main/featured-projects/GoCafeCo", "external": true }
+      ]
+    },
+    {
+      "tileClass": "project-tile-pronto",
+      "featured": false,
+      "mediaHref": "featured-projects/Pronto/",
+      "imageWebp": "featured-projects/Pronto/Logo.webp",
+      "imageFallback": "featured-projects/Pronto/Logo.png",
+      "imageW": 200,
+      "imageH": 200,
+      "badge": "Co-founder and developer",
+      "badgeSoon": false,
+      "title": "Pronto",
+      "caseHref": "featured-projects/Pronto/",
+      "tagline": "Keeps small teams aligned with lightweight workflows instead of bloated enterprise tools.",
+      "stack": ["HTML", "CSS", "JavaScript"],
+      "metric": "Co-built MVP — collaboration-first UX",
+      "actions": [
+        { "label": "Case study", "href": "featured-projects/Pronto/", "external": false },
+        { "label": "GitHub", "href": "https://github.com/kennethvemagiri/kennethvemagiri.com/tree/main/featured-projects/Pronto", "external": true }
+      ]
+    },
+    {
+      "tileClass": "project-tile-inplan",
+      "featured": false,
+      "mediaHref": "featured-projects/InPlan/",
+      "imageWebp": "featured-projects/InPlan/Logo.webp",
+      "imageFallback": "featured-projects/InPlan/Logo.png",
+      "imageW": 200,
+      "imageH": 200,
+      "badge": "Coming soon",
+      "badgeSoon": true,
+      "title": "InPlan",
+      "caseHref": "featured-projects/InPlan/",
+      "tagline": "Planning workspace that ties milestones, owners, and deadlines together so delivery dates stay credible.",
+      "stack": ["Product UI", "Roadmaps", "Task planning"],
+      "metric": "In development — launch materials to follow",
+      "actions": [
+        { "label": "Case study", "href": "featured-projects/InPlan/", "external": false },
+        { "label": "GitHub", "href": "https://github.com/kennethvemagiri/kennethvemagiri.com/tree/main/featured-projects/InPlan", "external": true }
+      ]
+    },
+    {
+      "tileClass": "project-tile-wiseweb",
+      "featured": true,
+      "mediaHref": "featured-projects/WiseWeb/",
+      "imageWebp": "featured-projects/WiseWeb/Logo.webp",
+      "imageFallback": "featured-projects/WiseWeb/Logo.png",
+      "imageW": 200,
+      "imageH": 200,
+      "badge": "Developer",
+      "badgeSoon": false,
+      "title": "WiseWeb",
+      "caseHref": "featured-projects/WiseWeb/",
+      "tagline": "Delivers bespoke marketing sites and simple product UI for businesses that outgrow DIY page builders.",
+      "stack": ["HTML", "CSS", "JavaScript", "Semantic HTML"],
+      "metric": "Client engagements — performance & clarity-first builds",
+      "actions": [
+        { "label": "Case study", "href": "featured-projects/WiseWeb/", "external": false },
+        { "label": "GitHub", "href": "https://github.com/kennethvemagiri/kennethvemagiri.com/tree/main/featured-projects/WiseWeb", "external": true }
+      ]
+    }
+  ],
+  "writingHome": [
+    {
+      "href": "blog/rag-pipeline-medical-documents-medworkflow.html",
+      "kicker": "MedWorkFlow · RAG · Healthcare",
+      "title": "How I built a RAG pipeline for medical-adjacent documents",
+      "excerpt": "Ingestion, chunking, embeddings, retrieval, and guardrails when the knowledge base is clinic policies and patient FAQs—not a generic PDF dump.",
+      "meta": "~12 min read · Python · vector search"
+    },
+    {
+      "href": "blog/prompt-injection-llm-guardrails.html",
+      "kicker": "Security · LLM products",
+      "title": "Prompt injection: what I check before shipping an LLM surface",
+      "excerpt": "Untrusted user text and retrieved chunks: delimiter patterns, tool allowlists, argument validation, and a small red-team suite on every template change.",
+      "meta": "~8 min read · Production guardrails"
+    },
+    {
+      "href": "blog/chunking-unstructured-documents.html",
+      "kicker": "RAG · Data quality",
+      "title": "Chunking unstructured documents without wrecking retrieval",
+      "excerpt": "Structure-aware splits, tables, overlap, boilerplate stripping, and when to reach for semantic chunking instead of fixed windows.",
+      "meta": "~7 min read · PDFs & HTML"
+    },
+    {
+      "href": "blog/rag-offline-evaluation-metrics.html",
+      "kicker": "Evaluation · ML ops",
+      "title": "Offline evaluation for RAG: metrics I actually track",
+      "excerpt": "Golden sets, context precision/recall@k, answer groundedness, abstention quality, and CI regression on chunk or embedding changes.",
+      "meta": "~8 min read · Testing RAG"
+    },
+    {
+      "href": "blog/llm-observability-production.html",
+      "kicker": "Production · SRE",
+      "title": "LLM observability in production: traces, costs, and SLOs",
+      "excerpt": "Per-request spans for retrieve vs generate, token/cost metrics, typed provider errors, and SLOs you can defend in incident reviews.",
+      "meta": "~7 min read · Logging & budgets"
+    }
+  ]
+}

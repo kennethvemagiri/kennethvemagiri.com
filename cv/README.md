@@ -1,9 +1,7 @@
 # CV / Resume
 
-Drop your CV PDF here so visitors can download it from the site.
+The site links to the CV on Google Drive.
 
-**Filename to use:** `CV.pdf`
-
-- Replace this file whenever you want to update your CV.
-- The header link "Download CV" points to `cv/CV.pdf`.
-- Keep the filename as `CV.pdf` so the link keeps working.
+- The header link "View CV" opens the resume in a new tab.
+- The URL is set in `index.html` (nav link with class `nav-cv`).
+- To change the CV, update the Google Drive link in `index.html`.

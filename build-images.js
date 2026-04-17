@@ -1,6 +1,7 @@
 /**
  * Build script: generate WebP images and compress hero for performance.
  * Run: node build-images.js (requires: npm install sharp)
+ * - (Optional) python trim-featured-logos.py — crop logo PNG margins first
  * - Hero profile.png → profile.webp (target <200KB)
  * - Featured project PNGs → WebP in same folder
  */
@@ -20,6 +21,16 @@ const HERO_MAX_KB = 120;
 const HERO_QUALITY = 80;
 const HERO_MAX_WIDTH = 480;
 const ROOT = __dirname;
+
+/** PNGs under featured-projects/ — run `python trim-featured-logos.py` to crop margins, then this rebuilds WebP. */
+const FEATURED_LOGOS = [
+  { dir: "MWF", file: "MedWorkFlow.png" },
+  { dir: "GoCafeCo", file: "Projects Logo.png" },
+  { dir: "Pronto", file: "Logo.png" },
+  { dir: "InPlan", file: "Logo.png" },
+  { dir: "WiseWeb", file: "Logo.png" },
+  { dir: "OpenRole", file: "logo.png" },
+];
 
 async function ensureDir(dir) {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
@@ -60,14 +71,7 @@ async function compressHero() {
 }
 
 async function featuredWebP() {
-  const projects = [
-    { dir: "MWF", file: "MedWorkFlow.png" },
-    { dir: "GoCafeCo", file: "Projects Logo.png" },
-    { dir: "Pronto", file: "Logo.png" },
-    { dir: "InPlan", file: "Logo.png" },
-    { dir: "WiseWeb", file: "Logo.png" },
-  ];
-  for (const p of projects) {
+  for (const p of FEATURED_LOGOS) {
     const base = path.join(ROOT, "featured-projects", p.dir);
     const src = path.join(base, p.file);
     const outName = p.file.replace(/\.(png|jpe?g)$/i, ".webp");
@@ -77,7 +81,7 @@ async function featuredWebP() {
 }
 
 (async () => {
-  console.log("Building WebP images...");
+  console.log("Building images...");
   await compressHero();
   await featuredWebP();
   console.log("Done.");

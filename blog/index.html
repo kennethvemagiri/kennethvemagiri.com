@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" class="blog-page-root">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Writing | Kenneth Vemagiri</title>
+  <meta name="description" content="Technical writing on NLP, RAG, LLMs, and production AI systems by Kenneth Vemagiri.">
+  <link rel="canonical" href="https://kennethvemagiri.com/blog/">
+  <link rel="icon" href="../favicon.ico" sizes="any">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="blog-page">
+  <header class="site-header">
+    <nav class="nav" aria-label="Main navigation">
+      <a href="../index.html" class="nav-logo">KV</a>
+      <a href="../index.html#writing" class="nav-back">← Back to site</a>
+    </nav>
+  </header>
+
+  <main class="blog-wrap">
+    <h1 class="section-title" style="margin-bottom: var(--space-sm);">Writing</h1>
+    <p class="section-intro" style="margin-bottom: var(--space-xl);">Notes on retrieval, LLMs, and shipping features users actually trust.</p>
+
+    <ul class="blog-index-list">
+      <li class="blog-index-item">
+        <a href="rag-pipeline-medical-documents-medworkflow.html">How I built a RAG pipeline for medical-adjacent documents</a>
+        <span class="blog-index-meta">MedWorkFlow · RAG · Python · ~12 min read · April 2026</span>
+      </li>
+      <li class="blog-index-item">
+        <a href="prompt-injection-llm-guardrails.html">Prompt injection: what I check before shipping an LLM surface</a>
+        <span class="blog-index-meta">Security · tools · ~8 min read · April 2026</span>
+      </li>
+      <li class="blog-index-item">
+        <a href="chunking-unstructured-documents.html">Chunking unstructured documents without wrecking retrieval</a>
+        <span class="blog-index-meta">RAG · chunking · ~7 min read · April 2026</span>
+      </li>
+      <li class="blog-index-item">
+        <a href="rag-offline-evaluation-metrics.html">Offline evaluation for RAG: metrics I actually track</a>
+        <span class="blog-index-meta">Evaluation · golden sets · ~8 min read · April 2026</span>
+      </li>
+      <li class="blog-index-item">
+        <a href="llm-observability-production.html">LLM observability in production: traces, costs, and SLOs</a>
+        <span class="blog-index-meta">Production · tracing · ~7 min read · April 2026</span>
+      </li>
+    </ul>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="year"></span> Prabhakar Kenneth Vemagiri</p>
+    <p class="footer-site-url"><a href="https://kennethvemagiri.com">kennethvemagiri.com</a></p>
+  </footer>
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

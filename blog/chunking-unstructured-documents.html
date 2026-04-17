@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Chunking unstructured documents without wrecking retrieval | Kenneth Vemagiri</title>
+  <meta name="description" content="Heuristics for splitting PDFs and HTML for RAG: structure-aware splits, table handling, overlap, and when to use semantic chunkers.">
+  <link rel="canonical" href="https://kennethvemagiri.com/blog/chunking-unstructured-documents.html">
+  <link rel="icon" href="../favicon.ico" sizes="any">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Chunking unstructured documents without wrecking retrieval">
+  <meta property="og:url" content="https://kennethvemagiri.com/blog/chunking-unstructured-documents.html">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BlogPosting","headline":"Chunking unstructured documents without wrecking retrieval","author":{"@type":"Person","name":"Kenneth Vemagiri","url":"https://kennethvemagiri.com"},"datePublished":"2026-04-07","dateModified":"2026-04-07"}
+  </script>
+</head>
+<body class="blog-page">
+  <header class="site-header">
+    <nav class="nav" aria-label="Main navigation">
+      <a href="../index.html" class="nav-logo">KV</a>
+      <a href="index.html" class="nav-back">← All writing</a>
+    </nav>
+  </header>
+
+  <article class="blog-wrap">
+    <header class="blog-article-header">
+      <p class="blog-nav"><a href="../index.html#writing">Writing</a></p>
+      <h1 class="blog-article-title">Chunking unstructured documents without wrecking retrieval</h1>
+      <p class="blog-article-deck">Bad chunking is the silent killer of RAG demos. These are the rules I apply before I touch an embedding model.</p>
+      <p class="blog-article-meta">Kenneth Vemagiri · ~7 min read · April 2026</p>
+      <ul class="blog-tags" aria-label="Topics">
+        <li>RAG</li>
+        <li>NLP</li>
+        <li>Data</li>
+      </ul>
+    </header>
+
+    <div class="blog-prose">
+      <h2>1. Preserve headings in metadata</h2>
+      <p>When I split text, each chunk carries a <strong>heading path</strong> (e.g. “Fees → Private patients”). Retrievers can display that path to users and models use it as free structure. Flattening the document into a string throws that signal away.</p>
+
+      <h2>2. Tables need special treatment</h2>
+      <p>Row-level splits produce useless vectors (“£45” with no column header). I either keep small tables as a single chunk or linearise them with explicit column names per row. For wide sheets I chunk by logical row groups, not token count alone.</p>
+
+      <h2>3. Token windows vs semantic boundaries</h2>
+      <p>
+        Fixed-size windows with overlap are a decent baseline. When quality plateaus, I experiment with <code>SemanticChunker</code>-style splits: break when cosine distance between sentence embeddings spikes. The cost is extra API calls offline—not on every query.
+      </p>
+
+      <h2>4. Overlap is cheap insurance</h2>
+      <p>Fifteen to twenty percent overlap between consecutive chunks cuts down edge cases where the answer sits on a boundary. I measure retrieval hit-rate before and after; the storage cost is usually negligible next to re-embedding everything.</p>
+
+      <h2>5. Deduplicate boilerplate</h2>
+      <p>Headers, footers, and repeated disclaimers dominate similarity search if they appear in every chunk. I strip or down-weight them once per document version so the index reflects the unique facts.</p>
+
+      <footer class="blog-page-footer">
+        <p><a href="index.html">← More writing</a> · <a href="rag-pipeline-medical-documents-medworkflow.html">Related: RAG pipeline post</a></p>
+      </footer>
+    </div>
+  </article>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="year"></span> Prabhakar Kenneth Vemagiri</p>
+    <p class="footer-site-url"><a href="https://kennethvemagiri.com">kennethvemagiri.com</a></p>
+  </footer>
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>How I built a RAG pipeline for medical-adjacent documents | Kenneth Vemagiri</title>
+  <meta name="description" content="End-to-end RAG for clinic policies and patient FAQs: ingestion, chunking, embeddings, retrieval, and guardrails—in a MedWorkFlow-style healthcare context.">
+  <link rel="canonical" href="https://kennethvemagiri.com/blog/rag-pipeline-medical-documents-medworkflow.html">
+  <link rel="icon" href="../favicon.ico" sizes="any">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="How I built a RAG pipeline for medical-adjacent documents">
+  <meta property="og:description" content="Ingestion, chunking, embeddings, retrieval, and guardrails when the knowledge base is clinic policies and patient FAQs.">
+  <meta property="og:url" content="https://kennethvemagiri.com/blog/rag-pipeline-medical-documents-medworkflow.html">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "How I built a RAG pipeline for medical-adjacent documents",
+    "description": "Technical walkthrough of a retrieval-augmented generation pipeline for clinic-facing knowledge: document ingestion, chunking, embeddings, vector search, and safety guardrails.",
+    "author": {
+      "@type": "Person",
+      "name": "Kenneth Vemagiri",
+      "url": "https://kennethvemagiri.com"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Kenneth Vemagiri"
+    },
+    "datePublished": "2026-04-07",
+    "dateModified": "2026-04-07",
+    "mainEntityOfPage": "https://kennethvemagiri.com/blog/rag-pipeline-medical-documents-medworkflow.html"
+  }
+  </script>
+</head>
+<body class="blog-page">
+  <header class="site-header">
+    <nav class="nav" aria-label="Main navigation">
+      <a href="../index.html" class="nav-logo">KV</a>
+      <a href="index.html" class="nav-back">← All writing</a>
+    </nav>
+  </header>
+
+  <article class="blog-wrap">
+    <header class="blog-article-header">
+      <p class="blog-nav"><a href="../index.html#writing">Writing</a> · <a href="../featured-projects/MWF/">MedWorkFlow</a></p>
+      <h1 class="blog-article-title">How I built a RAG pipeline for medical-adjacent documents</h1>
+      <p class="blog-article-deck">When you sell AI-powered websites and chat to UK healthcare practices, patients don’t want clever prose—they want answers grounded in <em>that clinic’s</em> opening hours, fees, and policies. Here’s how I approach RAG so the model cites the practice’s own documents instead of improvising.</p>
+      <p class="blog-article-meta">Kenneth Vemagiri · Python · LLMs · ChatGPT · Gemini · Google Antigravity · ~12 min read · April 2026</p>
+      <ul class="blog-tags" aria-label="Topics">
+        <li>RAG</li>
+        <li>LLM</li>
+        <li>Python</li>
+        <li>Healthcare UX</li>
+        <li>MedWorkFlow</li>
+      </ul>
+    </header>
+
+    <div class="blog-prose">
+      <aside class="blog-callout" role="note">
+        <strong>Scope &amp; safety</strong>
+        This post is about <em>informational</em> workflows—opening times, registration, parking, pricing summaries the practice already publishes—not diagnosis or treatment. Outputs should carry clear disclaimers, route urgent cases to human staff, and follow UK GDPR, your DPIA, and the practice’s own governance. Nothing here is medical advice.
+      </aside>
+
+      <h2>1. The problem: generic chat won’t survive contact with a GP reception desk</h2>
+      <p>MedWorkFlow targets UK clinics that need professional web presence and a patient-facing assistant. A plain LLM will happily sound authoritative while simultaneously inventing a phone number or merging two policies from different branches. For this market, <strong>faithfulness beats fluency</strong>. Retrieval-augmented generation (RAG) is the default pattern: retrieve grounded passages, then ask the model to answer only from what it was shown.</p>
+
+      <h2>2. System shape</h2>
+      <p>I treat the stack as four bounded services with clear contracts:</p>
+      <ol>
+        <li><strong>Ingestion</strong> — turn PDFs, HTML, and admin uploads into normalised text + metadata.</li>
+        <li><strong>Indexing</strong> — chunk, embed, and write to a vector index (often with a metadata filter per <code>practice_id</code>).</li>
+        <li><strong>Query path</strong> — embed the user question, retrieve top‑k chunks, optionally rerank, then assemble a cited prompt.</li>
+        <li><strong>Policy layer</strong> — PII redaction in logs, rate limits, refusal templates, and human handoff when confidence drops.</li>
+      </ol>
+      <pre><code># Conceptual flow (not a single script—usually separate workers + API)
+upload → parse (pdfplumber / unstructured) → clean → chunk
+     → embed (e.g. text-embedding-3-small or open local model)
+     → upsert(vector_db, namespace=practice_id)
+query → embed → retrieve(k=8) → optional_cross_encoder_rerank(k=4)
+     → build_prompt(snippets + "cite source IDs") → LLM → post-check</code></pre>
+
+      <h2>3. Ingestion: don’t lose structure</h2>
+      <p>Clinic PDFs often mix paragraphs, bullet lists, and tables (fee schedules). If you flatten everything into one blob, chunk boundaries slice through tabular rows and the retriever returns nonsense halves. I keep <strong>document structure hints</strong> in metadata: page number, heading trail (H1→H2), and whether a block came from a table. Libraries like <code>Unstructured</code> or careful <code>pdfplumber</code> extraction get you most of the way; the rest is heuristics you tune per customer.</p>
+
+      <h2>4. Chunking: optimising for recall on short factual questions</h2>
+      <p>Patients ask:“Are you taking new NHS patients?” “Do you charge for sick notes?” Those map to <strong>small, dense</strong> passages. I typically use:</p>
+      <ul>
+        <li><strong>Target size</strong> ~300–600 tokens with ~15–20% overlap so split sentences aren’t orphaned.</li>
+        <li><strong>Respect boundaries</strong> — prefer breaks at headings and paragraph ends.</li>
+        <li><strong>De-duplication</strong> — boilerplate repeated footers inflate retrieval; hash-normalise or strip repeated legal blocks.</li>
+      </ul>
+      <p>For FAQ-style pages, I sometimes build <strong>one chunk per Q/A pair</strong> if the HTML structure allows—retrieval becomes eerily precise.</p>
+
+      <h2>5. Embeddings &amp; vector store</h2>
+      <p>For multilingual patient bases, I pick an embedding model known to handle British English clinical-adjacent vocabulary well and keep it <strong>frozen per index version</strong> so you can reproduce results. In the vector DB, every vector carries metadata: <code>practice_id</code>, <code>doc_id</code>, <code>section_title</code>, <code>source_url</code>, and compliance flags (e.g. internal-only vs public).</p>
+      <p><strong>Hard filter first</strong> — always constrain retrieval to the tenant. Cross-tenant leakage is a career-limiting bug.</p>
+
+      <h2>6. Retrieval: k is not “set and forget”</h2>
+      <p>I start with <code>k=8</code> dense retrieval, then either:</p>
+      <ul>
+        <li><strong>compress to top 3–4</strong> with a small cross-encoder reranker, or</li>
+        <li>use <strong>hybrid search</strong> (BM25 + dense) when the query contains rare tokens like drug names or postcode fragments.</li>
+      </ul>
+      <p>If nothing clears a similarity threshold, the product shouldsay “I don’t have that in the documents you gave me” rather than letting the LLM fill the gap.</p>
+
+      <h2>7. Prompting with citations</h2>
+      <p>The system prompt I use is deliberately boring: answer in plain English, quote only from the provided snippets, and append something like <code>[doc:title § section]</code> for each claim. I reject answers that reference facts not present in the context—either by a light validator (regex / simple entailment check) or by asking the model to output JSON with <code>claims[]</code> mapped to snippet IDs and dropping unmapped claims.</p>
+
+      <h2>8. Guardrails beyond the model</h2>
+      <ul>
+        <li><strong>Input</strong> — block obvious prompt-injection patterns; trim absurd context stuffing.</li>
+        <li><strong>Output</strong> — scan for “book an appointment” flows and ensure they deep-link to real booking URLs from metadata, not invented paths.</li>
+        <li><strong>Urgent language</strong> — escalate chest pain, self-harm, or emergency keywords to a static crisis message + human routing.</li>
+        <li><strong>Logging</strong> — store prompt hashes and snippet IDs, not raw patient narratives, unless contracts explicitly allow it.</li>
+      </ul>
+
+      <h2>9. Evaluation (the part that separates a demo from a product)</h2>
+      <p>I hold out a small set of question–answer pairs per practice, labelled by staff—“ground truth” strings straight from their published material. Offline metrics:</p>
+      <ul>
+        <li><strong>Context precision</strong> — did the retriever surface the right chunk?</li>
+        <li><strong>Citation accuracy</strong> — does each sentence map to a retrieved span?</li>
+        <li><strong>Abstention rate</strong> — when there is no answer, does the bot refuse instead of hallucinating?</li>
+      </ul>
+      <p>Regression-test those suites whenever you change embedding model, chunk size, or prompt.</p>
+
+      <h2>10. How this shows up in MedWorkFlow</h2>
+      <p>MedWorkFlow’s positioning is fast, trustworthy healthcare sites with an AI layer patients can actually use. The React marketing site you see in my portfolio is the shop window; the RAG service behind it is where the <strong>NLP engineer work</strong> lives—contracts between ops-friendly upload flows, retrieval quality, and the tone of voice each practice expects. One solid technical post ties that story together for recruiters better than a logo alone.</p>
+
+      <footer class="blog-page-footer">
+        <p><a href="index.html">← More writing</a> · <a href="../index.html#contact">Get in touch</a> · <a href="https://medworkflow.digital" target="_blank" rel="noopener noreferrer">MedWorkFlow Digital</a></p>
+      </footer>
+    </div>
+  </article>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="year"></span> Prabhakar Kenneth Vemagiri</p>
+    <p class="footer-site-url"><a href="https://kennethvemagiri.com">kennethvemagiri.com</a></p>
+  </footer>
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

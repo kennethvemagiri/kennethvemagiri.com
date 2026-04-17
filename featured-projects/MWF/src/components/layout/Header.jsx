@@ -7,6 +7,7 @@ const navItems = [
   { name: 'Home', path: '/' },
   { name: 'Services', path: '/services' },
   { name: 'Portfolio', path: '/portfolio' },
+  { name: 'Skills', path: '/skills' },
   { name: 'About', path: '/about' },
   { name: 'Contact', path: '/contact' },
 ]
@@ -20,6 +21,13 @@ export default function Header() {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  useEffect(() => {
+    document.body.style.overflow = isMobileMenuOpen ? 'hidden' : ''
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isMobileMenuOpen])
 
   return (
     <motion.header
@@ -62,6 +70,8 @@ export default function Header() {
             className="lg:hidden p-2 text-heading"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-nav-menu"
           >
             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -74,6 +84,7 @@ export default function Header() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
+            id="mobile-nav-menu"
             className="lg:hidden bg-off-white border-t border-border"
           >
             <div className="px-4 py-4 space-y-2">

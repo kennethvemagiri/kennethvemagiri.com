@@ -1,32 +1,32 @@
 <!DOCTYPE html>
-<!-- Kenneth Vemagiri – Portfolio. Single-page: Hero, About, Featured projects, Contact. Form: Formspree (see CONTACT-FORM-SETUP.md). Awards: awards-data.js, run build-awards.js after adding images. -->
+<!-- Kenneth Vemagiri – Portfolio. Hero, About, Featured projects, Writing, Contact. Form: Formspree (see CONTACT-FORM-SETUP.md). -->
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
   <!-- Primary Meta Tags -->
-  <title>Kenneth Vemagiri | Data Scientist &amp; AI Specialist | London, UK</title>
-  <meta name="title" content="Kenneth Vemagiri | Data Scientist &amp; AI Specialist | London, UK">
-  <meta name="description" content="Kenneth Vemagiri is a Data Scientist &amp; AI Specialist based in London, UK, building intelligent and data-driven digital solutions.">
-  <meta name="keywords" content="Kenneth Vemagiri, Data Scientist, AI Specialist, London, UK, Portfolio">
+  <title>Kenneth Vemagiri | Python, LLMs, ChatGPT, Gemini &amp; Antigravity | London, UK</title>
+  <meta name="title" content="Kenneth Vemagiri | Python, LLMs, ChatGPT, Gemini &amp; Antigravity | London, UK">
+  <meta name="description" content="Kenneth Vemagiri is based in London, UK and works with Python, LLMs, ChatGPT, Gemini, Claude Code, Google Antigravity, and RAG. Building document intelligence and agentic workflows for real products.">
+  <meta name="keywords" content="Kenneth Vemagiri, Python, LLM, ChatGPT, Gemini, Google Antigravity, RAG, London, UK, Portfolio">
   <meta name="author" content="Kenneth Vemagiri">
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://kennethvemagiri.com/">
-  <meta property="og:title" content="Kenneth Vemagiri | Data Scientist &amp; AI Specialist | London, UK">
-  <meta property="og:description" content="Kenneth Vemagiri is a Data Scientist &amp; AI Specialist based in London, UK, building intelligent and data-driven digital solutions.">
+  <meta property="og:title" content="Kenneth Vemagiri | Python, LLMs, ChatGPT, Gemini &amp; Antigravity | London, UK">
+  <meta property="og:description" content="Kenneth Vemagiri is based in London, UK and works with Python, LLMs, ChatGPT, Gemini, Claude Code, Google Antigravity, and RAG. Building document intelligence for real products.">
   <meta property="og:image" content="https://kennethvemagiri.com/og-image.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Kenneth Vemagiri, Data Scientist &amp; AI Specialist">
+  <meta property="og:image:alt" content="Kenneth Vemagiri — skilled in Python, LLMs, ChatGPT, Gemini and Google Antigravity">
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="https://kennethvemagiri.com/">
-  <meta property="twitter:title" content="Kenneth Vemagiri | Data Scientist &amp; AI Specialist | London, UK">
-  <meta property="twitter:description" content="Kenneth Vemagiri is a Data Scientist &amp; AI Specialist based in London, UK, building intelligent and data-driven digital solutions.">
+  <meta property="twitter:title" content="Kenneth Vemagiri | Python, LLMs, ChatGPT, Gemini &amp; Antigravity | London, UK">
+  <meta property="twitter:description" content="Kenneth Vemagiri is based in London, UK and works with Python, LLMs, ChatGPT, Gemini, Claude Code, Google Antigravity, and RAG. Building document intelligence for real products.">
   <meta property="twitter:image" content="https://kennethvemagiri.com/og-image.jpg">
 
   <!-- Canonical URL -->
@@ -49,7 +49,7 @@
       "https://www.linkedin.com/in/prabhakar-kenneth-vemagiri-",
       "https://github.com/kennethvemagiri"
     ],
-    "jobTitle": "Data Scientist & AI Specialist",
+    "jobTitle": "Python, LLMs, ChatGPT, Gemini, Claude Code, Google Antigravity — document AI & RAG",
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "London",
@@ -60,12 +60,12 @@
 
   <!-- Preload LCP image (hero) -->
   <link rel="preload" as="image" href="profile.webp" fetchpriority="high">
-  <link rel="preload" href="styles.min.css" as="style">
+  <link rel="preload" href="styles.css" as="style">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.min.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <a href="#home" class="skip-link">Skip to main content</a>
@@ -83,9 +83,10 @@
           <button type="button" class="nav-close" aria-label="Close menu">← Back</button>
         </li>
         <li><a href="#about">About</a></li>
-        <li><a href="#projects">Projects</a></li>
+        <li><a href="#work">Work</a></li>
         <li><a href="#contact">Contact</a></li>
-        <li><a href="cv/CV.pdf" class="nav-cv" download>Download CV</a></li>
+        <li><a href="productive_version/">Developer View</a></li>
+        <li><a href="https://drive.google.com/file/d/1QpQsFC5iXIy58hskv6QNXf7R0Y5VuiGV/view?usp=sharing" class="nav-cv" target="_blank" rel="noopener noreferrer">View CV</a></li>
       </ul>
     </nav>
   </header>
@@ -99,9 +100,18 @@
             <span class="hero-greeting">Hi there, I'm Kenneth</span>
             <span class="hero-name-full"><span class="hero-name-line1">Prabhakar Kenneth</span> Vemagiri</span>
           </h1>
-          <p class="hero-tagline">I design and build scalable web products that turn complex data and AI into simple, usable experiences.</p>
+          <p class="hero-tagline">
+            I build RAG pipelines and agentic AI workflows that turn messy documents and data into precise, actionable answers. Powered by
+            <strong>Python</strong>,
+            <strong>LLMs</strong>,
+            <strong>ChatGPT</strong>,
+            <strong>Gemini</strong>,
+            <strong>Claude Code</strong>,
+            <strong>Google Antigravity</strong>,
+            and a lot of curiosity.
+          </p>
           <div class="hero-ctas">
-            <a href="#projects" class="btn btn-primary">→ View My Work</a>
+            <a href="#work" class="btn btn-primary">→ View My Work</a>
             <a href="#contact" class="btn btn-outline">→ Get in Touch</a>
           </div>
         </div>
@@ -111,8 +121,105 @@
             <img src="profile.png" alt="Kenneth Vemagiri" class="hero-profile-img" width="320" height="373" loading="eager" fetchpriority="high" decoding="async">
           </picture>
           <div class="hero-image-caption">
-            <p class="profile-role">Software Developer &amp; AI-Focused Data Scientist</p>
-            <p class="profile-location">Based in London, UK · <span id="hero-gmt-time" class="profile-time" aria-label="Current time in London"></span></p>
+            <div class="skill-logo-block">
+              <p class="skill-logo-intro">
+                <span class="skill-logo-intro-text">Experienced with</span>
+                <span class="skill-logo-emoji" aria-hidden="true">💻</span>
+              </p>
+              <div class="skill-logo-marquee" role="region" aria-label="Experienced with — scrolling logos: Python, ChatGPT, Gemini, Google Antigravity, Claude, GitHub Copilot, Cursor, Perplexity, Hugging Face, NotebookLM, Microsoft Excel, SQL (MySQL), Power BI, Canva">
+                <div class="skill-logo-marquee-track">
+                  <ul class="skill-logo-row skill-logo-row--marquee" role="list">
+                    <li>
+                      <a class="skill-logo-link" href="https://www.python.org/" target="_blank" rel="noopener noreferrer" title="Python" aria-label="Python — python.org (opens in new tab)">
+                        <img src="assets/brand-logos/python-colored.svg" alt="" width="14" height="14" decoding="async" class="skill-logo-img">
+                      </a>
+                    </li>
+                    <li>
+                      <a class="skill-logo-link" href="https://openai.com/chatgpt" target="_blank" rel="noopener noreferrer" title="ChatGPT (OpenAI)" aria-label="ChatGPT from OpenAI (opens in new tab)">
+                        <img src="assets/brand-logos/openai-chatgpt-colored.svg" alt="" width="14" height="14" decoding="async" class="skill-logo-img">
+                      </a>
+                    </li>
+                    <li>
+                      <a class="skill-logo-link" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer" title="Gemini (Google)" aria-label="Google Gemini — gemini.google.com (opens in new tab)">
+                        <img src="assets/brand-logos/googlegemini-colored.svg" alt="" width="14" height="14" decoding="async" class="skill-logo-img">
+                      </a>
+                    </li>
+                    <li>
+                      <a class="skill-logo-link" href="https://antigravity.google/" target="_blank" rel="noopener noreferrer" title="Antigravity (Google)" aria-label="Google Antigravity — antigravity.google (opens in new tab)">
+                        <img src="assets/brand-logos/google-antigravity-icon.svg" alt="" width="14" height="14" decoding="async" class="skill-logo-img">
+                      </a>
+                    </li>
+                    <li>
+                      <a class="skill-logo-link" href="https://claude.ai/" target="_blank" rel="noopener noreferrer" title="Claude (Anthropic)" aria-label="Claude from Anthropic — claude.ai (opens in new tab)">
+                        <img src="assets/brand-logos/anthropic-colored.svg" alt="" width="14" height="14" decoding="async" class="skill-logo-img">
+                      </a>
+                    </li>
+                    <li>
+                      <a class="skill-logo-link" href="https://github.com/features/copilot" target="_blank" rel="noopener noreferrer" title="GitHub Copilot" aria-label="GitHub Copilot — github.com/features/copilot (opens in new tab)">
+                        <img src="assets/brand-logos/githubcopilot-colored.svg" alt="" width="14" height="14" decoding="async" class="skill-logo-img">
+                      </a>
+                    </li>
+                    <li>
+                      <a class="skill-logo-link" href="https://cursor.com/" target="_blank" rel="noopener noreferrer" title="Cursor" aria-label="Cursor — cursor.com (opens in new tab)">
+                        <img src="assets/brand-logos/cursor-hero-colored.svg" alt="" width="14" height="14" decoding="async" class="skill-logo-img">
+                      </a>
+                    </li>
+                    <li>
+                      <a class="skill-logo-link" href="https://www.perplexity.ai/" target="_blank" rel="noopener noreferrer" title="Perplexity" aria-label="Perplexity — perplexity.ai (opens in new tab)">
+                        <img src="assets/brand-logos/perplexity-colored.svg" alt="" width="14" height="14" decoding="async" class="skill-logo-img">
+                      </a>
+                    </li>
+                    <li>
+                      <a class="skill-logo-link" href="https://huggingface.co/" target="_blank" rel="noopener noreferrer" title="Hugging Face" aria-label="Hugging Face — huggingface.co (opens in new tab)">
+                        <img src="assets/brand-logos/huggingface-colored.svg" alt="" width="14" height="14" decoding="async" class="skill-logo-img">
+                      </a>
+                    </li>
+                    <li>
+                      <a class="skill-logo-link" href="https://notebooklm.google.com/" target="_blank" rel="noopener noreferrer" title="NotebookLM (Google)" aria-label="Google NotebookLM — notebooklm.google.com (opens in new tab)">
+                        <img src="assets/brand-logos/notebooklm-colored.svg" alt="" width="14" height="14" decoding="async" class="skill-logo-img">
+                      </a>
+                    </li>
+                    <li>
+                      <a class="skill-logo-link" href="https://www.microsoft.com/microsoft-365/excel" target="_blank" rel="noopener noreferrer" title="Microsoft Excel" aria-label="Microsoft Excel — microsoft.com (opens in new tab)">
+                        <img src="assets/brand-logos/microsoft-excel-colored.svg" alt="" width="14" height="14" decoding="async" class="skill-logo-img">
+                      </a>
+                    </li>
+                    <li>
+                      <a class="skill-logo-link" href="https://www.mysql.com/" target="_blank" rel="noopener noreferrer" title="SQL (MySQL)" aria-label="SQL with MySQL — mysql.com (opens in new tab)">
+                        <img src="assets/brand-logos/mysql-colored.svg" alt="" width="14" height="14" decoding="async" class="skill-logo-img">
+                      </a>
+                    </li>
+                    <li>
+                      <a class="skill-logo-link" href="https://powerbi.microsoft.com/" target="_blank" rel="noopener noreferrer" title="Microsoft Power BI" aria-label="Microsoft Power BI — powerbi.microsoft.com (opens in new tab)">
+                        <img src="assets/brand-logos/powerbi-colored.svg" alt="" width="14" height="14" decoding="async" class="skill-logo-img">
+                      </a>
+                    </li>
+                    <li>
+                      <a class="skill-logo-link" href="https://www.canva.com/" target="_blank" rel="noopener noreferrer" title="Canva" aria-label="Canva — canva.com (opens in new tab)">
+                        <img src="assets/brand-logos/canva-colored.svg" alt="" width="14" height="14" decoding="async" class="skill-logo-img">
+                      </a>
+                    </li>
+                  </ul>
+                  <ul class="skill-logo-row skill-logo-row--marquee skill-logo-row--dup" role="presentation" aria-hidden="true">
+                    <li><span class="skill-logo-dup"><img src="assets/brand-logos/python-colored.svg" alt="" width="14" height="14" decoding="async" class="skill-logo-img"></span></li>
+                    <li><span class="skill-logo-dup"><img src="assets/brand-logos/openai-chatgpt-colored.svg" alt="" width="14" height="14" decoding="async" class="skill-logo-img"></span></li>
+                    <li><span class="skill-logo-dup"><img src="assets/brand-logos/googlegemini-colored.svg" alt="" width="14" height="14" decoding="async" class="skill-logo-img"></span></li>
+                    <li><span class="skill-logo-dup"><img src="assets/brand-logos/google-antigravity-icon.svg" alt="" width="14" height="14" decoding="async" class="skill-logo-img"></span></li>
+                    <li><span class="skill-logo-dup"><img src="assets/brand-logos/anthropic-colored.svg" alt="" width="14" height="14" decoding="async" class="skill-logo-img"></span></li>
+                    <li><span class="skill-logo-dup"><img src="assets/brand-logos/githubcopilot-colored.svg" alt="" width="14" height="14" decoding="async" class="skill-logo-img"></span></li>
+                    <li><span class="skill-logo-dup"><img src="assets/brand-logos/cursor-hero-colored.svg" alt="" width="14" height="14" decoding="async" class="skill-logo-img"></span></li>
+                    <li><span class="skill-logo-dup"><img src="assets/brand-logos/perplexity-colored.svg" alt="" width="14" height="14" decoding="async" class="skill-logo-img"></span></li>
+                    <li><span class="skill-logo-dup"><img src="assets/brand-logos/huggingface-colored.svg" alt="" width="14" height="14" decoding="async" class="skill-logo-img"></span></li>
+                    <li><span class="skill-logo-dup"><img src="assets/brand-logos/notebooklm-colored.svg" alt="" width="14" height="14" decoding="async" class="skill-logo-img"></span></li>
+                    <li><span class="skill-logo-dup"><img src="assets/brand-logos/microsoft-excel-colored.svg" alt="" width="14" height="14" decoding="async" class="skill-logo-img"></span></li>
+                    <li><span class="skill-logo-dup"><img src="assets/brand-logos/mysql-colored.svg" alt="" width="14" height="14" decoding="async" class="skill-logo-img"></span></li>
+                    <li><span class="skill-logo-dup"><img src="assets/brand-logos/powerbi-colored.svg" alt="" width="14" height="14" decoding="async" class="skill-logo-img"></span></li>
+                    <li><span class="skill-logo-dup"><img src="assets/brand-logos/canva-colored.svg" alt="" width="14" height="14" decoding="async" class="skill-logo-img"></span></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <p class="profile-location">Currently in <span class="profile-location-flag" aria-hidden="true">🇬🇧</span><span class="profile-location-sr">the UK</span> · London · <span id="hero-gmt-time" class="profile-time" aria-label="Current time in London"></span></p>
           </div>
         </div>
       </div>
@@ -133,122 +240,66 @@
           <div class="bio-content">
             <div class="bio-view bio-view-developer" data-view="developer">
               <p class="bio-lead">
-                I'm a software developer and AI-focused data analyst who enjoys turning complex ideas into simple, reliable digital products.
+                I'm Kenneth Vemagiri. I build retrieval (RAG) and agentic workflows with a focus on document intelligence and shipping models behind real products.
               </p>
               <p>
-                I work across web technologies, data, and AI, taking ideas from early concepts through to real-world solutions.
+                I hold a Bachelor's degree in Computer Science Engineering and an MSc in Artificial Intelligence from the University of East London, where I developed a strong foundation in software systems, data engineering and machine learning.
               </p>
               <p>
-                Based in the UK, collaborating globally and always happy to chat about new ideas, interesting projects, or grab a coffee.
+                I work on data pipelines, AI automation and LLM-based systems that help organisations reduce manual work and make better decisions. I enjoy building end-to-end systems from data extraction and modelling to intelligent interfaces powered by large language models.
+              </p>
+              <p>
+                Some of my work is showcased in the Featured Projects section of this portfolio.
+              </p>
+              <p>
+                I'm currently exploring opportunities to build scalable AI products and intelligent automation tools.
               </p>
             </div>
             <div class="bio-view bio-view-newbie" data-view="newbie" hidden>
               <p class="bio-lead">
-                I build software and work with data and AI.
+                I'm Kenneth Vemagiri. I teach computers to read messy documents and find the right answers, so people don't have to dig through hundreds of pages themselves.
               </p>
               <p>
-                I enjoy turning ideas into simple tools that people can actually use.
+                I studied Computer Science Engineering in India and then completed my MSc in Artificial Intelligence at the University of East London. Now I build tools that connect AI models to real data, helping organisations save time and make smarter decisions.
               </p>
               <p>
-                I'm based in the UK and happy to work with people from anywhere.
+                You can see some of what I've built in the Featured Projects section.
+              </p>
+              <p>
+                I'm looking for my next role building AI products.
               </p>
             </div>
             <div class="bio-ctas">
-              <a href="#projects" class="btn btn-primary">→ View My Work</a>
+              <a href="#work" class="btn btn-primary">→ View My Work</a>
               <a href="#contact" class="btn btn-outline">→ Get in Touch</a>
             </div>
-          </div>
-          <!-- Awards / activities: circular grid next to About me, filled by script.js -->
-          <div class="activities-grid-wrap" aria-label="Awards and activities">
-            <div class="activities-track" id="activities-track"></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Featured projects: horizontal scroll of tiles (MedWorkFlow + placeholders) -->
-    <section id="projects" class="section section-alt">
+    <!-- Work: Projects + Writing (one section) -->
+    <section id="work" class="section section-light work-section">
       <div class="container">
-        <h2 class="section-title reveal">Featured projects</h2>
-        <p class="section-intro reveal">Selected work and products I've built or co-founded.</p>
-        <div class="projects-scroll reveal">
-          <a href="featured-projects/MWF/" class="project-tile project-tile-featured project-tile-mwf project-tile-link">
-            <div class="project-tile-image">
-              <picture>
-                <source type="image/webp" srcset="featured-projects/MWF/MedWorkFlow.webp">
-                <img src="featured-projects/MWF/MedWorkFlow.png" alt="MedWorkFlow" width="200" height="200" loading="lazy" decoding="async">
-              </picture>
-            </div>
-            <div class="project-tile-content">
-              <span class="project-tile-badge">Co-founder</span>
-              <h3>MedWorkFlow</h3>
-              <p>Healthcare workflow automation and digital solutions for medical teams.</p>
-            </div>
-          </a>
-          <a href="featured-projects/GoCafeCo/" class="project-tile project-tile-featured project-tile-gocafeco project-tile-link">
-            <div class="project-tile-image">
-              <picture>
-                <source type="image/webp" srcset="featured-projects/GoCafeCo/Projects%20Logo.webp">
-                <img src="featured-projects/GoCafeCo/Projects%20Logo.png" alt="GoCafeCo" width="200" height="260" loading="lazy" decoding="async">
-              </picture>
-            </div>
-            <div class="project-tile-content">
-              <span class="project-tile-badge">Co-founder and developer</span>
-              <h3>GoCafeCo</h3>
-              <p>Discover and explore local cafes with curated recommendations and community reviews.</p>
-            </div>
-          </a>
-          <a href="featured-projects/Pronto/" class="project-tile project-tile-pronto project-tile-link">
-            <div class="project-tile-image">
-              <picture>
-                <source type="image/webp" srcset="featured-projects/Pronto/Logo.webp">
-                <img src="featured-projects/Pronto/Logo.png" alt="Pronto" width="200" height="200" loading="lazy" decoding="async">
-              </picture>
-            </div>
-            <div class="project-tile-content">
-              <span class="project-tile-badge">Co-founder and developer</span>
-              <h3>Pronto</h3>
-              <p>Fast, intuitive tools for team collaboration and workflow management.</p>
-            </div>
-          </a>
-          <a href="featured-projects/InPlan/" class="project-tile project-tile-inplan project-tile-link">
-            <div class="project-tile-image">
-              <picture>
-                <source type="image/webp" srcset="featured-projects/InPlan/Logo.webp">
-                <img src="featured-projects/InPlan/Logo.png" alt="InPlan" width="200" height="200" loading="lazy" decoding="async">
-              </picture>
-            </div>
-            <div class="project-tile-content">
-              <span class="project-tile-badge project-tile-badge-soon">Coming soon</span>
-              <h3>InPlan</h3>
-              <p>Planning and project management tools to help teams stay organised and deliver on time.</p>
-            </div>
-          </a>
-          <a href="featured-projects/WiseWeb/" class="project-tile project-tile-featured project-tile-wiseweb project-tile-link">
-            <div class="project-tile-image">
-              <picture>
-                <source type="image/webp" srcset="featured-projects/WiseWeb/Logo.webp">
-                <img src="featured-projects/WiseWeb/Logo.png" alt="WiseWeb" width="200" height="200" loading="lazy" decoding="async">
-              </picture>
-            </div>
-            <div class="project-tile-content">
-              <span class="project-tile-badge">Developer</span>
-              <h3>WiseWeb</h3>
-              <p>Custom web development and digital product design for businesses.</p>
-            </div>
-          </a>
-          <a href="more-apps.html" class="project-tile project-tile-link">
-            <div class="project-tile-image placeholder-box placeholder-tile">
-              <svg class="placeholder-tile-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
-              <span class="placeholder-tile-text">More apps & ideas</span>
-              <span class="placeholder-tile-subtext">Future projects and experiments I'm building. Watch this space.</span>
-            </div>
-            <div class="project-tile-content">
-              <span class="project-tile-badge project-tile-badge-soon">In the pipeline</span>
-              <h3>More apps & ideas</h3>
-              <p>Tools, products and experiments I'm working on. Reach out if you'd like to hear more or collaborate.</p>
-            </div>
-          </a>
+        <div class="work-header">
+          <h2 class="section-title reveal">Work</h2>
+          <nav class="work-tabs reveal" aria-label="Work view">
+            <button type="button" class="work-tab-btn is-active" data-work-view="projects" aria-pressed="true">Projects</button>
+            <span class="work-tab-sep" aria-hidden="true">·</span>
+            <button type="button" class="work-tab-btn" data-work-view="writing" aria-pressed="false">Writing</button>
+          </nav>
+          <a class="section-more-link reveal" href="blog/index.html">More →</a>
+        </div>
+
+        <div class="work-views">
+          <div class="work-view" data-view="projects">
+            <!-- Projects: rendered from data/site-content.json (edit via /admin/) -->
+            <div class="projects-grid reveal" id="projects-grid-root"></div>
+          </div>
+          <div class="work-view" data-view="writing" hidden>
+            <!-- Writing cards: rendered from data/site-content.json writingHome (full posts still live under blog/) -->
+            <ul class="writing-list reveal" id="writing-list-root" role="list"></ul>
+          </div>
         </div>
       </div>
     </section>
@@ -258,7 +309,9 @@
       <div class="container contact-cta-container">
         <h2 class="section-title reveal">Get in touch!</h2>
         <p class="contact-cta-lead reveal">Let's create something amazing together. Drop me a line and let's get the conversation started.</p>
-        <button type="button" class="btn btn-primary" id="open-contact-modal" aria-haspopup="dialog" aria-controls="contact-modal">Get in Touch</button>
+        <div class="contact-cta-actions reveal">
+          <button type="button" class="btn btn-primary" id="open-contact-modal" aria-haspopup="dialog" aria-controls="contact-modal">Get in Touch</button>
+        </div>
         <div class="contact-social">
           <a href="https://www.linkedin.com/in/prabhakar-kenneth-vemagiri-" target="_blank" rel="noopener noreferrer" class="contact-social-item" aria-label="LinkedIn">
             <span class="contact-social-icon" aria-hidden="true">
@@ -320,13 +373,16 @@
       </div>
 
       <div class="contact-modal-submit-error" id="contact-modal-submit-error" aria-live="polite" role="alert" hidden>
-        <p class="contact-modal-submit-error-text">Sorry, we couldn't send your message. You can also send me a Hi on LinkedIn!</p>
-        <a href="https://www.linkedin.com/in/prabhakar-kenneth-vemagiri-" target="_blank" rel="noopener noreferrer" class="btn btn-primary contact-modal-submit-error-link">Open LinkedIn</a>
+        <p class="contact-modal-submit-error-text">Sorry, we couldn't send your message. Try scheduling on Calendly or say hi on LinkedIn.</p>
+        <div class="contact-modal-submit-error-actions">
+          <a href="https://www.linkedin.com/in/prabhakar-kenneth-vemagiri-" target="_blank" rel="noopener noreferrer" class="btn btn-outline contact-modal-submit-error-link">Open LinkedIn</a>
+        </div>
       </div>
     </div>
   </div>
 
-  <script src="script.min.js" defer></script>
+  <script src="js/render-site-content.js" defer></script>
+  <script src="script.js" defer></script>
   <script>
   (function() {
     function setHeroTime() {

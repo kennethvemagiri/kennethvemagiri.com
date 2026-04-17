@@ -5,6 +5,7 @@
   "main": "build-awards.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npx --yes serve . -l 3000",
     "build": "node build-images.js",
     "minify": "npx clean-css-cli -o styles.min.css styles.css && npx terser script.js -o script.min.js -c -m"
   },

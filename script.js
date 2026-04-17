@@ -5,6 +5,24 @@
 (function () {
   "use strict";
 
+  // Always start at top on reload/navigate (avoids scroll position restore with scroll-snap)
+  if ("scrollRestoration" in history) {
+    history.scrollRestoration = "manual";
+  }
+  window.addEventListener("pageshow", function (ev) {
+    // Don't interfere with bfcache restores
+    if (ev && ev.persisted) return;
+    try {
+      var nav = performance.getEntriesByType && performance.getEntriesByType("navigation");
+      var navType = nav && nav[0] && nav[0].type;
+      if (navType === "reload" || navType === "navigate") {
+        window.scrollTo(0, 0);
+      }
+    } catch (e) {
+      window.scrollTo(0, 0);
+    }
+  });
+
   // --- Hero: fade-in on load ---
   var heroReveal = document.querySelector(".hero-reveal");
   if (heroReveal) {
@@ -15,6 +33,60 @@
       document.addEventListener("DOMContentLoaded", showHero);
     } else {
       requestAnimationFrame(showHero);
+    }
+  }
+
+  // --- Hero skill logos: random order (synced pairs), reshuffle each marquee loop ---
+  var skillLogoTrack = document.querySelector(".skill-logo-marquee-track");
+  var skillLogoUlMain =
+    skillLogoTrack &&
+    skillLogoTrack.querySelector(".skill-logo-row--marquee:not(.skill-logo-row--dup)");
+  var skillLogoUlDup =
+    skillLogoTrack && skillLogoTrack.querySelector(".skill-logo-row.skill-logo-row--dup");
+
+  function shuffleSkillLogoMarqueePair() {
+    if (!skillLogoUlMain || !skillLogoUlDup) return;
+    var mainLis = Array.prototype.slice.call(skillLogoUlMain.children);
+    var dupLis = Array.prototype.slice.call(skillLogoUlDup.children);
+    var n = mainLis.length;
+    if (n < 2 || dupLis.length !== n) return;
+
+    var order = [];
+    for (var i = 0; i < n; i++) order.push(i);
+    for (var k = n - 1; k > 0; k--) {
+      var j = Math.floor(Math.random() * (k + 1));
+      var tmp = order[k];
+      order[k] = order[j];
+      order[j] = tmp;
+    }
+
+    var fragM = document.createDocumentFragment();
+    var fragD = document.createDocumentFragment();
+    order.forEach(function (idx) {
+      fragM.appendChild(mainLis[idx]);
+      fragD.appendChild(dupLis[idx]);
+    });
+    skillLogoUlMain.appendChild(fragM);
+    skillLogoUlDup.appendChild(fragD);
+  }
+
+  function initSkillLogoShuffle() {
+    shuffleSkillLogoMarqueePair();
+    if (!skillLogoTrack || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+    skillLogoTrack.addEventListener("animationiteration", function (ev) {
+      if (ev.target === skillLogoTrack) {
+        shuffleSkillLogoMarqueePair();
+      }
+    });
+  }
+
+  if (skillLogoTrack && skillLogoUlMain && skillLogoUlDup) {
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initSkillLogoShuffle);
+    } else {
+      initSkillLogoShuffle();
     }
   }
 
@@ -47,6 +119,12 @@
   var navLinks = document.querySelector(".nav-links");
 
   if (navToggle && navLinks) {
+    function closeMobileNav() {
+      navToggle.setAttribute("aria-expanded", "false");
+      navLinks.classList.remove("is-open");
+      document.body.style.overflow = "";
+    }
+
     navToggle.addEventListener("click", function () {
       var expanded = navToggle.getAttribute("aria-expanded") === "true";
       navToggle.setAttribute("aria-expanded", !expanded);
@@ -57,18 +135,12 @@
     // Close menu when clicking a link or the Back button (for mobile)
     navLinks.querySelectorAll("a").forEach(function (link) {
       link.addEventListener("click", function () {
-        navToggle.setAttribute("aria-expanded", "false");
-        navLinks.classList.remove("is-open");
-        document.body.style.overflow = "";
+        closeMobileNav();
       });
     });
     var navClose = document.querySelector(".nav-close");
     if (navClose) {
-      navClose.addEventListener("click", function () {
-        navToggle.setAttribute("aria-expanded", "false");
-        navLinks.classList.remove("is-open");
-        document.body.style.overflow = "";
-      });
+      navClose.addEventListener("click", closeMobileNav);
     }
   }
 
@@ -118,6 +190,26 @@
         } else {
           v.setAttribute("hidden", "");
         }
+      });
+    });
+  });
+
+  // --- Work: tabs (Projects / Writing) ---
+  var workTabBtns = document.querySelectorAll(".work-tab-btn");
+  var workViews = document.querySelectorAll(".work-view");
+  workTabBtns.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var view = btn.getAttribute("data-work-view");
+      if (!view) return;
+      workTabBtns.forEach(function (b) {
+        var isActive = b.getAttribute("data-work-view") === view;
+        b.classList.toggle("is-active", isActive);
+        b.setAttribute("aria-pressed", isActive ? "true" : "false");
+      });
+      workViews.forEach(function (v) {
+        var match = v.getAttribute("data-view") === view;
+        if (match) v.removeAttribute("hidden");
+        else v.setAttribute("hidden", "");
       });
     });
   });
@@ -306,8 +398,6 @@
 
       if (!emailResult.valid) {
         showContactError(emailInput, emailError, emailResult);
-      }
-      if (!emailResult.valid) {
         return;
       }
 
@@ -381,4 +471,24 @@
       updateCharCount();
     }
   }
+
+  // --- Calendly: popup scheduling (widget.js loads async; fallback opens new tab) ---
+  function openCalendlyPopup(url) {
+    if (!url || typeof url !== "string") return;
+    var trimmed = url.trim();
+    if (!trimmed) return;
+    if (window.Calendly && typeof window.Calendly.initPopupWidget === "function") {
+      window.Calendly.initPopupWidget({ url: trimmed });
+    } else {
+      window.open(trimmed, "_blank", "noopener,noreferrer");
+    }
+  }
+
+  document.querySelectorAll(".js-calendly-popup").forEach(function (btn) {
+    btn.addEventListener("click", function (e) {
+      e.preventDefault();
+      var url = btn.getAttribute("data-calendly-url") || "";
+      openCalendlyPopup(url);
+    });
+  });
 })();
