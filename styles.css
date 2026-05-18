@@ -35,7 +35,8 @@
   --color-featured-tile-start: #f5f0e4;
   --color-featured-tile-end: #ebe4d4;
   --color-placeholder-bg: #f1f5f9;
-  --site-header-offset: calc(3.25rem + env(safe-area-inset-top, 0px));
+  --site-header-bar: 2.75rem; /* nav row (logo / hamburger touch target) */
+  --site-header-offset: calc(2 * var(--space-sm) + var(--site-header-bar) + env(safe-area-inset-top, 0px));
   /* Responsive breakpoints (use literal values in @media; vars document the scale) */
   --bp-sm: 480px;
   --bp-md: 640px;
@@ -336,12 +337,12 @@ button:focus-visible,
   min-height: 100vh;
   min-height: 100dvh;
   padding: var(--space-2xl) var(--pad-x);
-  padding-top: calc(clamp(4.5rem, 10vw, 7rem) + env(safe-area-inset-top, 0px));
+  padding-top: calc(var(--site-header-offset) + var(--space-lg));
   padding-bottom: calc(var(--space-2xl) + env(safe-area-inset-bottom));
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   overflow: hidden;
 }
 
@@ -2204,6 +2205,11 @@ button:focus-visible,
 @media (min-width: 768px) {
   html {
     scroll-snap-type: y proximity;
+  }
+
+  .hero {
+    padding-top: calc(var(--site-header-offset) + clamp(1.25rem, 5vw, 3.5rem));
+    justify-content: center;
   }
 
   .hero-inner {
