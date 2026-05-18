@@ -25,7 +25,10 @@ const SOURCE = path.join(ROOT, "main_favicon.png");
 const PNG_OUTPUTS = [
   { size: 16, file: "favicon-16x16.png" },
   { size: 32, file: "favicon-32x32.png" },
+  { size: 96, file: "favicon-96x96.png" },
   { size: 180, file: "apple-touch-icon.png" },
+  { size: 192, file: "web-app-manifest-192x192.png" },
+  { size: 512, file: "web-app-manifest-512x512.png" },
 ];
 
 const ICO_SIZES = [16, 32, 48];
