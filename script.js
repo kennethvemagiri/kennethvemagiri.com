@@ -1,6 +1,6 @@
 /**
- * Kenneth Vemagiri – Main script.
- * Footer year, mobile nav, scroll state, about bio filter, contact modal (Formspree).
+ * Kenneth Vemagiri - Main script.
+ * Footer year, mobile nav, scroll state, inline contact form (Formspree).
  */
 (function () {
   "use strict";
@@ -9,6 +9,29 @@
   if ("scrollRestoration" in history) {
     history.scrollRestoration = "manual";
   }
+
+  function scrollToElement(el, behavior) {
+    if (!el) return;
+    el.scrollIntoView({
+      block: "start",
+      behavior: behavior || "auto"
+    });
+  }
+
+  function scrollToHashTarget(behavior) {
+    var hash = window.location.hash;
+    if (!hash || hash.length < 2) {
+      window.scrollTo(0, 0);
+      return;
+    }
+    var id = decodeURIComponent(hash.slice(1));
+    var target = document.getElementById(id);
+    if (!target) return;
+    requestAnimationFrame(function () {
+      scrollToElement(target, behavior);
+    });
+  }
+
   window.addEventListener("pageshow", function (ev) {
     // Don't interfere with bfcache restores
     if (ev && ev.persisted) return;
@@ -16,11 +39,18 @@
       var nav = performance.getEntriesByType && performance.getEntriesByType("navigation");
       var navType = nav && nav[0] && nav[0].type;
       if (navType === "reload" || navType === "navigate") {
-        window.scrollTo(0, 0);
+        scrollToHashTarget();
       }
     } catch (e) {
-      window.scrollTo(0, 0);
+      scrollToHashTarget();
     }
+  });
+
+  window.addEventListener("kv-site-content-mounted", function () {
+    if (!window.location.hash) return;
+    requestAnimationFrame(function () {
+      scrollToHashTarget("auto");
+    });
   });
 
   // --- Hero: fade-in on load ---
@@ -171,49 +201,6 @@
     aboutObserver.observe(aboutSection);
   }
 
-  // --- About: filter (For developers / Explain like I'm a newbie) ---
-  var bioFilterBtns = document.querySelectorAll(".bio-filter-btn");
-  var bioViews = document.querySelectorAll(".bio-view");
-  bioFilterBtns.forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      var view = btn.getAttribute("data-bio-view");
-      if (!view) return;
-      bioFilterBtns.forEach(function (b) {
-        var isActive = b.getAttribute("data-bio-view") === view;
-        b.classList.toggle("is-active", isActive);
-        b.setAttribute("aria-pressed", isActive ? "true" : "false");
-      });
-      bioViews.forEach(function (v) {
-        var match = v.getAttribute("data-view") === view;
-        if (match) {
-          v.removeAttribute("hidden");
-        } else {
-          v.setAttribute("hidden", "");
-        }
-      });
-    });
-  });
-
-  // --- Work: tabs (Projects / Writing) ---
-  var workTabBtns = document.querySelectorAll(".work-tab-btn");
-  var workViews = document.querySelectorAll(".work-view");
-  workTabBtns.forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      var view = btn.getAttribute("data-work-view");
-      if (!view) return;
-      workTabBtns.forEach(function (b) {
-        var isActive = b.getAttribute("data-work-view") === view;
-        b.classList.toggle("is-active", isActive);
-        b.setAttribute("aria-pressed", isActive ? "true" : "false");
-      });
-      workViews.forEach(function (v) {
-        var match = v.getAttribute("data-view") === view;
-        if (match) v.removeAttribute("hidden");
-        else v.setAttribute("hidden", "");
-      });
-    });
-  });
-
   // --- Scroll: set aria-current on nav link for the section in view ---
   var sections = document.querySelectorAll("section[id]");
   var navAnchors = document.querySelectorAll(".nav-links a[href^='#']");
@@ -244,114 +231,27 @@
     updateActiveNav();
   }
 
-  // --- Get in touch popup: open/close modal ---
-  var openContactBtn = document.getElementById("open-contact-modal");
-  var contactModal = document.getElementById("contact-modal");
-  var contactModalBackdrop = document.getElementById("contact-modal-backdrop");
-  var closeContactBtn = document.getElementById("close-contact-modal");
+  // --- Contact: inline form (email validation + Formspree submit) ---
+  var contactInlineForm = document.getElementById("contact-inline-form");
+  var contactInlinePanel = document.getElementById("contact-inline-panel");
+  var contactInlineSuccess = document.getElementById("contact-inline-success");
+  var contactInlineError = document.getElementById("contact-inline-error");
+  var contactInlineSubmit = document.getElementById("contact-inline-submit");
+  var contactInlineSubmitText = contactInlineSubmit && contactInlineSubmit.querySelector(".contact-inline-submit-text");
+  var contactInlineSubmitSending = contactInlineSubmit && contactInlineSubmit.querySelector(".contact-inline-submit-sending");
 
-  var focusBeforeModal = null;
-
-  function getFocusableElements(container) {
-    var selector = "a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex=\"-1\"])";
-    return Array.prototype.slice.call(container.querySelectorAll(selector));
-  }
-
-  function trapFocus(e) {
-    if (e.key !== "Tab" || !contactModal || !contactModal.classList.contains("is-open")) return;
-    var focusable = getFocusableElements(contactModal);
-    if (focusable.length === 0) return;
-    var first = focusable[0];
-    var last = focusable[focusable.length - 1];
-    if (e.shiftKey) {
-      if (document.activeElement === first) {
-        e.preventDefault();
-        last.focus();
-      }
-    } else {
-      if (document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
-      }
-    }
-  }
-
-  function openContactModal() {
-    if (!contactModal) return;
-    focusBeforeModal = document.activeElement;
-    contactModal.classList.add("is-open");
-    contactModal.setAttribute("aria-hidden", "false");
-    document.body.style.overflow = "hidden";
-    document.addEventListener("keydown", trapFocus);
-    var focusable = getFocusableElements(contactModal);
-    var firstInput = contactModal.querySelector("#contact-modal-name");
-    if (firstInput) {
-      firstInput.focus();
-    } else if (closeContactBtn) {
-      closeContactBtn.focus();
-    } else if (focusable.length > 0) {
-      focusable[0].focus();
-    }
-  }
-
-  function closeContactModal() {
-    if (!contactModal) return;
-    contactModal.classList.remove("is-open");
-    contactModal.setAttribute("aria-hidden", "true");
-    document.body.style.overflow = "";
-    document.removeEventListener("keydown", trapFocus);
-    if (focusBeforeModal && typeof focusBeforeModal.focus === "function") {
-      focusBeforeModal.focus();
-    }
-  }
-
-  var contactForm = document.getElementById("contact-modal-form");
-  var contactModalBox = contactModal ? contactModal.querySelector(".contact-modal-box") : null;
-  var contactModalSuccess = document.getElementById("contact-modal-success");
-  var contactModalSubmitError = document.getElementById("contact-modal-submit-error");
-
-  if (openContactBtn) {
-    openContactBtn.addEventListener("click", function (e) {
-      e.preventDefault();
-      openContactModal();
-      if (contactModalSubmitError) contactModalSubmitError.setAttribute("hidden", "");
-    });
-  }
-
-  function hasContactFormContent() {
-    if (!contactForm) return false;
-    var name = (contactForm.querySelector("#contact-modal-name") || {}).value || "";
-    var email = (contactForm.querySelector("#contact-modal-email") || {}).value || "";
-    var message = (contactForm.querySelector("#contact-modal-message") || {}).value || "";
-    return (name.trim() !== "" || email.trim() !== "" || message.trim() !== "");
-  }
-
-  function onCloseContactModal() {
-    if (hasContactFormContent() && !confirm("You have unsaved changes. Close anyway?")) {
-      return;
-    }
-    closeContactModal();
-    if (contactModalBox) contactModalBox.classList.remove("is-sent");
-    if (contactModalSuccess) contactModalSuccess.setAttribute("hidden", "");
-    if (contactModalSubmitError) contactModalSubmitError.setAttribute("hidden", "");
-    if (contactForm) contactForm.classList.remove("is-sending");
-  }
-
-  if (closeContactBtn) closeContactBtn.addEventListener("click", onCloseContactModal);
-  if (contactModalBackdrop) contactModalBackdrop.addEventListener("click", onCloseContactModal);
-  document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" && contactModal && contactModal.classList.contains("is-open")) {
-      onCloseContactModal();
-    }
-  });
-
-  // --- Contact form: email validation (format + disposable blocklist) + Formspree submit ---
   var emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\.[a-zA-Z]{2,}$/;
   var disposableDomains = [
     "mailinator.com", "guerrillamail.com", "10minutemail.com", "temp-mail.org", "throwaway.email",
     "fakeinbox.com", "trashmail.com", "yopmail.com", "mailnesia.com", "tempmail.com",
     "getnada.com", "sharklasers.com", "guerrillamail.info", "maildrop.cc", "tempail.com"
   ];
+
+  function isValidName(name) {
+    var trimmed = (name || "").trim();
+    if (!trimmed) return { valid: false, message: "Name is required." };
+    return { valid: true };
+  }
 
   function isValidEmail(email) {
     var trimmed = (email || "").trim().toLowerCase();
@@ -364,11 +264,24 @@
     return { valid: true };
   }
 
+  function isValidMessage(message) {
+    var trimmed = (message || "").trim();
+    if (!trimmed) return { valid: false, message: "Message is required." };
+    return { valid: true };
+  }
+
+  function clearContactField(input, errorEl) {
+    if (input) {
+      input.classList.remove("is-invalid");
+      input.setAttribute("aria-invalid", "false");
+    }
+    if (errorEl) errorEl.textContent = "";
+  }
+
   function clearContactValidation(form) {
-    var emailInput = form.querySelector("#contact-modal-email");
-    var emailError = form.querySelector("#contact-modal-email-error");
-    if (emailInput) { emailInput.classList.remove("is-invalid"); emailInput.setAttribute("aria-invalid", "false"); }
-    if (emailError) emailError.textContent = "";
+    clearContactField(form.querySelector("#contact-name"), form.querySelector("#contact-name-error"));
+    clearContactField(form.querySelector("#contact-email"), form.querySelector("#contact-email-error"));
+    clearContactField(form.querySelector("#contact-message"), form.querySelector("#contact-message-error"));
   }
 
   function showContactError(input, errorEl, result) {
@@ -378,47 +291,68 @@
     errorEl.textContent = result.message;
   }
 
-  if (contactForm && contactModalBox && contactModalSuccess) {
-    contactForm.addEventListener("keydown", function (e) {
+  function setInlineSending(form, sending) {
+    if (!form || !contactInlineSubmit) return;
+    form.classList.toggle("is-sending", sending);
+    contactInlineSubmit.disabled = sending;
+    if (contactInlineSubmitText) contactInlineSubmitText.hidden = sending;
+    if (contactInlineSubmitSending) contactInlineSubmitSending.hidden = !sending;
+  }
+
+  if (contactInlineForm && contactInlinePanel && contactInlineSuccess) {
+    contactInlineForm.addEventListener("keydown", function (e) {
       if (e.key === "Enter" && e.target.tagName !== "TEXTAREA") {
         e.preventDefault();
-        contactForm.requestSubmit();
+        contactInlineForm.requestSubmit();
       }
     });
-    contactForm.addEventListener("submit", function (e) {
+    contactInlineForm.addEventListener("submit", function (e) {
       e.preventDefault();
       var form = e.target;
-      if (contactModalSubmitError) contactModalSubmitError.setAttribute("hidden", "");
+      if (contactInlineError) contactInlineError.setAttribute("hidden", "");
       clearContactValidation(form);
 
-      var emailInput = form.querySelector("#contact-modal-email");
-      var emailError = form.querySelector("#contact-modal-email-error");
-
+      var nameInput = form.querySelector("#contact-name");
+      var nameError = form.querySelector("#contact-name-error");
+      var emailInput = form.querySelector("#contact-email");
+      var emailError = form.querySelector("#contact-email-error");
+      var messageInput = form.querySelector("#contact-message");
+      var messageError = form.querySelector("#contact-message-error");
+      var nameResult = isValidName(nameInput ? nameInput.value : "");
       var emailResult = isValidEmail(emailInput ? emailInput.value : "");
+      var messageResult = isValidMessage(messageInput ? messageInput.value : "");
+      var firstInvalid = null;
 
+      if (!nameResult.valid) {
+        showContactError(nameInput, nameError, nameResult);
+        firstInvalid = nameInput;
+      }
       if (!emailResult.valid) {
         showContactError(emailInput, emailError, emailResult);
+        if (!firstInvalid) firstInvalid = emailInput;
+      }
+      if (!messageResult.valid) {
+        showContactError(messageInput, messageError, messageResult);
+        if (!firstInvalid) firstInvalid = messageInput;
+      }
+      if (firstInvalid) {
+        firstInvalid.focus();
         return;
       }
 
       var action = form.getAttribute("action");
-      // Demo mode: no real Formspree ID → show success state without sending
       if (!action || action.indexOf("YOUR_FORM_ID") !== -1) {
-        form.classList.add("is-sending");
+        setInlineSending(form, true);
         setTimeout(function () {
-          form.classList.remove("is-sending");
-          contactModalBox.classList.add("is-sent");
-          contactModalSuccess.removeAttribute("hidden");
-          setTimeout(function () {
-            onCloseContactModal();
-            contactModalBox.classList.remove("is-sent");
-            contactModalSuccess.setAttribute("hidden", "");
-            form.reset();
-          }, 2200);
-        }, 1200);
+          setInlineSending(form, false);
+          contactInlinePanel.setAttribute("hidden", "");
+          contactInlineSuccess.removeAttribute("hidden");
+          form.reset();
+        }, 900);
         return;
       }
-      form.classList.add("is-sending");
+
+      setInlineSending(form, true);
       var formData = new FormData(form);
       fetch(action, {
         method: "POST",
@@ -427,49 +361,29 @@
       })
         .then(function (res) {
           if (res.ok) {
-            contactModalBox.classList.add("is-sent");
-            contactModalSuccess.removeAttribute("hidden");
+            contactInlinePanel.setAttribute("hidden", "");
+            contactInlineSuccess.removeAttribute("hidden");
             form.reset();
-            setTimeout(function () {
-              onCloseContactModal();
-              contactModalBox.classList.remove("is-sent");
-              contactModalSuccess.setAttribute("hidden", "");
-            }, 2200);
           } else {
             throw new Error("Submit failed");
           }
         })
         .catch(function () {
-          form.classList.remove("is-sending");
-          if (contactModalSubmitError) {
-            contactModalSubmitError.removeAttribute("hidden");
-          }
+          if (contactInlineError) contactInlineError.removeAttribute("hidden");
         })
         .finally(function () {
-          form.classList.remove("is-sending");
+          setInlineSending(form, false);
         });
     });
 
-    var emailInputEl = contactForm.querySelector("#contact-modal-email");
-    if (emailInputEl) {
-      emailInputEl.addEventListener("input", function () {
-        this.classList.remove("is-invalid");
-        this.setAttribute("aria-invalid", "false");
-        var err = contactForm.querySelector("#contact-modal-email-error");
-        if (err) err.textContent = "";
+    ["#contact-name", "#contact-email", "#contact-message"].forEach(function (selector) {
+      var inputEl = contactInlineForm.querySelector(selector);
+      if (!inputEl) return;
+      inputEl.addEventListener("input", function () {
+        var errorId = this.getAttribute("aria-describedby");
+        clearContactField(this, errorId ? document.getElementById(errorId) : null);
       });
-    }
-    // Message field: live character count (0/2000)
-    var messageEl = contactForm.querySelector("#contact-modal-message");
-    var charCountEl = document.getElementById("contact-modal-char-count");
-    if (messageEl && charCountEl) {
-      function updateCharCount() {
-        charCountEl.textContent = (messageEl.value || "").length;
-      }
-      messageEl.addEventListener("input", updateCharCount);
-      messageEl.addEventListener("change", updateCharCount);
-      updateCharCount();
-    }
+    });
   }
 
   // --- Calendly: popup scheduling (widget.js loads async; fallback opens new tab) ---
@@ -491,4 +405,5 @@
       openCalendlyPopup(url);
     });
   });
+
 })();

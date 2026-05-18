@@ -1,0 +1,243 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="A prompt engineer is to AI what a director is to an actor — essay on prompt craft, tone, and constraint. By Kenneth Vemagiri.">
+<link rel="canonical" href="https://kennethvemagiri.com/insights/prompt-engineering/">
+<title>Kenneth | AI Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles.css">
+  <link rel="stylesheet" href="../../styles/case-study.css">
+  <link rel="icon" href="../../favicon.ico" sizes="any">
+  <link rel="icon" href="../../favicon-96x96.png" type="image/png" sizes="96x96">
+  <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+  <link rel="manifest" href="../../site.webmanifest">
+</head>
+<body class="essay-page">
+<a href="#essay-start" class="skip-link">Skip to main content</a>
+<header class="site-header"></header>
+
+<!-- ═══ HERO ═══ -->
+<header class="hero" id="essay-start">
+  <div class="hero-bg">
+    <img src="images/image2.png" alt="Troy and Odyssey cinematic collage">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1>Prompt<br>Engineering</h1>
+    <div class="byline">In the voice of @KennethVemagiri</div>
+    <div class="tagline">
+      <strong>A prompt engineer is to AI what a director is to an actor.</strong>
+      The actor (LLM) has talent, but the director shapes <em>what</em> comes out: tone, structure, depth, constraints.
+    </div>
+  </div>
+  <div class="scroll-hint">↓ Scroll</div>
+</header>
+
+<!-- ═══ TROY vs ODYSSEY ═══ -->
+<section>
+  <div class="container">
+    <div class="fade-in">
+      <h2>Troy vs Odyssey = Craft vs Over-Engineering</h2>
+      <p class="lead"><strong>Troy</strong> created scale and realism without IMAX. <strong>Odyssey</strong> has all the modern tech — IMAX-certified cameras, VFX, and a massive budget. But does it actually look better, or just more polished?</p>
+
+      <div class="section-img framed">
+        <img src="images/image3.png" alt="Troy and Odyssey visual comparison">
+      </div>
+
+      <div class="vs-grid">
+        <div class="vs-card troy">
+          <h4>Troy · 2004</h4>
+          <p>Shot on 35mm film, practical sets, real stunts, 1,000 real extras. The result? It <em>felt</em> massive. Wolfgang Petersen used <strong>craft</strong> to create scale — camera angles, choreography, set design. Limited tools, maximum impact.</p>
+        </div>
+        <div class="vs-card odyssey">
+          <h4>Odyssey · 2025</h4>
+          <p>IMAX cameras, cutting-edge VFX, massive budget. Looks stunning, sure. But does it hit harder than Troy's beach landing? Debatable. More tech doesn't mean more impact.</p>
+        </div>
+      </div>
+
+      <h3>Map This to Prompt Engineering</h3>
+      <p><strong>The "Odyssey" devs</strong> throw GPT-4 at everything, chain 5 APIs together, use LangChain + vector DBs + fine-tuning before they even have users. Polished? Sure. Necessary? Rarely.</p>
+      <p><strong>The "Troy" dev</strong> picks the right prompt technique for the job. A well-crafted system prompt with few-shot examples can outperform a bloated RAG pipeline. You don't need the IMAX camera if your directing is sharp.</p>
+
+      <div class="quote-block">
+        Prompt engineering isn't about using every tool available — it's about making the model do exactly what you need with <strong>the least complexity possible.</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ THE CORE IDEA ═══ -->
+<section>
+  <div class="container">
+    <div class="fade-in">
+      <h2>The Core Idea</h2>
+      <p class="lead">You're writing instructions that make an AI model behave predictably and usefully. That's it. But doing it <em>well</em> is where the skill lives.</p>
+
+      <h3>What You Actually Do</h3>
+      <p><strong>Input design</strong> — crafting the text you send to the model so the output is reliable, structured, and useful. This includes:</p>
+
+      <ul class="items">
+        <li><strong>System prompts</strong> — persona, rules, guardrails</li>
+        <li><strong>Few-shot examples</strong> — showing the model <em>what good looks like</em></li>
+        <li><strong>Output formatting</strong> — JSON, markdown, specific schemas</li>
+        <li><strong>Chain-of-thought reasoning</strong> — making the model "think step by step"</li>
+        <li><strong>Guardrails</strong> — what it should refuse, how it handles edge cases</li>
+      </ul>
+
+      <h3>Why It Matters For Any Dev Building With AI</h3>
+      <p>When you call Claude API to analyse CVs or generate portfolio content, the quality lives or dies in the prompt. The system prompt <em>is</em> the product. Everything else is plumbing.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ IS IT A REAL JOB ═══ -->
+<section>
+  <div class="container">
+    <div class="fade-in">
+      <h2>Is "Prompt Engineer" a Real Job?</h2>
+      <p class="lead">Yes, but context matters:</p>
+
+      <div class="job-grid">
+        <div class="job-item">
+          <strong>Standalone role</strong>
+          <p>Exists at bigger companies (Anthropic, Google, startups), but shrinking as models get better at following basic instructions.</p>
+        </div>
+        <div class="job-item">
+          <strong>Embedded skill</strong>
+          <p>This is where it's heading. Every dev building with LLMs needs this. It's becoming like knowing SQL — not a job title, it's a baseline expectation.</p>
+        </div>
+        <div class="job-item">
+          <strong>For the job market</strong>
+          <p>Listing "prompt engineering" as a skill is useful, but calling yourself a "prompt engineer" as a title is limiting in the UK market right now.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TECHNIQUES ═══ -->
+<section>
+  <div class="container">
+    <div class="fade-in">
+      <h2>The Techniques Worth Knowing</h2>
+
+      <div class="tech-grid">
+        <div class="tech-card">
+          <div class="tech-label">Zero-shot</div>
+          <div class="tech-desc">Just ask directly, no examples. Trust the model's raw instinct.<br><em>"Analyse this CV and give feedback"</em></div>
+        </div>
+        <div class="tech-card">
+          <div class="tech-label">Few-shot</div>
+          <div class="tech-desc">Give 2–3 examples before your actual request. The model mirrors the pattern.<br><em>"Here are 3 example CV reviews. Now review this one the same way."</em></div>
+        </div>
+        <div class="tech-card">
+          <div class="tech-label">Chain-of-thought</div>
+          <div class="tech-desc">Make the model show its working before answering.<br><em>"First identify strengths, then gaps, then give a score with reasoning."</em></div>
+        </div>
+        <div class="tech-card">
+          <div class="tech-label">Role prompting</div>
+          <div class="tech-desc">Tell the model <strong>who it is</strong>, not just what to do.<br><em>"You are a senior recruiter reviewing this CV"</em></div>
+        </div>
+        <div class="tech-card">
+          <div class="tech-label">Structured output</div>
+          <div class="tech-desc">Lock the response format. No improvisation.<br><em>"Respond in this exact JSON format: {score, strengths[], weaknesses[]}"</em></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ RAIN MAN / CHARLIE BABBIT ═══ -->
+<section class="rainman-section">
+  <div class="container">
+    <div class="fade-in">
+      <div class="spoiler-tag">Spoiler Alert — Rain Man (1988)</div>
+
+      <h2>LLM = Rain Man.<br>You = Charlie Babbit.</h2>
+
+      <div class="rainman-images">
+        <img src="images/image1.png" alt="Rain Man and Charlie at the casino table">
+        <img src="images/image4.png" alt="Rain Man and Charlie Babbit">
+      </div>
+
+      <p>Charlie Babbit wasn't a genius. He didn't teach Rain Man anything. He just figured out <strong>where to point him and what to ask.</strong></p>
+
+      <p>When Charlie discovered Rain Man could count cards, he didn't say "go be smart." He designed the whole setup — chose blackjack (not poker, not roulette), set the rules, told Rain Man exactly what to focus on, and handled everything else around him.</p>
+
+      <p><strong>That's prompt engineering.</strong></p>
+
+      <ul class="items">
+        <li><strong>Rain Man's counting ability</strong> = the LLM's raw capability. It already exists. You didn't build it.</li>
+        <li><strong>Charlie choosing blackjack</strong> = picking the right task. Not every problem needs AI.</li>
+        <li><strong>"Just tell me how many"</strong> = the prompt. Short, specific, directed.</li>
+        <li><strong>The casino, the table, the plan</strong> = the system prompt. You're setting the environment, the rules, the constraints.</li>
+        <li><strong>Charlie adjusting when things went sideways</strong> = prompt iteration. Your first prompt is never your best.</li>
+      </ul>
+
+      <div class="quote-block">
+        Charlie didn't make Rain Man smarter. He made Rain Man's intelligence <strong>useful.</strong> That's the entire job.
+      </div>
+
+      <!-- Red background Rain Man image as a dramatic divider -->
+      <div class="banner-img">
+        <img src="images/image1.png" alt="Rain Man dramatic scene">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STACKING ═══ -->
+<section class="rainman-section" style="padding-top: 0; border-top: 1px solid rgba(255,255,255,0.08);">
+  <div class="container">
+    <div class="fade-in">
+      <h2>Stacking Techniques — The Real Skill</h2>
+
+      <p>Knowing five techniques doesn't make you a prompt engineer. Knowing <strong>when to combine them</strong> does.</p>
+
+      <p>Charlie didn't just say "count cards." He layered the whole operation:</p>
+
+      <div class="stack-grid">
+        <div class="stack-card">
+          <div class="stack-num">01</div>
+          <div><p><strong>Role →</strong> He put Rain Man in a specific context — you're at a blackjack table, not wandering a casino floor.</p></div>
+        </div>
+        <div class="stack-card">
+          <div class="stack-num">02</div>
+          <div><p><strong>Few-shot →</strong> He showed Rain Man the pattern — when you see these cards, this is what we do.</p></div>
+        </div>
+        <div class="stack-card">
+          <div class="stack-num">03</div>
+          <div><p><strong>Chain-of-thought →</strong> He made Rain Man track the running count before giving the final signal — process first, answer second.</p></div>
+        </div>
+        <div class="stack-card">
+          <div class="stack-num">04</div>
+          <div><p><strong>Structured output →</strong> He kept the response simple — just say hit or stay. No rambling, no extra information.</p></div>
+        </div>
+      </div>
+
+      <div class="quote-block">
+        One technique gives you an answer. Stacking gives you a <strong>system.</strong>
+      </div>
+
+      <p>Anyone can ask an LLM a question. The skill is building the right combination of role, examples, reasoning, and format so the output is reliable every single time — not just once.</p>
+
+      <p><strong>That's the difference between <em>using</em> AI and <em>engineering</em> with it.</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CLOSER ═══ -->
+<div class="closer">
+  <p>Rain Man has the talent. But Rain Man without Charlie is just a guy counting toothpicks on the floor.</p>
+  <div class="sig">@KennethVemagiri</div>
+</div>
+
+<script src="../../js/site-header.js" defer></script>
+<script src="../../script.js" defer></script>
+<script src="../../js/case-study.js" defer></script>
+</body>
+</html>

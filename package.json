@@ -6,8 +6,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "npx --yes serve . -l 3000",
+    "dev:netlify": "npx --yes netlify-cli dev",
     "build": "node build-images.js",
+    "build:favicon": "node build-favicon.js",
     "minify": "npx clean-css-cli -o styles.min.css styles.css && npx terser script.js -o script.min.js -c -m"
+  },
+  "engines": {
+    "node": ">=20"
   },
   "repository": {
     "type": "git",
@@ -21,6 +26,7 @@
   },
   "homepage": "https://github.com/kennethvemagiri/kennethvemagiri.com#readme",
   "devDependencies": {
-    "sharp": "^0.34.5"
+    "sharp": "^0.34.5",
+    "to-ico": "^1.1.5"
   }
 }

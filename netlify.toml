@@ -1,0 +1,17 @@
+# Netlify — https://docs.netlify.com/configure-files/#netlify-toml-configuration
+[build]
+  command = "npm run build"
+  publish = "."
+
+[build.environment]
+  NODE_VERSION = "20"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+# Keep /api/github-contributions for productive_version/script.js (same path as Vercel)
+[[redirects]]
+  from = "/api/github-contributions"
+  to = "/.netlify/functions/github-contributions"
+  status = 200

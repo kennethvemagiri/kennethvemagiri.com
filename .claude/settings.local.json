@@ -2,7 +2,11 @@
   "permissions": {
     "allow": [
       "Bash(npx serve:*)",
-      "Bash(git config *)"
+      "Bash(git config *)",
+      "PowerShell(Get-ChildItem \"C:\\\\Users\\\\kenst\\\\Desktop\\\\kennethvemagiri.com\\\\new favicon\\\\\" | Select-Object Name, @{N='Size';E={[math]::Round\\($_.Length/1KB, 1\\)}} | Format-Table -AutoSize)",
+      "Bash(npm run *)",
+      "Bash(curl *)",
+      "Bash(python3 *)"
     ]
   }
 }

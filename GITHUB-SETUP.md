@@ -65,7 +65,7 @@ You can use GitHub to **store your code** and **host the site for free** (GitHub
    - They’ll show which DNS records to add in Squarespace (A or CNAME). Add those in Squarespace DNS.
 
 5. **Add a serverless contact form** (I can give you the exact code)
-   - A small serverless function (e.g. `api/contact.js` or `netlify/functions/contact.js`) that receives the form and sends email to **urstrulykenneth@gmail.com** via a free email API (e.g. Resend).
+   - A small serverless function (e.g. `api/contact.js` or `netlify/functions/contact.js`) that receives the form and sends email to **kennethvemagiri@gmail.com** via a free email API (e.g. Resend).
    - Your form in `index.html` would POST to that function instead of Formspree.
 
 ---

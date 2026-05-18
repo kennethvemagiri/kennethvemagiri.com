@@ -1,0 +1,352 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="TierUp AI — an AI-powered job search engine for international students navigating visa-sponsored markets. Built by Kenneth Vemagiri.">
+<link rel="canonical" href="https://kennethvemagiri.com/featured-projects/portfolio_TierUp/">
+<title>Kenneth | AI Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles.css">
+  <link rel="stylesheet" href="../../styles/case-study.css">
+  <link rel="icon" href="../../favicon.ico" sizes="any">
+  <link rel="icon" href="../../favicon-96x96.png" type="image/png" sizes="96x96">
+  <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+  <link rel="manifest" href="../../site.webmanifest">
+</head>
+<body class="essay-page case-study-tierup" style="--essay-accent: #166534;">
+<a href="#essay-start" class="skip-link">Skip to main content</a>
+<header class="site-header"></header>
+
+<!-- ═══ HERO ═══ -->
+<header class="hero" id="essay-start">
+  <div class="hero-pattern"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="dot"></span> Full-Stack AI Project</div>
+    <h1>Tier<span class="ai">Up</span> AI</h1>
+    <div class="byline">Built by @KennethVemagiri</div>
+    <div class="tagline">
+      <strong>An AI-powered job search engine</strong> that scrapes LinkedIn, scores every listing against your CV with GPT-4o, and flags visa sponsors — all in one search.
+    </div>
+  </div>
+  <div class="scroll-hint">↓ Scroll</div>
+</header>
+
+<!-- ═══ THE PROBLEM ═══ -->
+<section>
+  <div class="container">
+    <div class="fade-in">
+      <h2>The Problem I Lived</h2>
+      <p class="lead">As an international student in the UK, every job search starts with the same question: <strong>"Will they sponsor my visa?"</strong> Nobody tells you upfront. You apply to 50 roles, hear back from 3, and two of them don't sponsor.</p>
+
+      <p>I was doing this manually — copy a company name, paste it into the Home Office register, check, repeat. Then tailor a CV. Then write a cover letter. For every. single. role.</p>
+
+      <p>So I built the thing I wished existed.</p>
+
+      <div class="quote-block">
+        TierUp doesn't just find jobs — it tells you <strong>which ones are worth your time</strong> before you spend an hour applying.
+      </div>
+
+      <div class="stat-row">
+        <div class="stat-card">
+          <div class="num">50k+</div>
+          <div class="label">Sponsor Companies</div>
+        </div>
+        <div class="stat-card">
+          <div class="num">0→10</div>
+          <div class="label">AI Match Score</div>
+        </div>
+        <div class="stat-card">
+          <div class="num">~15s</div>
+          <div class="label">Per Search</div>
+        </div>
+        <div class="stat-card">
+          <div class="num">SSE</div>
+          <div class="label">Real-Time Stream</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ WHAT IT DOES ═══ -->
+<section>
+  <div class="container">
+    <div class="fade-in">
+      <h2>What It Actually Does</h2>
+      <p class="lead">Six features, one workflow. Search → Score → Check Visa → Apply — with AI doing the heavy lifting at every step.</p>
+
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="icon">🔍</div>
+          <h4>Live LinkedIn Scraping</h4>
+          <p>Pulls real postings via Apify actors — not cached job board data. Fresh listings, every search.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">🧠</div>
+          <h4>GPT-4o CV Matching</h4>
+          <p>Every result gets a 0–10 fit score with strengths, gaps, ATS keywords, and a concrete tip before you apply.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">🛂</div>
+          <h4>Visa Sponsor Check</h4>
+          <p>Automatically badges UK Skilled Worker licensed employers. No more tab-switching to the Home Office register.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">📝</div>
+          <h4>CV &amp; Cover Letter</h4>
+          <p>Paste a job URL or description → get a tailored rewrite with STAR bullets and a 350-word cover letter.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">📋</div>
+          <h4>Application Tracker</h4>
+          <p>Kanban board from Saved → Applied → Interviewing → Offer or Rejected. Star your top picks.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">🌐</div>
+          <h4>Web Search Fallback</h4>
+          <p>No Apify token? GPT-4o uses DuckDuckGo + page fetch as tools — still finds and scores jobs.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ HOW THE SEARCH WORKS ═══ -->
+<section class="dark-section">
+  <div class="container">
+    <div class="fade-in">
+      <h2>How the Search Works</h2>
+      <p>The core flow streams results to your browser in real time — you see cards appearing as they arrive, not after a loading spinner.</p>
+
+      <div class="stack-grid">
+        <div class="stack-card">
+          <div class="stack-num">01</div>
+          <div>
+            <p><strong>User submits search →</strong> FastAPI opens an SSE stream. The browser is now listening.</p>
+          </div>
+        </div>
+        <div class="stack-card">
+          <div class="stack-num">02</div>
+          <div>
+            <p><strong>Apify actor launches →</strong> LinkedIn search URL gets built from your filters. The scraper polls every 2 seconds, max 35s timeout.</p>
+          </div>
+        </div>
+        <div class="stack-card">
+          <div class="stack-num">03</div>
+          <div>
+            <p><strong>Raw cards stream in →</strong> Each job appears in the UI immediately — title, company, location. No scores yet, but you're already scanning.</p>
+          </div>
+        </div>
+        <div class="stack-card">
+          <div class="stack-num">04</div>
+          <div>
+            <p><strong>GPT-4o scores in parallel →</strong> Your profile + all listings → one prompt. Scores, fit analysis, gap warnings, and ATS tips come back.</p>
+          </div>
+        </div>
+        <div class="stack-card">
+          <div class="stack-num">05</div>
+          <div>
+            <p><strong>Visa check runs →</strong> Each company name gets normalised and matched against 50,000+ entries in the Home Office register.</p>
+          </div>
+        </div>
+        <div class="stack-card">
+          <div class="stack-num">06</div>
+          <div>
+            <p><strong>Cards update live →</strong> Score pills, visa badges, and analysis text appear on each card. Done.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="quote-block">
+        Without Apify, the system falls back to GPT-4o's <strong>tool-calling capability</strong> — DuckDuckGo search + page fetch, all orchestrated as an agentic loop.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ARCHITECTURE ═══ -->
+<section>
+  <div class="container">
+    <div class="fade-in">
+      <h2>Architecture</h2>
+      <p class="lead">Full-stack, async-first, single-file database. No over-engineering — the "Troy" approach.</p>
+
+      <div class="tech-grid">
+        <div class="tech-card">
+          <div class="tech-label">Backend</div>
+          <div class="tech-desc">
+            <strong>FastAPI</strong> — async endpoints, SSE streaming via generators. <em>Python 3.12+, aiosqlite, uvicorn.</em>
+          </div>
+        </div>
+        <div class="tech-card">
+          <div class="tech-label">AI Layer</div>
+          <div class="tech-desc">
+            <strong>GPT-4o</strong> — job analysis, CV generation, and agentic web search with tool-calling. <em>OpenAI SDK, function definitions for web_search + web_fetch.</em>
+          </div>
+        </div>
+        <div class="tech-card">
+          <div class="tech-label">Scraping</div>
+          <div class="tech-desc">
+            <strong>Apify Cloud</strong> — LinkedIn jobs actor with start-poll-abort pattern. <em>Fallback: DuckDuckGo via ddgs + requests.</em>
+          </div>
+        </div>
+        <div class="tech-card">
+          <div class="tech-label">Frontend</div>
+          <div class="tech-desc">
+            <strong>Next.js 14</strong> — file-based routing, TypeScript, Tailwind CSS. <em>SSE consumption via ReadableStream.</em>
+          </div>
+        </div>
+        <div class="tech-card">
+          <div class="tech-label">Database</div>
+          <div class="tech-desc">
+            <strong>SQLite</strong> — single-file, zero config. Applications, sponsors, profiles, search history. <em>Async via aiosqlite.</em>
+          </div>
+        </div>
+        <div class="tech-card">
+          <div class="tech-label">API Design</div>
+          <div class="tech-desc">
+            <strong>14 endpoints</strong> — RESTful for CRUD, SSE for streaming. <em>Next.js rewrites proxy /api/* to FastAPI.</em>
+          </div>
+        </div>
+      </div>
+
+      <h3>The Visa Matching Engine</h3>
+      <p>The Home Office publishes a CSV of 50,000+ licensed sponsors. TierUp imports it into SQLite, normalises every company name (lowercase, punctuation stripped), and runs a two-pass match:</p>
+
+      <div class="code-block">
+<pre><span class="comment"># 1. Exact normalised match</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> sponsors
+<span class="keyword">WHERE</span> name_norm = <span class="func">normalize</span>(<span class="string">'Google'</span>)
+
+<span class="comment"># 2. Fuzzy fallback — catches "Google UK Ltd"</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> sponsors
+<span class="keyword">WHERE</span> name_norm <span class="keyword">LIKE</span> <span class="string">'%google%'</span></pre>
+      </div>
+
+      <p>Result: every job card gets a green <span class="visa-badge">✓ Visa Sponsor</span> badge or a red warning — <strong>automatically</strong>. No manual checking.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ BEFORE & AFTER ═══ -->
+<section>
+  <div class="container">
+    <div class="fade-in">
+      <h2>Before vs After TierUp</h2>
+      <p class="lead">The difference isn't features — it's time.</p>
+
+      <div class="vs-grid">
+        <div class="vs-card before">
+          <h4>Before · Manual</h4>
+          <p>Open LinkedIn. Search. Open job. Copy company name. Open Home Office register. Search. No match? Try variations. Found a match? Go back. Read the job description. Open Google Docs. Tailor your CV. Write a cover letter. Save. Apply. <strong>Repeat 50 times.</strong></p>
+        </div>
+        <div class="vs-card after">
+          <h4>After · TierUp</h4>
+          <p>Type a role. Hit search. Get 10 scored results with visa badges in 15 seconds. Click "CV Package" on the best match — get a tailored CV and cover letter streamed to your screen. Save to tracker. Apply. <strong>Done in under 2 minutes.</strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ DECISIONS ═══ -->
+<section class="dark-section">
+  <div class="container">
+    <div class="fade-in">
+      <h2>Design Decisions Worth Noting</h2>
+
+      <ul class="items">
+        <li><strong>SSE over WebSockets</strong> — one-directional stream is all job search needs. WebSockets would be over-engineering for a unidirectional data flow. Simpler, fewer failure modes.</li>
+        <li><strong>SQLite over Postgres</strong> — this is a personal tool. Single-file database means zero infrastructure, instant setup, and the entire state fits in one autojob.db file you can back up with copy-paste.</li>
+        <li><strong>Apify over custom scraping</strong> — LinkedIn blocks scrapers aggressively. Apify handles proxy rotation, browser fingerprinting, and CAPTCHA solving. I focused on the AI layer, not on fighting anti-bot systems.</li>
+        <li><strong>GPT-4o as an agent, not just a scorer</strong> — the web search fallback uses tool-calling to run DuckDuckGo searches and fetch pages in an agentic loop. The AI decides what to search, when to fetch a page, and when it has enough data to score.</li>
+        <li><strong>Normalised sponsor matching</strong> — exact matching fails when LinkedIn says "Google" but the register says "Google UK Limited." Normalisation + fuzzy LIKE catches these edge cases without needing a vector database.</li>
+      </ul>
+
+      <div class="quote-block">
+        Every decision was driven by the same principle: <strong>what gets a working product to my hands fastest?</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ API SURFACE ═══ -->
+<section>
+  <div class="container">
+    <div class="fade-in">
+      <h2>API Surface</h2>
+      <p class="lead">14 endpoints across 6 routers. RESTful for CRUD, SSE for streaming.</p>
+
+      <div class="code-block">
+<pre><span class="comment"># Core endpoints</span>
+<span class="keyword">POST</span>   <span class="string">/api/jobs/search</span>         <span class="comment"># SSE stream — job search + scoring</span>
+<span class="keyword">POST</span>   <span class="string">/api/cv/optimize</span>         <span class="comment"># SSE stream — tailored CV + cover letter</span>
+<span class="keyword">POST</span>   <span class="string">/api/cv/batch</span>            <span class="comment"># SSE stream — batch CV generation</span>
+
+<span class="comment"># Application tracker (CRUD)</span>
+<span class="keyword">GET</span>    <span class="string">/api/tracker</span>             <span class="comment"># List all saved applications</span>
+<span class="keyword">POST</span>   <span class="string">/api/tracker</span>             <span class="comment"># Save a new application</span>
+<span class="keyword">PATCH</span>  <span class="string">/api/tracker/:id</span>         <span class="comment"># Update status, notes, starred</span>
+<span class="keyword">DELETE</span> <span class="string">/api/tracker/:id</span>         <span class="comment"># Remove application</span>
+
+<span class="comment"># Visa sponsors</span>
+<span class="keyword">POST</span>   <span class="string">/api/sponsors/import</span>     <span class="comment"># Load Home Office CSV into DB</span>
+<span class="keyword">GET</span>    <span class="string">/api/sponsors/check</span>      <span class="comment"># Check if company sponsors visas</span>
+
+<span class="comment"># Profile + Activity</span>
+<span class="keyword">GET</span>    <span class="string">/api/profile</span>             <span class="comment"># Read user profile (JSON)</span>
+<span class="keyword">POST</span>   <span class="string">/api/profile</span>             <span class="comment"># Save profile</span>
+<span class="keyword">GET</span>    <span class="string">/api/activity</span>            <span class="comment"># Aggregate stats + recent log</span></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ WHAT I LEARNED ═══ -->
+<section>
+  <div class="container">
+    <div class="fade-in">
+      <h2>What I Learned Building This</h2>
+
+      <h3>SSE Streaming Is Underrated</h3>
+      <p>Most devs reach for WebSockets by default. But for server-to-client data flow — which is exactly what AI streaming responses are — Server-Sent Events are simpler, auto-reconnect out of the box, and work through proxies without extra config. The FastAPI generator pattern makes it clean:</p>
+
+      <div class="code-block">
+<pre><span class="keyword">async def</span> <span class="func">search_generator</span>():
+    <span class="keyword">yield</span> <span class="func">sse_event</span>(<span class="string">"status"</span>, {<span class="string">"message"</span>: <span class="string">"Scraping LinkedIn..."</span>})
+    jobs = <span class="keyword">await</span> <span class="func">scrape_linkedin</span>(params)
+    <span class="keyword">for</span> job <span class="keyword">in</span> jobs:
+        <span class="keyword">yield</span> <span class="func">sse_event</span>(<span class="string">"job"</span>, job)  <span class="comment"># card appears immediately</span>
+    scores = <span class="keyword">await</span> <span class="func">score_with_gpt4o</span>(jobs, profile)
+    <span class="keyword">yield</span> <span class="func">sse_event</span>(<span class="string">"jobs"</span>, scores)  <span class="comment"># cards update with AI analysis</span></pre>
+      </div>
+
+      <h3>AI Tool-Calling Changes Everything</h3>
+      <p>The web search fallback isn't a hardcoded scraper — it's GPT-4o deciding what to search, evaluating results, fetching pages, and reasoning about which jobs match. The AI orchestrates its own tool calls. I just defined the tools and the goal.</p>
+
+      <h3>Build for Yourself First</h3>
+      <p>This started as a script I ran in my terminal. Then it got a FastAPI wrapper. Then a frontend. The product grew from a real need, not a spec doc. That's why every feature exists — because I needed it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CLOSER ═══ -->
+<div class="closer">
+  <p>I didn't build TierUp because I wanted a portfolio project. I built it because applying for jobs as an international student shouldn't feel like a second full-time job.</p>
+  <div class="cta-row">
+    <a href="https://github.com/kennethvemagiri/tierup-ai" class="cta-btn primary" target="_blank" rel="noopener">View on GitHub →</a>
+    <a href="https://kennethvemagiri.com" class="cta-btn secondary">Back to Portfolio</a>
+  </div>
+  <div class="sig" style="margin-top: 2rem;">@KennethVemagiri</div>
+</div>
+
+<script src="../../js/site-header.js" defer></script>
+<script src="../../script.js" defer></script>
+<script src="../../js/case-study.js" defer></script>
+</body>
+</html>

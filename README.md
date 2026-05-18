@@ -19,13 +19,19 @@ Portfolio and project site. Built with HTML, CSS, and vanilla JavaScript. Single
 ## Customize
 
 - **Content:** Edit `index.html` (copy, links, project descriptions).
-- **Styles:** Edit `styles.css`; run `npm run minify` to update `styles.min.css`.
+- **Styles:** Edit `styles.css` (and page-specific sheets under `styles/`). HTML references the source files; run `npm run minify` only when you intentionally ship `styles.min.css` / `script.min.js`.
 - **Images:** Add or change images, then run `npm run build` to regenerate WebP.
 - **Contact form:** See `CONTACT-FORM-SETUP.md`. Form ID is in the form `action` in `index.html`.
 
 ## Deploy
 
-The site is static. Deploy the repo to Netlify, Vercel, or GitHub Pages (publish directory: root). See `DEPLOY-NETLIFY.md` for Netlify steps.
+**Netlify** (recommended): connect the GitHub repo; `netlify.toml` sets build, publish directory, and the GitHub contributions function. See **`DEPLOY-NETLIFY.md`** and **`NETLIFY-GITHUB.md`** for env vars and verification.
+
+```bash
+npm install
+npm run build          # optional locally; runs on Netlify before publish
+npx netlify-cli dev    # static site + functions locally
+```
 
 ---
 

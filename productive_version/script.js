@@ -41,17 +41,83 @@
   var navToggle = document.querySelector(".nav-toggle");
   var navLinks = document.querySelector(".nav-links");
   if (navToggle && navLinks) {
+    var navBackdrop = document.querySelector(".nav-backdrop");
+    if (!navBackdrop) {
+      navBackdrop = document.createElement("button");
+      navBackdrop.type = "button";
+      navBackdrop.className = "nav-backdrop";
+      navBackdrop.setAttribute("aria-label", "Close menu");
+      document.body.appendChild(navBackdrop);
+    }
+
+    var focusableSelector =
+      'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
+
+    function getNavFocusables() {
+      return Array.prototype.slice.call(
+        navLinks.querySelectorAll(focusableSelector)
+      );
+    }
+
+    function trapNavFocus(event) {
+      if (event.key !== "Tab" || navToggle.getAttribute("aria-expanded") !== "true") {
+        return;
+      }
+      var focusables = getNavFocusables();
+      if (!focusables.length) return;
+      var first = focusables[0];
+      var last = focusables[focusables.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+
     function closeNav() {
+      var hadFocus = document.activeElement;
       navToggle.setAttribute("aria-expanded", "false");
       navLinks.classList.remove("is-open");
+      navBackdrop.classList.remove("is-visible");
       document.body.style.overflow = "";
+      document.removeEventListener("keydown", trapNavFocus);
+      if (hadFocus && navLinks.contains(hadFocus)) {
+        navToggle.focus();
+      }
     }
+
+    function openNav() {
+      navToggle.setAttribute("aria-expanded", "true");
+      navLinks.classList.add("is-open");
+      navBackdrop.classList.add("is-visible");
+      document.body.style.overflow = "hidden";
+      document.addEventListener("keydown", trapNavFocus);
+      var focusables = getNavFocusables();
+      if (focusables.length) {
+        focusables[0].focus();
+      }
+    }
+
     navToggle.addEventListener("click", function () {
       var open = navToggle.getAttribute("aria-expanded") === "true";
-      navToggle.setAttribute("aria-expanded", !open);
-      navLinks.classList.toggle("is-open");
-      document.body.style.overflow = open ? "" : "hidden";
+      if (open) {
+        closeNav();
+      } else {
+        openNav();
+      }
     });
+
+    navBackdrop.addEventListener("click", closeNav);
+
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && navToggle.getAttribute("aria-expanded") === "true") {
+        event.preventDefault();
+        closeNav();
+      }
+    });
+
     navLinks.querySelectorAll("a").forEach(function (a) {
       a.addEventListener("click", closeNav);
     });
@@ -59,41 +125,437 @@
     if (navClose) navClose.addEventListener("click", closeNav);
   }
 
-  // --- Active nav link on scroll ---
-  var sections = document.querySelectorAll("section[id]");
+  function trimProductiveNav() {
+    if (!document.body.classList.contains("productive-version-page")) return;
+
+    var logo = document.querySelector(".site-header .nav-logo");
+    if (logo) logo.setAttribute("href", "../index.html#home");
+
+    var removeLabels = {
+      Work: true,
+      About: true,
+      Contact: true
+    };
+
+    document.querySelectorAll(".site-header .nav-links li").forEach(function (li) {
+      var anchor = li.querySelector("a");
+      if (!anchor) return;
+      if (removeLabels[(anchor.textContent || "").trim()]) {
+        li.remove();
+      }
+    });
+  }
+
+  function localizeProductiveNav() {
+    trimProductiveNav();
+  }
+
+  var sections = document.querySelectorAll("section[id], article[id]");
   var navAnchors = document.querySelectorAll(".nav-links a[href^='#']");
+
   function updateActiveNav() {
     var header = document.querySelector(".site-header");
     var headerHeight = header ? header.offsetHeight : 80;
     var scrollY = window.scrollY || window.pageYOffset;
+    var activeId = "";
     sections.forEach(function (section) {
       var id = section.getAttribute("id");
       if (!id) return;
       var top = section.offsetTop - headerHeight;
       var height = section.offsetHeight;
       if (scrollY >= top && scrollY < top + height) {
-        navAnchors.forEach(function (a) {
-          if (a.getAttribute("href") === "#" + id) {
-            a.setAttribute("aria-current", "page");
-          } else {
-            a.removeAttribute("aria-current");
-          }
-        });
+        activeId = id;
+      }
+    });
+    navAnchors.forEach(function (anchor) {
+      if (anchor.getAttribute("href") === "#" + activeId) {
+        anchor.setAttribute("aria-current", "page");
+      } else {
+        anchor.removeAttribute("aria-current");
       }
     });
   }
-  if (sections.length && navAnchors.length) {
-    window.addEventListener("scroll", updateActiveNav, { passive: true });
-    updateActiveNav();
+
+  function initProductivePageNav() {
+    localizeProductiveNav();
+    if (sections.length && navAnchors.length) {
+      window.addEventListener("scroll", updateActiveNav, { passive: true });
+      updateActiveNav();
+    }
   }
 
-  // Contributions: show current month as "Last 30 days" label (e.g. "Mar 2026")
+  // Contributions: show current month beside the last-14-days label (e.g. "MAY 2026")
   var contribPeriod = document.getElementById("contrib-period");
   if (contribPeriod) {
     var d = new Date();
-    var monthName = d.toLocaleString("en-GB", { month: "short" });
+    var monthName = d.toLocaleString("en-GB", { month: "short" }).toUpperCase();
     var year = d.getFullYear();
-    contribPeriod.textContent = "Last 30 days · " + monthName + " " + year;
+    contribPeriod.textContent = monthName + " " + year;
+  }
+
+  function initTimelineCompression() {
+    var board = document.querySelector(".dual-timeline-board");
+    if (!board) return;
+
+    var babyStart = 2000;
+    var babyEnd = 2007;
+    var endYear = 2026;
+    var babyShare = 0.07;
+
+    function timelineYearToPercent(year) {
+      if (year <= babyEnd) {
+        if (year <= babyStart) return 0;
+        return ((year - babyStart) / (babyEnd - babyStart)) * babyShare * 100;
+      }
+      return (
+        babyShare * 100 +
+        ((year - babyEnd) / (endYear - babyEnd)) * (100 - babyShare * 100)
+      );
+    }
+
+    function babyReveal(year) {
+      if (year > babyEnd) return { opacity: 1, blur: 0 };
+      var progress = (year - babyStart) / (babyEnd - babyStart);
+      if (progress < 0) progress = 0;
+      return { opacity: progress, blur: (1 - progress) * 4 };
+    }
+
+    board.querySelectorAll(".dual-timeline-years span").forEach(function (span) {
+      var year = parseInt(span.textContent, 10);
+      if (Number.isNaN(year)) return;
+      var reveal = babyReveal(year);
+      span.style.opacity = String(reveal.opacity);
+      span.style.filter = reveal.blur > 0 ? "blur(" + reveal.blur.toFixed(2) + "px)" : "none";
+    });
+
+    board.querySelectorAll(".dual-timeline-pin[data-year]").forEach(function (pin) {
+      var year = parseInt(pin.getAttribute("data-year"), 10);
+      if (Number.isNaN(year)) return;
+      pin.style.left = timelineYearToPercent(year) + "%";
+      var reveal = babyReveal(year);
+      pin.style.opacity = String(reveal.opacity);
+      pin.style.filter = reveal.blur > 0 ? "blur(" + reveal.blur.toFixed(2) + "px)" : "none";
+    });
+  }
+
+  function initTimelineYearActivate() {
+    var board = document.querySelector(".dual-timeline-board");
+    if (!board) return;
+
+    var yearTargets = board.querySelectorAll(".dual-timeline-years span");
+    var pinTargets = board.querySelectorAll(".dual-timeline-pin[data-year]");
+
+    yearTargets.forEach(function (span) {
+      if (window.getComputedStyle(span).visibility === "hidden") return;
+      span.setAttribute("role", "button");
+      span.setAttribute("tabindex", "0");
+    });
+
+    function clearActive() {
+      board.querySelectorAll(".is-year-active").forEach(function (el) {
+        el.classList.remove("is-year-active");
+      });
+    }
+
+    function activateYear(year) {
+      if (Number.isNaN(year)) return;
+      clearActive();
+      yearTargets.forEach(function (span) {
+        if (parseInt(span.textContent, 10) === year) {
+          span.classList.add("is-year-active");
+        }
+      });
+      pinTargets.forEach(function (pin) {
+        if (parseInt(pin.getAttribute("data-year"), 10) === year) {
+          pin.classList.add("is-year-active");
+        }
+      });
+    }
+
+    function activateFromTarget(target) {
+      if (!target) return;
+      if (target.matches(".dual-timeline-years span")) {
+        activateYear(parseInt(target.textContent, 10));
+        return;
+      }
+      var pin = target.closest(".dual-timeline-pin[data-year]");
+      if (pin) {
+        activateYear(parseInt(pin.getAttribute("data-year"), 10));
+      }
+    }
+
+    board.addEventListener("click", function (event) {
+      activateFromTarget(
+        event.target.closest(".dual-timeline-years span, .dual-timeline-pin[data-year]")
+      );
+    });
+
+    board.addEventListener("pointerleave", clearActive);
+
+    board.addEventListener("keydown", function (event) {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      var yearSpan = event.target.closest(".dual-timeline-years span");
+      if (!yearSpan) return;
+      event.preventDefault();
+      activateFromTarget(yearSpan);
+    });
+  }
+
+  function initTimelineScrollPan() {
+    var scroller = document.querySelector(".dual-timeline-scroll");
+    if (!scroller) return;
+
+    var prefersReduced =
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    var isDragging = false;
+    var activePointerId = null;
+    var startX = 0;
+    var startScrollLeft = 0;
+    var dragged = false;
+
+    function canScroll() {
+      return scroller.scrollWidth > scroller.clientWidth + 1;
+    }
+
+    function stopDrag(pointerId) {
+      if (activePointerId != null && pointerId !== activePointerId) return;
+      isDragging = false;
+      activePointerId = null;
+      scroller.classList.remove("is-dragging");
+    }
+
+    scroller.addEventListener("pointerdown", function (event) {
+      if (!canScroll()) return;
+      if (event.pointerType === "mouse" && event.button !== 0) return;
+      if (event.target.closest(".dual-timeline-years span, .dual-timeline-pin[data-year]")) {
+        return;
+      }
+
+      isDragging = true;
+      dragged = false;
+      activePointerId = event.pointerId;
+      startX = event.clientX;
+      startScrollLeft = scroller.scrollLeft;
+      scroller.classList.add("is-dragging");
+      scroller.setPointerCapture(event.pointerId);
+    });
+
+    scroller.addEventListener("pointermove", function (event) {
+      if (!isDragging || event.pointerId !== activePointerId) return;
+      var delta = event.clientX - startX;
+      if (Math.abs(delta) > 3) dragged = true;
+      event.preventDefault();
+      scroller.scrollLeft = startScrollLeft - delta;
+    });
+
+    scroller.addEventListener("pointerup", function (event) {
+      stopDrag(event.pointerId);
+    });
+
+    scroller.addEventListener("pointercancel", function (event) {
+      stopDrag(event.pointerId);
+    });
+
+    scroller.addEventListener(
+      "click",
+      function (event) {
+        if (!dragged) return;
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        dragged = false;
+      },
+      true
+    );
+
+    scroller.addEventListener("keydown", function (event) {
+      if (!canScroll()) return;
+      var step = Math.max(40, Math.round(scroller.clientWidth * 0.15));
+      if (event.key === "ArrowLeft") {
+        scroller.scrollLeft -= step;
+        event.preventDefault();
+      } else if (event.key === "ArrowRight") {
+        scroller.scrollLeft += step;
+        event.preventDefault();
+      } else if (event.key === "Home") {
+        scroller.scrollLeft = 0;
+        event.preventDefault();
+      } else if (event.key === "End") {
+        scroller.scrollLeft = scroller.scrollWidth;
+        event.preventDefault();
+      }
+    });
+
+    if (!prefersReduced) {
+      scroller.addEventListener(
+        "wheel",
+        function (event) {
+          if (!canScroll()) return;
+          if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
+          scroller.scrollLeft += event.deltaY;
+          event.preventDefault();
+        },
+        { passive: false }
+      );
+    }
+  }
+
+  function bootProductivePage() {
+    initProductivePageNav();
+    initTimelineCompression();
+    initTimelineYearActivate();
+    initTimelineScrollPan();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", bootProductivePage);
+  } else {
+    bootProductivePage();
+  }
+
+  var FEATURED_PROJECT_COUNT = 3;
+
+  function escapeHtml(value) {
+    return String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
+  function resolveSitePath(path) {
+    if (!path) return "#";
+    if (/^https?:\/\//i.test(path)) return path;
+    return "../" + String(path).replace(/^\//, "");
+  }
+
+  function externalLinkAttrs(href) {
+    if (href && /^https?:\/\//i.test(href)) {
+      return ' target="_blank" rel="noopener noreferrer"';
+    }
+    return "";
+  }
+
+  function shuffleAndPick(items, count) {
+    var pool = items.slice();
+    var i = pool.length;
+    while (i > 1) {
+      i -= 1;
+      var j = Math.floor(Math.random() * (i + 1));
+      var temp = pool[i];
+      pool[i] = pool[j];
+      pool[j] = temp;
+    }
+    return pool.slice(0, Math.min(count, pool.length));
+  }
+
+  function renderFeaturedProjectCard(project) {
+    var featured = project.featured ? " project-tile-featured" : "";
+    var badgeClass = project.badgeSoon ? " project-tile-badge-soon" : "";
+    var mediaHref = resolveSitePath(project.mediaHref);
+    var caseHref = resolveSitePath(project.caseHref || project.mediaHref);
+    var mediaRel = externalLinkAttrs(project.mediaHref);
+    var caseRel = externalLinkAttrs(project.caseHref || project.mediaHref);
+    var tileClass = escapeHtml(project.tileClass || "project-tile-generic");
+    var stackItems = (project.stack || [])
+      .map(function (tech) {
+        return "<li>" + escapeHtml(tech) + "</li>";
+      })
+      .join("");
+    var actions = (project.actions || [])
+      .map(function (action) {
+        var rel = action.external ? ' target="_blank" rel="noopener noreferrer"' : "";
+        return (
+          '<a href="' +
+          escapeHtml(resolveSitePath(action.href)) +
+          '"' +
+          rel +
+          ">" +
+          escapeHtml(action.label) +
+          "</a>"
+        );
+      })
+      .join("");
+    return (
+      '<article class="project-tile ' +
+      tileClass +
+      featured +
+      '">' +
+      '<a href="' +
+      escapeHtml(mediaHref) +
+      '"' +
+      mediaRel +
+      ' class="project-tile-media" tabindex="-1" aria-hidden="true">' +
+      '<div class="project-tile-image">' +
+      "<picture>" +
+      '<source type="image/webp" srcset="' +
+      escapeHtml(resolveSitePath(project.imageWebp)) +
+      '">' +
+      '<img src="' +
+      escapeHtml(resolveSitePath(project.imageFallback)) +
+      '" alt="" width="' +
+      Number(project.imageW || 200) +
+      '" height="' +
+      Number(project.imageH || 200) +
+      '" loading="lazy" decoding="async">' +
+      "</picture>" +
+      "</div>" +
+      "</a>" +
+      '<div class="project-tile-content">' +
+      '<span class="project-tile-badge' +
+      badgeClass +
+      '">' +
+      escapeHtml(project.badge) +
+      "</span>" +
+      '<h3 class="project-tile-title"><a href="' +
+      escapeHtml(caseHref) +
+      '"' +
+      caseRel +
+      ">" +
+      escapeHtml(project.title) +
+      "</a></h3>" +
+      '<p class="project-tile-tagline">' +
+      escapeHtml(project.tagline) +
+      "</p>" +
+      '<ul class="project-tile-stack" aria-label="Tech stack">' +
+      stackItems +
+      "</ul>" +
+      '<p class="project-tile-metric">' +
+      escapeHtml(project.metric) +
+      "</p>" +
+      '<div class="project-tile-actions">' +
+      actions +
+      "</div>" +
+      "</div>" +
+      "</article>"
+    );
+  }
+
+  function renderFeaturedProjects() {
+    var root = document.getElementById("featured-projects-root");
+    if (!root) return;
+    fetch("../data/site-content.json", { credentials: "same-origin" })
+      .then(function (res) {
+        if (!res.ok) throw new Error("site-content");
+        return res.json();
+      })
+      .then(function (data) {
+        var featured = (data.projects || []).filter(function (project) {
+          return !!project.featured;
+        });
+        if (!featured.length) return;
+        var chosen = shuffleAndPick(featured, FEATURED_PROJECT_COUNT);
+        root.innerHTML = chosen.map(renderFeaturedProjectCard).join("");
+      })
+      .catch(function () {});
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", renderFeaturedProjects);
+  } else {
+    renderFeaturedProjects();
   }
 
   // ========== Impression / visitor counter (IP-based when API is connected) ==========
@@ -119,263 +581,278 @@
     }
   }
 
-  // ========== Current project: set name, brief, Git URL, and Live URL here ==========
+  // ========== Current project: driven by data/site-content.json ==========
+  // Mark exactly one project with "currentBuild": true (or we fall back to the first
+  // featured project that has a GitHub action). Edit title, tagline, and actions there.
   (function () {
-    var CURRENT_PROJECT = {
-      name: "—",           // e.g. "MedWorkFlow"
-      brief: "—",          // e.g. "Healthcare workflow automation for medical teams."
-      git: "#",            // e.g. "https://github.com/you/repo"
-      live: "#"            // e.g. "https://app.example.com"
-    };
     var nameEl = document.getElementById("current-project-name");
     var briefEl = document.getElementById("current-project-brief");
     var gitEl = document.getElementById("current-project-git");
-    var liveEl = document.getElementById("current-project-live");
-    if (nameEl) nameEl.textContent = CURRENT_PROJECT.name;
-    if (briefEl) briefEl.textContent = CURRENT_PROJECT.brief;
-    if (gitEl) { gitEl.href = CURRENT_PROJECT.git; gitEl.querySelector(".current-project-link-label").textContent = "Git"; }
-    if (liveEl) { liveEl.href = CURRENT_PROJECT.live; liveEl.querySelector(".current-project-link-label").textContent = "Live"; }
+    if (!nameEl || !briefEl || !gitEl) return;
+
+    function githubHrefFromProject(p) {
+      if (!p || !Array.isArray(p.actions)) return "";
+      for (var i = 0; i < p.actions.length; i++) {
+        var a = p.actions[i];
+        if (!a || !a.href) continue;
+        var href = String(a.href).trim();
+        var lab = String(a.label || "").toLowerCase();
+        if (href.indexOf("github.com") !== -1 || lab === "github") return href;
+      }
+      return "";
+    }
+
+    function applyProject(p) {
+      if (!p) return;
+      var name = String(p.title || "").trim();
+      var brief = String(p.tagline || p.metric || "").trim();
+      var gitUrl = githubHrefFromProject(p);
+      nameEl.textContent = name || "—";
+      briefEl.textContent = brief || "Add the build you are shipping right now.";
+      if (gitUrl) {
+        gitEl.href = gitUrl;
+        gitEl.removeAttribute("aria-disabled");
+        gitEl.classList.remove("is-placeholder");
+        gitEl.setAttribute("aria-label", "Open " + name + " on GitHub");
+      } else {
+        gitEl.href = "#";
+        gitEl.setAttribute("aria-disabled", "true");
+        gitEl.classList.add("is-placeholder");
+        gitEl.removeAttribute("aria-label");
+      }
+    }
+
+    function pickProject(projects) {
+      if (!projects || !projects.length) return null;
+      var flagged = projects.filter(function (p) {
+        return p && p.currentBuild;
+      });
+      if (flagged.length) return flagged[0];
+      for (var j = 0; j < projects.length; j++) {
+        var q = projects[j];
+        if (q && q.featured && githubHrefFromProject(q)) return q;
+      }
+      return null;
+    }
+
+    var dataUrl = new URL("../data/site-content.json", window.location.href).toString();
+    fetch(dataUrl, { credentials: "same-origin" })
+      .then(function (res) {
+        if (!res.ok) throw new Error("bad status");
+        return res.json();
+      })
+      .then(function (data) {
+        var p = pickProject(data && data.projects);
+        applyProject(p);
+      })
+      .catch(function () {
+        /* keep HTML defaults when JSON missing (e.g. wrong base path) */
+      });
   })();
 
-  // ========== Skills timeline ==========
+  // ========== Last played: multiple YouTube URLs, random pick every 2–3 h ==========
   (function () {
-    var container = document.getElementById('skills-timeline');
-    if (!container) return;
+    /**
+     * Add as many entries as you like. Each rotation picks a random video (never the
+     * same as the previous pick when there are 2+). Interval until next pick is random
+     * between 2h and 3h, persisted in localStorage so it survives refresh.
+     *
+     * Back-compat: a lone `youtube` + optional `title` still works as a one-item list.
+     */
+    var LAST_PLAYED = {
+      videos: [
+        { youtube: "https://www.youtube.com/watch?v=RnOWJoHU_NY", title: "" }
+        // { youtube: "https://youtu.be/VIDEO_ID", title: "Talk title" },
+      ]
+    };
 
-    var YEAR_START = 2020;
-    var YEAR_END = 2026;
-    var LABEL_W = 72;
-    var ROW_H = 36;
-    var YEAR_W = 96;
-    var PAD_TOP = 26;
-    var PAD_BOTTOM = 8;
+    var STORAGE_KEY = "kv-dev-last-played-rot";
+    var MIN_ROT_MS = 2 * 60 * 60 * 1000;
+    var MAX_ROT_MS = 3 * 60 * 60 * 1000;
 
-    var categories = [
-      {
-        name: 'Languages',
-        color: '#58a6ff',
-        skills: [
-          { name: 'Python',       year: 2020.0, prof: 3 },
-          { name: 'JavaScript',   year: 2020.4, prof: 3 },
-          { name: 'HTML / CSS',   year: 2020.7, prof: 3 },
-          { name: 'SQL',          year: 2021.2, prof: 2 },
-          { name: 'TypeScript',   year: 2022.3, prof: 2 },
-        ]
-      },
-      {
-        name: 'Frontend',
-        color: '#d2a8ff',
-        skills: [
-          { name: 'React',          year: 2022.0, prof: 2 },
-          { name: 'Vite',           year: 2023.0, prof: 2 },
-          { name: 'Tailwind CSS',   year: 2023.3, prof: 2 },
-          { name: 'Framer Motion',  year: 2023.7, prof: 1 },
-          { name: 'Three.js',       year: 2024.2, prof: 1 },
-        ]
-      },
-      {
-        name: 'Backend',
-        color: '#3fb950',
-        skills: [
-          { name: 'REST APIs',  year: 2021.0, prof: 2 },
-          { name: 'Node.js',    year: 2022.1, prof: 2 },
-          { name: 'Flask',      year: 2022.5, prof: 1 },
-          { name: 'FastAPI',    year: 2023.2, prof: 2 },
-        ]
-      },
-      {
-        name: 'Data / ML',
-        color: '#ffa657',
-        skills: [
-          { name: 'Pandas',       year: 2020.1, prof: 3 },
-          { name: 'NumPy',        year: 2020.5, prof: 3 },
-          { name: 'Scikit-learn', year: 2021.1, prof: 2 },
-          { name: 'TensorFlow',   year: 2021.6, prof: 2 },
-          { name: 'PyTorch',      year: 2022.4, prof: 2 },
-        ]
-      },
-      {
-        name: 'AI / LLM',
-        color: '#ff7b72',
-        skills: [
-          { name: 'Prompt Engineering', year: 2023.0, prof: 3 },
-          { name: 'OpenAI API',         year: 2023.2, prof: 3 },
-          { name: 'LangChain',          year: 2023.5, prof: 2 },
-          { name: 'RAG',                year: 2024.0, prof: 2 },
-          { name: 'Fine-tuning',        year: 2024.5, prof: 2 },
-        ]
-      },
-      {
-        name: 'DevOps',
-        color: '#79c0ff',
-        skills: [
-          { name: 'Git',            year: 2020.2, prof: 3 },
-          { name: 'Docker',         year: 2023.0, prof: 2 },
-          { name: 'Netlify',        year: 2023.4, prof: 2 },
-          { name: 'GitHub Actions', year: 2024.1, prof: 1 },
-        ]
-      },
-    ];
-
-    var profR = [0, 3, 5, 7];
-    var YEARS = YEAR_END - YEAR_START;
-    var CHART_W = YEARS * YEAR_W;
-    var SVG_W = LABEL_W + CHART_W + 20;
-    var SVG_H = PAD_TOP + categories.length * ROW_H + PAD_BOTTOM;
-    var NS = 'http://www.w3.org/2000/svg';
-
-    function mk(tag, attrs) {
-      var el = document.createElementNS(NS, tag);
-      Object.keys(attrs).forEach(function (k) { el.setAttribute(k, attrs[k]); });
-      return el;
+    function randomRotationMs() {
+      return MIN_ROT_MS + Math.random() * (MAX_ROT_MS - MIN_ROT_MS);
     }
 
-    var svg = mk('svg', {
-      width: '100%',
-      viewBox: '0 0 ' + SVG_W + ' ' + SVG_H,
-      preserveAspectRatio: 'xMinYMin meet',
-      style: 'display:block',
-      'aria-hidden': 'true'
-    });
-
-    // Year grid lines + labels
-    for (var y = YEAR_START; y <= YEAR_END; y++) {
-      var gx = LABEL_W + (y - YEAR_START) * YEAR_W;
-      svg.appendChild(mk('line', {
-        x1: gx, y1: PAD_TOP - 6,
-        x2: gx, y2: SVG_H - PAD_BOTTOM,
-        stroke: '#30363d', 'stroke-width': 1
-      }));
-      var yt = mk('text', {
-        x: gx, y: PAD_TOP - 10,
-        'text-anchor': 'middle',
-        fill: '#8b949e',
-        'font-family': '"JetBrains Mono",monospace',
-        'font-size': '11'
-      });
-      yt.textContent = y;
-      svg.appendChild(yt);
+    function getYouTubeVideoId(url) {
+      if (!url) return "";
+      try {
+        var parsed = new URL(url.trim());
+        if (parsed.hostname === "youtu.be") {
+          return parsed.pathname.replace(/^\//, "").split(/[/?#]/)[0];
+        }
+        var fromQuery = parsed.searchParams.get("v");
+        if (fromQuery) return fromQuery;
+        var pathMatch = parsed.pathname.match(/\/(?:embed|shorts|live)\/([^/?#]+)/);
+        if (pathMatch) return pathMatch[1];
+      } catch (error) {
+        return "";
+      }
+      return "";
     }
 
-    // Category rows
-    categories.forEach(function (cat, i) {
-      var rowY = PAD_TOP + i * ROW_H;
-      var midY = rowY + ROW_H / 2;
+    function normalizeVideos(cfg) {
+      var list = cfg.videos;
+      if (Array.isArray(list) && list.length) {
+        return list
+          .map(function (item) {
+            if (typeof item === "string") {
+              return { youtube: item.trim(), title: "" };
+            }
+            if (!item || typeof item !== "object") return null;
+            var y = (item.youtube || item.url || "").trim();
+            return y ? { youtube: y, title: (item.title || "").trim() } : null;
+          })
+          .filter(Boolean);
+      }
+      var single = (cfg.youtube || "").trim();
+      if (single) return [{ youtube: single, title: (cfg.title || "").trim() }];
+      return [];
+    }
 
-      // Alternating row tint
-      if (i % 2 === 0) {
-        svg.appendChild(mk('rect', {
-          x: 0, y: rowY, width: SVG_W, height: ROW_H,
-          fill: 'rgba(255,255,255,0.018)'
-        }));
+    function playlistHash(entries) {
+      return entries
+        .map(function (e) {
+          return e.youtube;
+        })
+        .join("|");
+    }
+
+    function readState() {
+      try {
+        var raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return null;
+        var o = JSON.parse(raw);
+        if (typeof o.index !== "number" || typeof o.nextAt !== "number") return null;
+        return o;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function writeState(o) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(o));
+      } catch (e) {}
+    }
+
+    function pickRandomIndexExcluding(n, exclude) {
+      if (n <= 1) return 0;
+      var i;
+      var guard = 0;
+      do {
+        i = Math.floor(Math.random() * n);
+        guard++;
+      } while (i === exclude && guard < 50);
+      return i;
+    }
+
+    function resolveRotation(entries, hash) {
+      var now = Date.now();
+      var n = entries.length;
+      var st = readState();
+      var idx;
+      var nextAt;
+
+      if (!st || st.hash !== hash || st.index < 0 || st.index >= n) {
+        idx = Math.floor(Math.random() * n);
+        nextAt = now + randomRotationMs();
+        writeState({ index: idx, nextAt: nextAt, hash: hash });
+        return { entry: entries[idx], nextAt: nextAt };
       }
 
-      // Category label
-      var lbl = mk('text', {
-        x: LABEL_W - 10, y: midY + 4,
-        'text-anchor': 'end',
-        fill: '#8b949e',
-        'font-family': '"JetBrains Mono",monospace',
-        'font-size': '11'
-      });
-      lbl.textContent = cat.name;
-      svg.appendChild(lbl);
-
-      // Left separator
-      svg.appendChild(mk('line', {
-        x1: LABEL_W, y1: rowY, x2: LABEL_W, y2: rowY + ROW_H,
-        stroke: '#30363d', 'stroke-width': 1
-      }));
-
-      // Skill dots
-      cat.skills.forEach(function (skill) {
-        var cx = LABEL_W + (skill.year - YEAR_START) * YEAR_W;
-        var r = profR[skill.prof] || 5;
-        var c = mk('circle', {
-          cx: cx, cy: midY, r: r,
-          fill: cat.color, opacity: '0.88',
-          tabindex: '0',
-          'aria-label': skill.name + ' – since ' + Math.floor(skill.year),
-          style: 'cursor:pointer;outline:none;'
-        });
-        c.dataset.name = skill.name;
-        c.dataset.year = Math.floor(skill.year);
-        c.dataset.prof = skill.prof;
-        c.dataset.color = cat.color;
-        svg.appendChild(c);
-      });
-    });
-
-    container.appendChild(svg);
-
-    // Tooltip
-    var tip = document.createElement('div');
-    tip.className = 'skills-timeline-tooltip';
-    tip.style.display = 'none';
-    document.body.appendChild(tip);
-
-    var profLabel = ['', 'Learning', 'Proficient', 'Expert'];
-
-    function showTip(e, el) {
-      tip.innerHTML =
-        '<strong>' + el.dataset.name + '</strong><br>' +
-        '<span style="color:#8b949e">Since ' + el.dataset.year + ' &nbsp;·&nbsp; ' + (profLabel[el.dataset.prof] || '') + '</span>';
-      tip.style.display = 'block';
-      moveTip(e);
-    }
-
-    function moveTip(e) {
-      var tx = e.clientX + 14;
-      var ty = e.clientY - 8;
-      if (tx + 180 > window.innerWidth) tx = e.clientX - 190;
-      tip.style.left = tx + 'px';
-      tip.style.top = ty + 'px';
-    }
-
-    svg.addEventListener('mouseover', function (e) {
-      if (e.target.tagName === 'circle') showTip(e, e.target);
-    });
-    svg.addEventListener('mousemove', function (e) {
-      if (e.target.tagName === 'circle') moveTip(e);
-    });
-    svg.addEventListener('mouseout', function (e) {
-      if (e.target.tagName === 'circle') tip.style.display = 'none';
-    });
-    svg.addEventListener('focusin', function (e) {
-      if (e.target.tagName === 'circle') {
-        var r = e.target.getBoundingClientRect();
-        var fe = { clientX: r.left + r.width / 2, clientY: r.top };
-        showTip(fe, e.target);
+      if (now >= st.nextAt) {
+        idx = pickRandomIndexExcluding(n, st.index);
+        nextAt = now + randomRotationMs();
+        writeState({ index: idx, nextAt: nextAt, hash: hash });
+        return { entry: entries[idx], nextAt: nextAt };
       }
+
+      return { entry: entries[st.index], nextAt: st.nextAt };
+    }
+
+    var link = document.getElementById("last-played-link");
+    var thumb = document.getElementById("last-played-thumb");
+    var caption = document.getElementById("last-played-caption");
+    if (!link || !thumb || !caption) return;
+
+    var entries = normalizeVideos(LAST_PLAYED).filter(function (e) {
+      return getYouTubeVideoId(e.youtube);
     });
-    svg.addEventListener('focusout', function () { tip.style.display = 'none'; });
+    if (!entries.length) return;
+
+    var hash = playlistHash(entries);
+    var rotateTimer = null;
+
+    function applyEntry(entry) {
+      var youtubeUrl = entry.youtube.trim();
+      var videoId = getYouTubeVideoId(youtubeUrl);
+      if (!videoId) return;
+
+      link.href = youtubeUrl;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.removeAttribute("aria-disabled");
+      link.removeAttribute("tabindex");
+      link.classList.remove("is-placeholder");
+      link.setAttribute("aria-label", "Watch last played video on YouTube");
+
+      thumb.src = "https://i.ytimg.com/vi/" + videoId + "/hqdefault.jpg";
+      thumb.alt = entry.title ? entry.title + " thumbnail" : "YouTube video thumbnail";
+
+      caption.textContent = entry.title || "Watch on YouTube";
+    }
+
+    function scheduleRotate(nextAt) {
+      if (rotateTimer) {
+        clearTimeout(rotateTimer);
+        rotateTimer = null;
+      }
+      var delay = Math.max(5000, nextAt - Date.now());
+      rotateTimer = window.setTimeout(runRotation, delay);
+    }
+
+    function runRotation() {
+      var r = resolveRotation(entries, hash);
+      applyEntry(r.entry);
+      scheduleRotate(r.nextAt);
+    }
+
+    runRotation();
+
+    document.addEventListener("visibilitychange", function () {
+      if (document.visibilityState !== "visible") return;
+      runRotation();
+    });
   })();
 
-  // ========== PLACEHOLDER: Last played – Spotify, YouTube, Podcast APIs ==========
-  // When you have APIs, set text (or innerHTML) on these elements:
-  // Spotify:  #last-played-spotify-title, #last-played-spotify-subtitle
-  // YouTube: #last-played-youtube-title, #last-played-youtube-subtitle
-  // Podcast: #last-played-podcast-title, #last-played-podcast-subtitle
-  // Example: document.getElementById("last-played-spotify-title").textContent = data.track;
-  //          document.getElementById("last-played-spotify-subtitle").textContent = data.artist;
+  // ========== Contributions: last 14 days (/api/github-contributions → Netlify Function) ==========
+  (function () {
+    var cells = document.querySelectorAll("#contrib-grid .contrib-cell");
+    var placeholder = document.getElementById("contrib-placeholder");
+    if (!cells.length) return;
 
-  // ========== PLACEHOLDER: Contributions – last 30 days only ==========
-  // API should return an array of 30 numbers (count per day, oldest first).
-  // Set data-level on each .contrib-cell: 0 = none, 1–4 = intensity (CSS colors them).
-  // Example: for each cell, cell.setAttribute("data-level", levelFromCount(count));
-  // function fetchContributions() {
-  //   fetch("YOUR_CONTRIB_API_OR_PROXY?days=30")
-  //     .then(function (res) { return res.json(); })
-  //     .then(function (data) {
-  //       var cells = document.querySelectorAll("#contrib-grid .contrib-cell");
-  //       var placeholder = document.getElementById("contrib-placeholder");
-  //       if (!cells.length) return;
-  //       data.forEach(function (count, i) {
-  //         if (cells[i]) cells[i].setAttribute("data-level", count === 0 ? "0" : Math.min(4, Math.ceil(count / 5)).toString());
-  //       });
-  //       if (placeholder) placeholder.style.display = "none";
-  //     })
-  //     .catch(function () {});
-  // }
-  // fetchContributions();
+    function countToLevel(count) {
+      if (!count || count <= 0) return "0";
+      return String(Math.min(4, Math.ceil(count / 5)));
+    }
+
+    var apiPath = "/api/github-contributions";
+    fetch(apiPath, { credentials: "same-origin" })
+      .then(function (res) {
+        if (!res.ok) throw new Error("bad status");
+        return res.json();
+      })
+      .then(function (data) {
+        var arr = data && data.counts;
+        if (!Array.isArray(arr) || arr.length !== 14) throw new Error("bad payload");
+        arr.forEach(function (count, i) {
+          if (cells[i]) cells[i].setAttribute("data-level", countToLevel(count));
+        });
+        if (placeholder) placeholder.style.display = "none";
+      })
+      .catch(function () {
+        /* keep placeholder when API missing (e.g. local static serve) */
+      });
+  })();
 })();

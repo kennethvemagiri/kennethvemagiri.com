@@ -1,0 +1,257 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="LLMs don't think. They predict the next token, and understanding that pipeline changes how you build with them. By Kenneth Vemagiri.">
+<link rel="canonical" href="https://kennethvemagiri.com/insights/how-llms-work/">
+<title>Kenneth | AI Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles.css">
+  <link rel="stylesheet" href="../../styles/case-study.css">
+  <link rel="icon" href="../../favicon.ico" sizes="any">
+  <link rel="icon" href="../../favicon-96x96.png" type="image/png" sizes="96x96">
+  <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+  <link rel="manifest" href="../../site.webmanifest">
+</head>
+<body class="essay-page case-study-llm" style="--essay-accent: #2ecc71;">
+<a href="#essay-start" class="skip-link">Skip to main content</a>
+<header class="site-header"></header>
+
+<!-- ═══ HERO ═══ -->
+<header class="hero" id="essay-start">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1><span class="mono">// under the hood</span>How LLMs<br>Work</h1>
+    <div class="byline">In the voice of @KennethVemagiri</div>
+    <div class="tagline">
+      <strong>LLMs don't think.</strong> They predict the next token, and understanding that pipeline changes <span class="hl">how you build with them.</span>
+    </div>
+  </div>
+  <div class="scroll-hint">↓ Scroll</div>
+</header>
+
+<!-- ═══ TOKENS ═══ -->
+<section>
+  <div class="container">
+    <div class="fade-in">
+      <h2>Tokens. The LEGO Bricks of Language</h2>
+      <p class="lead">You don't read letter-by-letter. Neither does an LLM. It chunks text into <strong>tokens</strong>, usually ~4 characters or ~¾ of a word.</p>
+
+      <p>"Unbelievable" doesn't go in as one piece. It becomes:</p>
+
+      <div class="pipeline">
+        <span class="pipe-step">'Un'</span>
+        <span class="pipe-step">'believ'</span>
+        <span class="pipe-step">'able'</span>
+      </div>
+
+      <p>The model thinks in these chunks. But here's the thing most people miss: <strong>the model doesn't see text at all.</strong> It sees numbers. Token IDs.</p>
+
+      <h3>The Real Pipeline</h3>
+      <div class="pipeline">
+        <span class="pipe-step">"Hello Kenny"</span>
+        <span class="pipe-arrow">→</span>
+        <span class="pipe-step">Tokenizer</span>
+        <span class="pipe-arrow">→</span>
+        <span class="pipe-step highlight">[15339, 62920]</span>
+        <span class="pipe-arrow">→</span>
+        <span class="pipe-step">Model</span>
+        <span class="pipe-arrow">→</span>
+        <span class="pipe-step">Output IDs</span>
+        <span class="pipe-arrow">→</span>
+        <span class="pipe-step">Text</span>
+      </div>
+
+      <div class="section-img dark-framed">
+        <img src="images/image5.png" alt="Token visualisation showing how text is broken into tokens with character count, word count, token count, and cost">
+      </div>
+
+      <div class="callout">
+        <div class="callout-label">⚠️ Technical note</div>
+        <p style="margin-bottom:0;">This is an approximation. Real tokenizers (like Claude's) use <strong>Byte-Pair Encoding (BPE)</strong>. They learn the most efficient chunks from training data. But the concept is the same: text → chunks → numbers → model.</p>
+      </div>
+
+      <h3>Why Should You Care?</h3>
+      <p>Because <strong>cost and limits are measured in tokens.</strong> When Claude says "200K context window," that's 200,000 tokens, not characters. And you're billed per token on API calls.</p>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <div class="num">104</div>
+          <div class="label">Characters</div>
+        </div>
+        <div class="concept-card">
+          <div class="num">14</div>
+          <div class="label">Words</div>
+        </div>
+        <div class="concept-card">
+          <div class="num">28</div>
+          <div class="label">~Tokens</div>
+        </div>
+        <div class="concept-card">
+          <div class="num">$0.00008</div>
+          <div class="label">~Input Cost</div>
+        </div>
+      </div>
+
+      <p>Understanding token count = understanding cost. That's not theory. That's your bill.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTEXT WINDOW ═══ -->
+<section>
+  <div class="container">
+    <div class="fade-in">
+      <h2>Context Window. The Model's Entire Memory</h2>
+      <p class="lead">Imagine you're taking an exam, but you can only see a fixed number of pages of notes at once. That's the context window.</p>
+
+      <p>Everything (system prompt, conversation history, your question, AND the response) must fit inside it. Once it's full, old stuff gets dropped. This is why long conversations sometimes feel like Claude lost context. It literally can't see the earlier messages anymore.</p>
+
+      <div class="section-img dark-framed">
+        <img src="images/image6.png" alt="Context window visualisation showing 1,024 tokens with usage bar">
+      </div>
+
+      <div class="quote-block">
+        Old stuff doesn't get "pushed out." It <strong>never gets sent.</strong> The API is stateless. Every single call sends the full conversation from scratch. The UI just truncates older messages before sending.
+      </div>
+
+      <p>There's no persistent memory between calls. Each request is a fresh start. The model sees only what you put in that request.</p>
+
+      <div class="callout">
+        <div class="callout-label">💡 Why this matters</div>
+        <p style="margin-bottom:0;">This is exactly why <strong>RAG (Retrieval-Augmented Generation) exists.</strong> Instead of stuffing everything into the context window, you retrieve only what's relevant and inject it. Smart retrieval > brute force context.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TEMPERATURE ─── Dark Section ═══ -->
+<section class="dark-section">
+  <div class="container">
+    <div class="fade-in">
+      <h2>Temperature. The Creativity Dial</h2>
+      <p>Temperature controls randomness. Think of it as a spectrum from careful accountant to unhinged poet.</p>
+
+      <div class="temp-grid">
+        <div class="temp-card">
+          <div class="temp-val">0</div>
+          <h4>Deterministic</h4>
+          <p>Always picks the most likely next word. A careful accountant. Perfect for code, structured data, factual Q&A.</p>
+        </div>
+        <div class="temp-card">
+          <div class="temp-val">1</div>
+          <h4>Default / Creative</h4>
+          <p>A poet after two coffees. Good balance of coherence and creativity. Fine for most tasks.</p>
+        </div>
+        <div class="temp-card">
+          <div class="temp-val">2</div>
+          <h4>Max Chaos</h4>
+          <p>That poet after six espressos. Expect nonsense. Fun to experiment with, but don't ship it.</p>
+        </div>
+      </div>
+
+      <div class="section-img" style="border: 1px solid rgba(255,255,255,0.1); border-radius: 6px;">
+        <img src="images/image3.png" alt="Temperature at 2.0 showing probability distribution. Python 30.1%, JavaScript 22.4%, down to banana at 1.4%">
+      </div>
+
+      <p>At temperature 2, "banana" has a 1.4% chance of being the next word after "The best programming language for beginners is..." That's chaos. That's also why you keep temperature low for code.</p>
+
+      <div class="section-img" style="border: 1px solid rgba(255,255,255,0.1); border-radius: 6px;">
+        <img src="images/image4.png" alt="Temperature comparison visualisation">
+      </div>
+
+      <div class="section-img" style="border: 1px solid rgba(255,255,255,0.1); border-radius: 6px;">
+        <img src="images/image2.png" alt="Temperature at low setting showing deterministic output">
+      </div>
+
+      <div class="quote-block">
+        For code: keep it low. For creative writing: crank it up. For production: <strong>test both and measure.</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ LIVE API CALL ═══ -->
+<section>
+  <div class="container">
+    <div class="fade-in">
+      <h2>The Live API Call. Putting It All Together</h2>
+      <p class="lead">Every ChatGPT conversation, every Claude response? It's just an API call with a nice UI on top. Here's what's actually happening.</p>
+
+      <p>You set four things: the <strong>system prompt</strong> (who Claude should be), the <strong>user message</strong> (what you're asking), the <strong>temperature</strong> (how creative), and <strong>max tokens</strong> (response length limit).</p>
+
+      <div class="section-img dark-framed">
+        <img src="images/image7.png" alt="Live API playground showing system prompt, user message, temperature and max tokens controls with Claude's response">
+      </div>
+
+      <h3>What the Response Tells You</h3>
+
+      <div class="section-img dark-framed">
+        <img src="images/image1.png" alt="API response metadata showing model, input tokens, output tokens, latency, and cost">
+      </div>
+
+      <div class="stack-grid">
+        <div class="stack-card stack-on-light">
+          <div class="stack-num">01</div>
+          <div><p><strong>Model:</strong> Which version of Claude processed your request. Different models = different costs and capabilities.</p></div>
+        </div>
+        <div class="stack-card stack-on-light">
+          <div class="stack-num">02</div>
+          <div><p><strong>Input tokens:</strong> How many tokens your system prompt + message consumed. This is your input cost.</p></div>
+        </div>
+        <div class="stack-card stack-on-light">
+          <div class="stack-num">03</div>
+          <div><p><strong>Output tokens:</strong> How many tokens the response used. Input + Output = total cost.</p></div>
+        </div>
+        <div class="stack-card stack-on-light">
+          <div class="stack-num">04</div>
+          <div><p><strong>Latency & Cost:</strong> Time to respond and what it cost. At ~$0.01 per call, this is production-cheap.</p></div>
+        </div>
+      </div>
+
+      <div class="quote-block">
+        When you use Claude through the UI, all of this is happening behind the scenes. The UI is just a wrapper. <strong>Understanding the API is understanding the product.</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ MENTAL MODEL ═══ -->
+<section class="dark-section">
+  <div class="container">
+    <div class="fade-in">
+      <h2>The Mental Model</h2>
+      <p>Strip away the hype and here's what an LLM actually is:</p>
+
+      <ul class="items">
+        <li><strong>A next-token prediction machine.</strong> It doesn't "understand." It predicts what comes next based on patterns learned from training data.</li>
+        <li><strong>Stateless.</strong> No memory between calls. Every request is a blank slate. The "memory" is whatever you put in the context window.</li>
+        <li><strong>Bounded.</strong> Limited by context window size. Can't see what you don't send. Can't remember what you don't include.</li>
+        <li><strong>Tunable.</strong> Temperature, system prompts, max tokens. These are your levers. Learn to pull them.</li>
+      </ul>
+
+      <div class="quote-block">
+        Understanding these four properties changes how you prompt, how you architect, and how you build. <strong>Everything else is UI.</strong>
+      </div>
+
+      <p>You don't need to understand transformer architecture or attention mechanisms to build with LLMs. But you do need to understand this pipeline. Because every decision you make (prompt design, RAG vs fine-tuning, model selection, cost optimisation) flows from it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CLOSER ═══ -->
+<div class="closer">
+  <p>The model has the intelligence. Your job is knowing where to point it, what to feed it, and how to read what comes back.</p>
+  <div class="sig">@KennethVemagiri</div>
+</div>
+
+<script src="../../js/site-header.js" defer></script>
+<script src="../../script.js" defer></script>
+<script src="../../js/case-study.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,310 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kenneth | AI Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles.css">
+  <link rel="icon" href="../../favicon.ico" sizes="any">
+  <link rel="icon" href="../../favicon-96x96.png" type="image/png" sizes="96x96">
+  <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+  <link rel="manifest" href="../../site.webmanifest">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#ffffff;
+  --surface:#ffffff;
+  --text:#0f172a;
+  --muted:#475569;
+  --faint:#64748b;
+  --border:#e5e7eb;
+  --hairline:rgba(2,6,23,.08);
+  --link:#1d4ed8;
+  --linkHover:#1e40af;
+
+  --fontBody:var(--font-body);
+  --fontHeading:var(--font-heading);
+  --fontMono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,'Liberation Mono','Courier New',monospace;
+
+  --measure:72ch;
+  --h1:clamp(2rem,4vw,2.6rem);
+  --h2:clamp(1.25rem,2.2vw,1.55rem);
+  --body:clamp(1rem,1vw,1.05rem);
+  --small:.85rem;
+  --micro:.72rem;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--fontBody);
+  font-size:var(--body);
+  line-height:1.75;
+  text-rendering:optimizeLegibility;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+.container a{
+  color:var(--link);
+  text-decoration:underline;
+  text-underline-offset:.18em;
+  text-decoration-thickness:from-font;
+}
+.container a:hover{color:var(--linkHover)}
+
+.container{max-width:var(--measure);margin:0 auto;padding:0 1.5rem}
+section{padding:4.5rem 0;border-bottom:1px solid var(--border)}
+section:last-of-type{border-bottom:none}
+
+.hero{padding:6.5rem 0 4.25rem;border-bottom:1px solid var(--border);text-align:center}
+.hero-logo{width:80px;height:80px;border-radius:50%;border:1px solid var(--border);object-fit:cover;margin-bottom:1.5rem;filter:grayscale(100%) contrast(1.05)}
+.hero-tag{font-size:var(--micro);letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:.75rem;font-family:var(--fontMono)}
+.hero h1{font-size:var(--h1);font-weight:700;color:var(--text);letter-spacing:-.02em;margin-bottom:.6rem;font-family:var(--fontHeading);line-height:1.1}
+.hero .sub{font-size:1rem;color:var(--muted);max-width:60ch;margin:0 auto 2.25rem}
+.hero-meta{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;font-size:var(--micro);color:var(--faint);font-family:var(--fontMono)}
+.hero-meta span::before{content:'›';margin-right:.4rem;color:rgba(2,6,23,.35)}
+
+.label{font-size:var(--micro);text-transform:uppercase;letter-spacing:.14em;color:var(--faint);margin-bottom:.8rem;font-family:var(--fontMono)}
+.heading{font-size:var(--h2);font-weight:700;color:var(--text);margin-bottom:1rem;letter-spacing:-.01em;font-family:var(--fontHeading);line-height:1.2}
+.prose{color:var(--muted);font-size:1rem;max-width:65ch;line-height:1.85}
+.prose strong{color:var(--text);font-weight:600}
+
+.problem-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:1.75rem}
+.problem-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.25rem;box-shadow:0 1px 0 var(--hairline)}
+.problem-card .num{font-family:var(--fontMono);font-size:var(--micro);color:var(--faint);margin-bottom:.5rem}
+.problem-card .title{font-size:.95rem;color:var(--text);font-weight:650;margin-bottom:.35rem}
+.problem-card .desc{font-size:var(--small);color:var(--muted);line-height:1.6}
+
+.terminal{background:#0b0f16;border:1px solid rgba(2,6,23,.18);border-radius:12px;overflow:hidden;margin-top:2.25rem;font-family:var(--fontMono);box-shadow:0 10px 30px rgba(2,6,23,.08)}
+.terminal-bar{display:flex;align-items:center;gap:6px;padding:.65rem .85rem;border-bottom:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03)}
+.dot{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.16)}
+.terminal-bar .path{margin-left:auto;font-size:var(--micro);color:rgba(255,255,255,.45)}
+.terminal-body{padding:1.05rem 1.1rem;font-size:.78rem;line-height:2;white-space:pre-wrap;overflow-x:auto;color:rgba(255,255,255,.86)}
+.t-red{color:#f44747}
+.t-green{color:#6a9955}
+.t-yellow{color:#dcdcaa}
+.t-cyan{color:#4ec9b0}
+.t-blue{color:#569cd6}
+.t-dim{color:rgba(255,255,255,.42)}
+.t-white{color:#fff;font-weight:700}
+
+.audience-list{margin-top:1.25rem;display:flex;flex-direction:column;gap:.6rem}
+.audience-item{display:flex;align-items:flex-start;gap:.75rem;font-size:1rem;color:var(--muted)}
+.audience-item .marker{color:var(--faint);font-family:var(--fontMono);font-size:var(--micro);flex-shrink:0;margin-top:3px}
+
+.tech-table{width:100%;border-collapse:collapse;margin-top:1.75rem;font-size:var(--small)}
+.tech-table th{text-align:left;color:var(--faint);font-weight:600;padding:.65rem 0;border-bottom:1px solid var(--border);font-family:var(--fontMono);font-size:var(--micro);text-transform:uppercase;letter-spacing:.1em}
+.tech-table td{padding:.75rem 0;border-bottom:1px solid rgba(2,6,23,.06);vertical-align:top}
+.tech-table td:first-child{color:var(--text);font-weight:600;width:190px;font-family:var(--fontMono);font-size:var(--micro)}
+.tech-table td:last-child{color:var(--muted)}
+
+.code{background:#0b0f16;border:1px solid rgba(2,6,23,.18);border-radius:12px;padding:1.05rem 1.1rem;font-family:var(--fontMono);font-size:.74rem;line-height:1.9;overflow-x:auto;margin-top:1.25rem;position:relative;box-shadow:0 10px 30px rgba(2,6,23,.08);color:rgba(255,255,255,.86)}
+.code .tag{position:absolute;top:.55rem;right:.75rem;font-size:.56rem;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.08em}
+.kw{color:#569cd6}.fn{color:#dcdcaa}.st{color:#ce9178}.cm{color:#6a9955}.num{color:#b5cea8}.type{color:#4ec9b0}
+
+.arch{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin-top:1.75rem;font-family:var(--fontMono);font-size:var(--micro)}
+.arch-node{border:1px solid var(--border);padding:.45rem .85rem;border-radius:999px;color:var(--muted);background:rgba(2,6,23,.02)}
+.arch-node.main{color:var(--text);border-color:rgba(2,6,23,.18);background:rgba(2,6,23,.03)}
+.arch-sep{color:rgba(2,6,23,.35)}
+
+.footer{padding:3.25rem 0;text-align:center;border-top:1px solid var(--border)}
+.footer .name{font-size:1rem;color:var(--text);font-weight:700;margin-bottom:.25rem;font-family:var(--fontHeading)}
+.footer .role{font-size:var(--small);color:var(--faint)}
+.footer-links{margin-top:.75rem;display:flex;gap:1rem;justify-content:center}
+.footer-links a{font-size:var(--micro);color:var(--muted);text-decoration:none;font-family:var(--fontMono);letter-spacing:.05em}
+.footer-links a:hover{color:var(--text)}
+
+@media(max-width:550px){
+  .problem-grid{grid-template-columns:1fr}
+  .hero h1{font-size:clamp(1.9rem,7vw,2.25rem)}
+  .arch{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+<a href="#essay-start" class="skip-link">Skip to main content</a>
+<header class="site-header"></header>
+
+<div class="container">
+
+<div class="hero">
+  <img class="hero-logo" src="./shakespeare-icon.png" alt="Shakespeare">
+  <div class="hero-tag">Personal · Side Project</div>
+  <h1>Shakespeare</h1>
+  <p class="sub">A terminal tool that turns YouTube videos into clean, searchable transcripts. Find answers fast without rewatching.</p>
+  <div class="hero-meta">
+    <span>Python 3</span>
+    <span>CLI Tool</span>
+    <span>Zero Config</span>
+    <span>Auto-Cleanup</span>
+  </div>
+</div>
+
+<section>
+  <div class="label">The Problem</div>
+  <h2 class="heading">YouTube is a black hole for your time</h2>
+  <p class="prose">You watch a 45-minute tutorial. A week later you need one command, and you're scrubbing again. <strong>Video is hard to search, skim, or Ctrl+F.</strong></p>
+  <div class="problem-grid">
+    <div class="problem-card">
+      <div class="num">01</div>
+      <div class="title">Can't search video</div>
+      <div class="desc">No way to Ctrl+F a 40-min tutorial when you need one specific answer.</div>
+    </div>
+    <div class="problem-card">
+      <div class="num">02</div>
+      <div class="title">Rewatching wastes hours</div>
+      <div class="desc">You scrub through videos to find one section, every time.</div>
+    </div>
+    <div class="problem-card">
+      <div class="num">03</div>
+      <div class="title">Notes go stale</div>
+      <div class="desc">Manual notes miss context. You never capture everything the first time.</div>
+    </div>
+    <div class="problem-card">
+      <div class="num">04</div>
+      <div class="title">Transcripts aren't readable</div>
+      <div class="desc">Auto-captions are a wall of text with no structure.</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="label">The Solution</div>
+  <h2 class="heading">Paste a URL. Get a clean transcript. Move on.</h2>
+  <p class="prose">Shakespeare extracts the full transcript, <strong>formats it into natural paragraphs</strong> using a silence-gap heuristic, saves it as a .txt file named after the video, and <strong>auto-deletes old files after 7 days</strong> so your folder stays clean.</p>
+  <div class="terminal">
+    <div class="terminal-bar">
+      <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      <span class="path">~/Shakespeare</span>
+    </div>
+    <div class="terminal-body">  <span class="t-white">──────────────────────────────────────────────────────────</span>
+          <span class="t-cyan">Youtube Transcript Extractor</span>  <span class="t-dim">@kennethvemagiri</span>
+  <span class="t-white">──────────────────────────────────────────────────────────</span>
+
+  <span class="t-dim">URL › (or H = history, Q = quit)</span> https://youtube.com/watch?v=abc123
+
+  <span class="t-cyan">⠹</span>  Fetching video title
+
+  <span class="t-white">AI Engineering A Realistic Roadmap for Beginners</span>
+
+  <span class="t-cyan">⠼</span>  Extracting transcript
+
+  <span class="t-green">✓  Saved</span>  <span class="t-dim">14,832 chars</span>
+  <span class="t-dim">↳ AI Engineering A Realistic Roadmap for Beginners.txt</span>
+
+  <span class="t-yellow">⚠  Expires May 06, 2026  (7 days remaining)</span>
+
+  <span class="t-cyan">📂 Open transcripts folder</span></div>
+  </div>
+</section>
+
+<section>
+  <div class="label">Who This Helps</div>
+  <h2 class="heading">Built for people who learn from YouTube</h2>
+  <div class="audience-list">
+    <div class="audience-item">
+      <span class="marker">→</span>
+      <span><strong>Students</strong> studying from tutorials who need searchable notes without rewatching hours of content.</span>
+    </div>
+    <div class="audience-item">
+      <span class="marker">→</span>
+      <span><strong>Developers</strong> following coding walkthroughs who want to copy commands and snippets from the transcript directly.</span>
+    </div>
+    <div class="audience-item">
+      <span class="marker">→</span>
+      <span><strong>Content creators</strong> researching topics via YouTube who need raw text to reference, quote, or build on.</span>
+    </div>
+    <div class="audience-item">
+      <span class="marker">→</span>
+      <span><strong>Anyone</strong> who watches long-form YouTube and wants to turn passive watching into searchable knowledge.</span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="label">Architecture</div>
+  <h2 class="heading">One file. No server. No database.</h2>
+  <p class="prose">Single Python script launched via a Windows shortcut. No web framework, no config, no Docker.</p>
+  <div class="arch">
+    <div class="arch-node">Shakespeare.lnk</div>
+    <div class="arch-sep">→</div>
+    <div class="arch-node">.bat</div>
+    <div class="arch-sep">→</div>
+    <div class="arch-node main">Python Script</div>
+    <div class="arch-sep">→</div>
+    <div class="arch-node">youtube_transcript_api</div>
+    <div class="arch-sep">→</div>
+    <div class="arch-node">.txt</div>
+  </div>
+</section>
+
+<section>
+  <div class="label">Tech Stack</div>
+  <h2 class="heading">What's under the hood</h2>
+  <table class="tech-table">
+    <tr><th>Tool</th><th>Purpose</th></tr>
+    <tr><td>youtube_transcript_api</td><td>Fetches raw transcript segments from YouTube's internal API</td></tr>
+    <tr><td>yt-dlp</td><td>Fetches the video title; falls back to video ID when needed</td></tr>
+    <tr><td>threading</td><td>Powers the braille-dot spinner (⠋⠙⠹⠸⠼⠴) as a context manager</td></tr>
+    <tr><td>re</td><td>Regex URL parsing for watch, short, embed, and Shorts links</td></tr>
+    <tr><td>ANSI + OSC 8</td><td>Colour-coded output and clickable hyperlinks in terminal</td></tr>
+    <tr><td>os / time / datetime</td><td>File age tracking, expiry dates, and 7-day auto-cleanup</td></tr>
+  </table>
+</section>
+
+<section>
+  <div class="label">Code Highlights</div>
+  <h2 class="heading">Patterns worth noting</h2>
+  <div class="code">
+    <div class="tag">Context Manager Spinner</div>
+<span class="kw">class</span> <span class="type">Spinner</span>:
+    _FRAMES = [<span class="st">'⠋'</span>, <span class="st">'⠙'</span>, <span class="st">'⠹'</span>, <span class="st">'⠸'</span>, <span class="st">'⠼'</span>, <span class="st">'⠴'</span>]
+
+    <span class="kw">def</span> <span class="fn">__enter__</span>(self):
+        self._thread.start()      <span class="cm"># start animation</span>
+        <span class="kw">return</span> self
+
+    <span class="kw">def</span> <span class="fn">__exit__</span>(self, *_):
+        self._stop.set()           <span class="cm"># signal stop</span>
+        self._thread.join()        <span class="cm"># clean exit</span>
+  </div>
+  <div class="code">
+    <div class="tag">Silence-Gap Paragraph Splitting</div>
+<span class="cm"># Split transcript into paragraphs when</span>
+<span class="cm"># speaker pauses for > 2 seconds</span>
+<span class="kw">for</span> snippet <span class="kw">in</span> transcript:
+    <span class="kw">if</span> prev_end <span class="kw">and</span> (snippet.start - prev_end) > <span class="num">2.0</span>:
+        paragraphs.append(<span class="st">" "</span>.join(current))
+        current = []
+    current.append(snippet.text)
+  </div>
+  <div class="code">
+    <div class="tag">4-Format URL Parser</div>
+<span class="kw">for</span> pattern <span class="kw">in</span> (
+    r<span class="st">"(?:v=)([a-zA-Z0-9_-]{11})"</span>,         <span class="cm"># /watch?v=</span>
+    r<span class="st">"(?:youtu\.be/)([a-zA-Z0-9_-]{11})"</span>,  <span class="cm"># youtu.be/</span>
+    r<span class="st">"(?:embed/)([a-zA-Z0-9_-]{11})"</span>,      <span class="cm"># /embed/</span>
+    r<span class="st">"(?:shorts/)([a-zA-Z0-9_-]{11})"</span>,     <span class="cm"># /shorts/</span>
+):
+  </div>
+</section>
+
+<div class="footer">
+  <div class="name">Kenneth Vemagiri</div>
+  <div class="role">Full-Stack Developer · AI Builder</div>
+  <div class="footer-links">
+    <a href="https://github.com/kennethvemagiri/Shakespeare" target="_blank">github</a>
+    <a href="https://www.linkedin.com/in/prabhakar-kenneth-vemagiri-/" target="_blank">linkedin</a>
+  </div>
+</div>
+
+</div>
+
+<script src="../../js/site-header.js" defer></script>
+<script src="../../script.js" defer></script>
+</body>
+</html>

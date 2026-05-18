@@ -5,7 +5,7 @@ Dark-theme, single-page portfolio inspired by a productive/dev-style layout.
 ## What’s included
 
 - **Hero**: Profile photo, name, “Available for work”, info grid (role, location, email, time, site, resume), bio with tech tags, CTAs and social links.
-- **Last played**: Placeholder card for a “now playing” API (e.g. Spotify). Replace via script when you have an endpoint.
+- **Last played**: YouTube card driven from `script.js`. Set `LAST_PLAYED.videos` to an array of `{ youtube, title? }` URLs (or plain URL strings). A random video is shown; every **2–3 hours** (random interval) it picks another (different from the previous when you have 2+). State is stored in `localStorage` (`kv-dev-last-played-rot`) so refreshes do not reset the timer. Single URL still works via `youtube` / `title` only.
 - **Contributions**: Placeholder for a contribution graph (e.g. GitHub). Replace via script when you have an API or proxy.
 - **Tech stack**: Pills for Python, JS, React, etc. Edit the list in `index.html` as needed.
 - **Featured projects**: Cards for MedWorkFlow, GoCafeCo, Pronto, WiseWeb with links to the main site’s project pages. Repo links are `#` placeholders.
@@ -15,8 +15,9 @@ Dark-theme, single-page portfolio inspired by a productive/dev-style layout.
 ## Where to add integrations
 
 1. **APIs**
-   - **Last played**: In `script.js`, uncomment and implement the “PLACEHOLDER: Last Played” block. Point `fetch` at your API (e.g. Spotify or a serverless proxy) and update `#last-played-placeholder` with the response.
-   - **Contributions**: In `script.js`, uncomment and implement the “PLACEHOLDER: Contributions” block. Use your GitHub (or other) data and render the grid into `#contrib-graph`.
+   - **Last played**: In `script.js`, set `LAST_PLAYED.videos` (array of YouTube URLs / `{ youtube, title }`). Rotation is client-side every 2–3 hours with `localStorage`; no API required.
+   - **Contributions**: Deploy on **Netlify** and set `GITHUB_TOKEN` (and optional `GITHUB_LOGIN`) per root **`NETLIFY-GITHUB.md`**. `productive_version/script.js` calls `/api/github-contributions` on the same origin.
+- **Current project**: Set **`"currentBuild": true`** on exactly one entry in **`data/site-content.json`** (same file as the main site work grid). The Developer View card reads that project’s **`title`**, **`tagline`** (or **`metric`** if tagline is empty), and the first **GitHub** action link. If nothing is flagged, the first **featured** project with a GitHub `href` is used.
 
 2. **Links**
    - **CV/Resume**: In `index.html`, the hero “Resume” link is set to your Google Drive CV. Change the `href` if you move it.

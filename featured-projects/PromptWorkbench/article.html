@@ -1,0 +1,222 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="Pronto turns rough ideas into structured prompts that behave across LLMs. Essay by Kenneth Vemagiri.">
+<link rel="canonical" href="https://kennethvemagiri.com/featured-projects/PromptWorkbench/article.html">
+<link rel="icon" href="../../favicon.ico" sizes="any">
+<link rel="icon" href="../../favicon-96x96.png" type="image/png" sizes="96x96">
+<link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+  <link rel="manifest" href="../../site.webmanifest">
+<title>Kenneth | AI Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles.css">
+  <link rel="stylesheet" href="../../styles/case-study.css">
+</head>
+<body class="essay-page case-study-pronto" style="--essay-accent: #1a73e8;">
+<a href="#essay-start" class="skip-link">Skip to main content</a>
+<header class="site-header"></header>
+
+<!-- ═══ HERO ═══ -->
+<header class="hero" id="essay-start">
+  <div class="hero-gradient"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <h1><span class="accent">Pronto</span></h1>
+    <div class="byline">Built by @KennethVemagiri</div>
+    <div class="tagline">
+      <strong>Better prompts. Better results.</strong>
+      Turn rough ideas into clear, structured prompts you can paste into any LLM. Get there in seconds, not retries.
+    </div>
+    <a href="https://pronto-liard-one.vercel.app/index.html" class="hero-cta" target="_blank" rel="noopener noreferrer">
+      Try it live
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </div>
+  <div class="scroll-hint">↓ Scroll</div>
+</header>
+
+<!-- ═══ THE PROBLEM ═══ -->
+<section>
+  <div class="container">
+    <div class="fade-in">
+      <h2>Everyone Uses AI.<br>Almost Nobody Prompts It Well.</h2>
+      <p class="lead">You type a rough idea into ChatGPT. You get a generic response. You retry. You rephrase. You give up. The problem was never the model. It was the <em>input.</em></p>
+
+      <div class="vs-grid">
+        <div class="vs-card before">
+          <h4>What most people type</h4>
+          <p>You ask for a blog post about marketing. The model answers with eight hundred words that sound like someone had just discovered bullet points. Three retries later it still feels thin.</p>
+        </div>
+        <div class="vs-card after">
+          <h4>After Pronto</h4>
+          <p>Same brief, but now role, audience, format, and constraints are baked in. Paste once into any LLM and the first answer is something you can actually <em>use.</em></p>
+        </div>
+      </div>
+
+      <div class="quote-block">
+        Pronto doesn't make AI smarter. It makes your <strong>input</strong> smarter.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ WHAT IT IS ═══ -->
+<section>
+  <div class="container">
+    <div class="fade-in">
+      <h2>What Pronto Is</h2>
+      <p class="lead">A prompt polisher. Not a chatbot, not a wrapper, not another AI competing with ChatGPT. It sits <em>before</em> whatever model you use and makes the input better.</p>
+
+      <h3>How It Works</h3>
+      <div class="flow-grid flow-steps">
+        <div class="flow-step">
+          <div class="flow-num">1</div>
+          <div class="flow-label">Paste</div>
+          <div class="flow-desc">Type your rough prompt: messy, vague, shorthand. That is fine.</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">2</div>
+          <div class="flow-label">Polish</div>
+          <div class="flow-desc">Pronto structures it with grammar, role, context, format, and constraints.</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">3</div>
+          <div class="flow-label">Tweak</div>
+          <div class="flow-desc">Click the highlighted words to edit. It re-polishes instantly.</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">4</div>
+          <div class="flow-label">Use</div>
+          <div class="flow-desc">Copy. Paste into ChatGPT, Claude, Gemini, or whatever you already use.</div>
+        </div>
+      </div>
+
+      <h3>What You Get</h3>
+      <ul class="items">
+        <li><strong>5 tone modes</strong>: Default, Professional, Friendly, Detailed, Creative. Each one changes how the prompt is structured, not just word choice.</li>
+        <li><strong>Interactive keywords</strong>: Green highlights lock domain terms. Red highlights are editable slots. Click, type, and Pronto re-polishes immediately.</li>
+        <li><strong>AI + Basic modes</strong>: Basic fixes grammar and punctuation on the spot. AI mode adds full prompt engineering (role, context, task, format, constraints).</li>
+        <li><strong>Works with every major model</strong>: ChatGPT, Claude, Gemini, Grok, Llama, Midjourney. The output stays model-agnostic.</li>
+        <li><strong>No account needed</strong>: Twenty free polishes per hour. No signup, no credit card, nothing stored.</li>
+        <li><strong>Privacy-first</strong>: Prompts are processed and discarded. Nothing saved for training.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TONE MODES ═══ -->
+<section>
+  <div class="container">
+    <div class="fade-in">
+      <h2>Tone Isn't a Gimmick</h2>
+      <p class="lead">Each tone mode runs a different system prompt under the hood. It does not just swap adjectives. It changes sentence structure, vocabulary level, and how much detail lands in the prompt.</p>
+
+      <div class="tech-grid">
+        <div class="tech-card">
+          <div class="tech-label">Professional</div>
+          <div class="tech-desc">Concise, polite, unambiguous. Suitable for colleagues, clients, stakeholders.<br><em>Strips filler, tightens language, keeps it direct.</em></div>
+        </div>
+        <div class="tech-card">
+          <div class="tech-label">Friendly</div>
+          <div class="tech-desc">Warm and approachable without sacrificing clarity.<br><em>Good for community posts, onboarding copy, user-facing content.</em></div>
+        </div>
+        <div class="tech-card">
+          <div class="tech-label">Detailed</div>
+          <div class="tech-desc">Expands with context, goals, constraints, and output format.<br><em>For complex tasks where the model needs more to work with.</em></div>
+        </div>
+        <div class="tech-card">
+          <div class="tech-label">Creative</div>
+          <div class="tech-desc">Encourages imaginative, varied outputs while keeping requirements explicit.<br><em>For brainstorms, content ideas, anything that needs range.</em></div>
+        </div>
+        <div class="tech-card">
+          <div class="tech-label">Concise</div>
+          <div class="tech-desc">Strips everything to the raw ask. No roles, no formatting, no politeness. Just the core instruction in one or two sentences.<br><em>For when you know exactly what you want.</em></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ BUILT WITH ═══ -->
+<section class="dark-section">
+  <div class="container">
+    <div class="fade-in">
+      <div class="section-tag">Under the Hood</div>
+
+      <h2>Built Lean, Ships Fast</h2>
+      <p>No React, no build step, no framework overhead. Vanilla JS frontend, Express backend, local AI via Ollama, optional Supabase for auth. The product is the prompt logic. Everything else is plumbing.</p>
+
+      <ul class="items">
+        <li><strong>Frontend</strong>: Pure HTML, CSS, vanilla JS. No bundler, no transpiler. Ships as-is.</li>
+        <li><strong>Backend</strong>: Express with rate limiting, security headers, and structured logging.</li>
+        <li><strong>AI</strong>: Ollama runs locally with no API keys and no data leaving your machine. OpenAI is there if you need a fallback.</li>
+        <li><strong>Database</strong>: Supabase for optional auth and prompt history. Skip it and the product still runs.</li>
+        <li><strong>Deployed on</strong>: Vercel. One push to main and it is live.</li>
+      </ul>
+
+      <div class="quote-block">
+        The &ldquo;AI&rdquo; in Pronto is not the model. It is the system prompt: tightly written instructions that train a general-purpose model to behave like a <strong>prompt engineering specialist.</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ WHAT'S NEXT ═══ -->
+<section class="dark-section" style="padding-top: 0; border-top: 1px solid rgba(255,255,255,0.08);">
+  <div class="container">
+    <div class="fade-in">
+      <div class="section-tag">Roadmap</div>
+
+      <h2>What's Coming Next</h2>
+      <p>Pronto works today. Here is what ships next, ordered by impact instead of ease.</p>
+
+      <div class="stack-grid">
+        <div class="stack-card">
+          <div class="stack-num">01</div>
+          <div><p><strong>Prompt Templates →</strong> Pre-built structures for common tasks: blog writing, code review, email drafting, data analysis. Solve the cold-start problem.</p></div>
+        </div>
+        <div class="stack-card">
+          <div class="stack-num">02</div>
+          <div><p><strong>Model Selection →</strong> Pick which model powers your polish: Claude, GPT-4, Gemini, or keep it local. Different models, different strengths.</p></div>
+        </div>
+        <div class="stack-card">
+          <div class="stack-num">03</div>
+          <div><p><strong>Prompt History →</strong> Save, search, and reuse past polishes. Build a personal prompt library over time.</p></div>
+        </div>
+        <div class="stack-card">
+          <div class="stack-num">04</div>
+          <div><p><strong>Team Collaboration →</strong> Shared prompt libraries, custom tone presets, and brand voice enforcement across an org.</p></div>
+        </div>
+        <div class="stack-card">
+          <div class="stack-num">05</div>
+          <div><p><strong>API Access →</strong> Embed Pronto's polish into your own apps. One POST endpoint, structured prompts back.</p></div>
+        </div>
+        <div class="stack-card">
+          <div class="stack-num">06</div>
+          <div><p><strong>Desktop App →</strong> System-tray app for Windows. Highlight text anywhere, hit a shortcut, get a better prompt.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CLOSER ═══ -->
+<div class="closer">
+  <p>The AI has the talent. But without a clear prompt, it's just guessing. Pronto turns guessing into engineering.</p>
+  <a href="https://pronto-liard-one.vercel.app/index.html" class="closer-cta" target="_blank" rel="noopener noreferrer">
+    Open Pronto →
+  </a>
+  <div class="sig">@KennethVemagiri</div>
+</div>
+
+<script src="../../js/site-header.js" defer></script>
+<script src="../../script.js" defer></script>
+<script src="../../js/case-study.js" defer></script>
+</body>
+</html>

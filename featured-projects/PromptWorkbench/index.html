@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Kenneth | AI Engineer</title>
+  <meta name="description" content="Better prompts. Better results. Pronto helps you design structured prompts that behave across LLMs." />
+  <link rel="canonical" href="https://kennethvemagiri.com/featured-projects/PromptWorkbench/" />
+  <link rel="icon" href="../../favicon.ico" sizes="any">
+  <link rel="icon" href="../../favicon-96x96.png" type="image/png" sizes="96x96">
+  <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+  <link rel="manifest" href="../../site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles.css">
+</head>
+<body class="pronto-landing-page">
+<a href="#essay-start" class="skip-link">Skip to main content</a>
+<header class="site-header"></header>
+
+  <!-- Set your deployed app URL here (https://...) — used by the primary CTA. -->
+  <script>
+    const LIVE_APP_URL = "https://pronto-liard-one.vercel.app/index.html";
+  </script>
+
+  <main class="wrap" id="essay-start">
+    <div class="top">
+      <a href="../../index.html#work">← Back to portfolio</a>
+    </div>
+
+    <section class="hero-shot" aria-label="Product screenshot">
+      <img src="./screenshot.png" alt="Pronto landing: Better prompts. Better results." width="1024" height="689" loading="eager" decoding="async" />
+    </section>
+
+    <article class="card">
+      <span class="pill">Side project</span>
+      <h1>Pronto</h1>
+      <p class="lead">
+        If your prompt isn&rsquo;t structured, your output is random. This workbench helps you design
+        <strong>structured prompts</strong> that behave consistently across LLMs &mdash; fewer surprises, more repeatable results.
+      </p>
+
+      <div class="cta-row">
+        <a class="cta" id="pw-open-app" href="#">Open workbench →</a>
+        <a href="./article.html" class="cta-secondary">Read the full article →</a>
+      </div>
+      <p class="hint" id="pw-url-hint" hidden>
+        Add your live URL in <code>featured-projects/PromptWorkbench/index.html</code> (set <code>LIVE_APP_URL</code> in the script at the top of the file), then refresh.
+      </p>
+
+      <p class="mono-footer">developed by @kennethvemagiri</p>
+    </article>
+  </main>
+
+  <script>
+    (function () {
+      var btn = document.getElementById("pw-open-app");
+      var hint = document.getElementById("pw-url-hint");
+      var url = typeof LIVE_APP_URL === "string" ? LIVE_APP_URL.trim() : "";
+      if (url && /^https?:\/\//i.test(url)) {
+        btn.href = url;
+        btn.setAttribute("rel", "noopener noreferrer");
+        btn.setAttribute("target", "_blank");
+      } else {
+        btn.href = "#";
+        btn.setAttribute("aria-disabled", "true");
+        if (hint) hint.hidden = false;
+        btn.addEventListener("click", function (e) {
+          e.preventDefault();
+        });
+      }
+    })();
+  </script>
+
+<script src="../../js/site-header.js" defer></script>
+<script src="../../script.js" defer></script>
+</body>
+</html>

@@ -1,6 +1,7 @@
 /**
  * Build script: generate WebP images and compress hero for performance.
- * Run: node build-images.js (requires: npm install sharp)
+ * Run: node build-images.js (requires: npm install)
+ * - main_favicon.png → favicon.ico, favicon-16/32, apple-touch-icon (see build-favicon.js)
  * - (Optional) python trim-featured-logos.py — crop logo PNG margins first
  * - Hero profile.png → profile.webp (target <200KB)
  * - Featured project PNGs → WebP in same folder
@@ -8,12 +9,13 @@
 
 const fs = require("fs");
 const path = require("path");
+const { buildFavicons } = require("./build-favicon");
 
 let sharp;
 try {
   sharp = require("sharp");
 } catch (e) {
-  console.error("Run: npm install sharp");
+  console.error("Run: npm install");
   process.exit(1);
 }
 
@@ -70,6 +72,37 @@ async function compressHero() {
   console.log("Hero:", dest, "(" + Math.round(out.length / 1024) + " KB, quality " + quality + ")");
 }
 
+/** Essay hero thumb for Work grid */
+async function insightsCoverWebP() {
+  const src = path.join(ROOT, "insights", "prompt-engineering", "images", "image2.png");
+  const dest = path.join(ROOT, "insights", "prompt-engineering", "images", "cover.webp");
+  await toWebP(src, dest, { maxWidth: 400, quality: 82 });
+}
+
+async function promptWorkbenchTileWebP() {
+  const src = path.join(ROOT, "featured-projects", "PromptWorkbench", "screenshot.png");
+  const dest = path.join(ROOT, "featured-projects", "PromptWorkbench", "hero-tile.webp");
+  await toWebP(src, dest, { maxWidth: 560, quality: 82 });
+}
+
+async function shakespeareTileWebP() {
+  const src = path.join(ROOT, "featured-projects", "portfolio_Shakespeare", "cover.png");
+  const dest = path.join(ROOT, "featured-projects", "portfolio_Shakespeare", "hero-tile.webp");
+  await toWebP(src, dest, { maxWidth: 800, quality: 82 });
+}
+
+async function tierupTileWebP() {
+  const src = path.join(ROOT, "featured-projects", "portfolio_TierUp", "cover.png");
+  const dest = path.join(ROOT, "featured-projects", "portfolio_TierUp", "hero-tile.webp");
+  await toWebP(src, dest, { maxWidth: 800, quality: 82 });
+}
+
+async function howLlmsWorkCoverWebP() {
+  const src = path.join(ROOT, "insights", "How LLM Work's", "cover.png");
+  const dest = path.join(ROOT, "insights", "How LLM Work's", "cover.webp");
+  await toWebP(src, dest, { maxWidth: 400, quality: 82 });
+}
+
 async function featuredWebP() {
   for (const p of FEATURED_LOGOS) {
     const base = path.join(ROOT, "featured-projects", p.dir);
@@ -82,7 +115,13 @@ async function featuredWebP() {
 
 (async () => {
   console.log("Building images...");
+  await buildFavicons();
   await compressHero();
   await featuredWebP();
+  await insightsCoverWebP();
+  await howLlmsWorkCoverWebP();
+  await promptWorkbenchTileWebP();
+  await shakespeareTileWebP();
+  await tierupTileWebP();
   console.log("Done.");
 })();
